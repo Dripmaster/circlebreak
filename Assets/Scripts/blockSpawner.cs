@@ -17,11 +17,15 @@ public class blockSpawner : MonoBehaviour
 
 
 
-    [Header("SpawnValues")]
+    [Header("MassiveSpawnValues")]
     public int SpawnCount = 10;
     public float TimeOfSpawn = 0.5f;
     public float ShrinkDuration = 0.5f;
+    public float massiveSafetyZoneDegree = 90f;
+    public int massiveSpawnDegreeDivideCount = 27;
+    [Header("PassiveSpawnValues")]
     public float passiveSpawnTime = 1;
+    public float passiveSafetyZoneDegree= 45f;
 
     void Awake()
     {
@@ -84,13 +88,41 @@ public class blockSpawner : MonoBehaviour
     {
         float RangeMin = p.rangeMin;
         float RangeMax = p.rangeMax;
+
+        bool[] thetas = new bool[massiveSpawnDegreeDivideCount];
+        float divTheta = ((Mathf.PI * 2f ) -Mathf.Deg2Rad*massiveSafetyZoneDegree )/ thetas.Length;
+        int thetasNum = 0;
         for (int i = 0; i < count; i++)
         {
             var g = Instantiate(blockObject);
             g.transform.parent = transform.parent;
             g.transform.localPosition = Vector2.zero;
-            float theta = Random.Range(0,Mathf.PI*1.5f);
-            theta = p.getTheta() - theta;
+
+            int thetaNum = Random.Range(1, thetas.Length);
+            float theta;
+            do
+            {
+                
+
+                if (thetas[thetasNum])
+                {
+                    thetasNum -= 1;
+                }
+                else
+                {
+                    thetaNum -=1;
+                    if(thetaNum>0)
+                    thetasNum -= 1;
+                }
+
+                if (thetasNum < 0)
+                {
+                    thetasNum = thetas.Length-1;
+                }
+            } while (thetaNum > 0);
+
+            theta =p.getTheta() - divTheta * (thetasNum)-divTheta;
+
             float Range = Random.Range(RangeMin, RangeMax);
             g.GetComponent<blockBase>().setDest(theta,Range,timeOfSpawn,p);
         }
@@ -104,7 +136,7 @@ public class blockSpawner : MonoBehaviour
             g.transform.parent = transform.parent;
             g.transform.localPosition = Vector2.zero;
             float theta = Random.Range(0, Mathf.PI /2);
-        theta = p.getTheta()+Mathf.PI +theta-Mathf.PI/4;
+        theta = p.getTheta()+Mathf.PI +theta-passiveSafetyZoneDegree*Mathf.Deg2Rad;
             float Range = Random.Range(RangeMin, RangeMax);
             g.GetComponent<blockBase>().setDest(theta, Range, TimeOfSpawn, p);
     }

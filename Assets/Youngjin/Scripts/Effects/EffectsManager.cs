@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class EffectsManager : MonoBehaviour
 {
+    public ParticleSystem blockDestroyParticle;
+
+    public ParticleSystem preDashParticle;
     public ParticleSystem dashParticle;
     public ParticleSystem dashBurstParticlePrimary;
     public ParticleSystem dashBurstParticleSecondary;
 
-    
+    public ParticleSystem boomCircleParticle;
+
     public void StartParticle(ParticleSystem particle)
     {
         particle.gameObject.SetActive(false);

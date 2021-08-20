@@ -13,7 +13,7 @@ public class playerMovwe : MonoBehaviour
     /// </summary>
 
     [Header("References")]
-    [SerializeField] PlayerEffects effector;
+    public  PlayerEffects effector;
     new Rigidbody2D rigidbody;
 
     [Header("Values")]
@@ -22,6 +22,7 @@ public class playerMovwe : MonoBehaviour
     public float turnSpeed = 1;
     public float rangeSpeed = 1;
     public float dashCoolTime = 0.5f;
+    public float invincibleTime = 0.4f;
     float dashCoolTimeTimer = 0f;
 
     bool isSmallPower;
@@ -82,7 +83,7 @@ public class playerMovwe : MonoBehaviour
     {
         float StartTime = 0;
         isSmallPower = true;
-        float speedScale = 1;
+        float speedScale = 0;
         do
         {
             if (dashCoolTimeTimer >= 0)
@@ -92,8 +93,8 @@ public class playerMovwe : MonoBehaviour
             if (isSmallPower)
             {
                 StartTime += Time.unscaledDeltaTime;
-                speedScale = StartTime/0.4f;
-                if (StartTime>=0.4f)//대쉬끝, 꽝찍기 끝 등 하고 move 오면 잠시 무적시간
+                speedScale = Mathf.Lerp(0,1, StartTime/ invincibleTime);
+                if (StartTime>= invincibleTime)//대쉬끝, 꽝찍기 끝 등 하고 move 오면 잠시 무적시간
                 {
                     isSmallPower = false;
                     speedScale = 1;
@@ -162,6 +163,7 @@ public class playerMovwe : MonoBehaviour
 
     [Header("BoomValues")]
     public float chargeDuration = 0.2f;
+    public float chargeDistance = 0.3f;
     public float boomToCenterDuration = 0.1f;
     public float returnDuration = 0.2f;
     public float waitForSpawnDuration = 0.5f;
@@ -182,13 +184,9 @@ public class playerMovwe : MonoBehaviour
                 eTime += Time.unscaledDeltaTime;
                 if (eTime <= chargeDuration)
                 {//공중 날기
-                    float rati = eTime / chargeDuration;
-
-                    float x;
-                    x = Mathf.Lerp(0, 0.1f, rati);
-
-                    rati = 1 + x;
-                    Vector2 newMove = new Vector2(bigCircleRatio.x * Range * rati * math.cos(-timeStack), bigCircleRatio.y * Range * rati * math.sin(-timeStack));
+                    float x = eTime / chargeDuration;
+                    float distance = Mathf.Lerp(0, chargeDistance, TimeCurves.ExponentialMirrored(x));
+                    Vector2 newMove = new Vector2(bigCircleRatio.x * (Range + distance) * math.cos(-timeStack), bigCircleRatio.y * (Range + distance) * math.sin(-timeStack));
 
                     newMove = Quaternion.Euler(0, 0, transform.parent.rotation.eulerAngles.z) * newMove;
                     newMove += (Vector2)transform.parent.position;
@@ -224,7 +222,8 @@ public class playerMovwe : MonoBehaviour
                 {//제자리로
 
                     float x;
-                    x = Mathf.Lerp(0,1,(eeTime - waitForSpawnDuration) / returnDuration);
+                    float r = (eeTime - waitForSpawnDuration) / returnDuration;
+                    x = Mathf.Lerp(0,1,TimeCurves.ExponentialMirrored(r));
                     rati = 1 - rati + rati * x;
 
 
@@ -345,6 +344,7 @@ public class playerMovwe : MonoBehaviour
     {
         if (currentState == circleStates.boom)
         {
+            effector.OnBoom();
             spawner.cutCenter();
             isSpawned = true;
             spawner.SpawnBlocks(spawner.SpawnCount, spawner.TimeOfSpawn);
