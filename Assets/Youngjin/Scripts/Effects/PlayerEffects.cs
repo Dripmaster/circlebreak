@@ -131,7 +131,7 @@ public class PlayerEffects : MonoBehaviour
     }
     public void OnBlockBreak()
     {
-        effectsManager.StartParticle(effectsManager.blockDestroyParticle);
+        Instantiate(effectsManager.blockDestroyPrefab,transform.position, Quaternion.identity);
         cameraEffector.Shake();
     }
     public float GetDashSpeed()

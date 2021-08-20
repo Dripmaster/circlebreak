@@ -29283,6 +29283,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1230436137}
     - target: {fileID: 63981207, guid: ba1da0aa90c1c914495029aeb183583a, type: 3}
+      propertyPath: blockDestroyPrefab
+      value: 
+      objectReference: {fileID: 9133864562301683003, guid: c844014ab5240fc4887be2253492760c, type: 3}
+    - target: {fileID: 63981207, guid: ba1da0aa90c1c914495029aeb183583a, type: 3}
       propertyPath: boomCircleParticle
       value: 
       objectReference: {fileID: 272154426}

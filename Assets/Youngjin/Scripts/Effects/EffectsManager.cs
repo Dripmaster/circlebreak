@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EffectsManager : MonoBehaviour
 {
-    public ParticleSystem blockDestroyParticle;
+    public GameObject blockDestroyPrefab;
 
     public ParticleSystem preDashParticle;
     public ParticleSystem dashParticle;
