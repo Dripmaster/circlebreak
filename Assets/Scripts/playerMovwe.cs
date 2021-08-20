@@ -361,6 +361,14 @@ public class playerMovwe : MonoBehaviour
             changeState = true;
         }
     }
+    public void wallCollisionEnter(blockBase block)
+    {
+        if (currentState != circleStates.die && currentState != circleStates.boom)
+        {
+            currentState = circleStates.die;
+            changeState = true;
+        }
+    }
     public void centerCollisionEnter(blockSpawner center)
     {
         if (currentState == circleStates.boom)

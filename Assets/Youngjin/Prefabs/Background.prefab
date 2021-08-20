@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1542950656250401485}
   m_Layer: 0
   m_Name: dashCollider
-  m_TagString: Untagged
+  m_TagString: dashCollider
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -160,6 +160,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blockObject: {fileID: 2895154627238896035, guid: 0ffd60a05f2165d458d547bb8e27f462, type: 3}
+  wallObject: {fileID: 2061259672698292489, guid: 1fc25a9504a2d4e4a8b496beea730317, type: 3}
   p: {fileID: 6722249828909340031}
   fillSpeed: 0.1
   SpawnCount: 5
@@ -169,6 +170,7 @@ MonoBehaviour:
   massiveSpawnDegreeDivideCount: 27
   passiveSpawnTime: 1.5
   passiveDangerZoneDegree: 45
+  WallSpawnCount: 5
 --- !u!1 &5306423704052889984
 GameObject:
   m_ObjectHideFlags: 0
@@ -608,6 +610,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6722249828709662663, guid: 7689dda58f27f3b4996ea27ac58c32db, type: 3}
+      propertyPath: cap
+      value: 
+      objectReference: {fileID: 1542950656250401485}
     - target: {fileID: 6722249828709662663, guid: 7689dda58f27f3b4996ea27ac58c32db, type: 3}
       propertyPath: dashCoolTime
       value: 0
