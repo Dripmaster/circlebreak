@@ -22,6 +22,7 @@ public class playerMovwe : MonoBehaviour
     public float turnSpeed = 1;
     public float rangeSpeed = 1;
     public float dashCoolTime = 0.5f;
+    public float invincibleTime = 0.4f;
     float dashCoolTimeTimer = 0f;
 
     bool isSmallPower;
@@ -82,7 +83,7 @@ public class playerMovwe : MonoBehaviour
     {
         float StartTime = 0;
         isSmallPower = true;
-        float speedScale = 1;
+        float speedScale = 0;
         do
         {
             if (dashCoolTimeTimer >= 0)
@@ -92,8 +93,8 @@ public class playerMovwe : MonoBehaviour
             if (isSmallPower)
             {
                 StartTime += Time.unscaledDeltaTime;
-                speedScale = StartTime/0.4f;
-                if (StartTime>=0.4f)//대쉬끝, 꽝찍기 끝 등 하고 move 오면 잠시 무적시간
+                speedScale = Mathf.Lerp(0,1, StartTime/ invincibleTime);
+                if (StartTime>= invincibleTime)//대쉬끝, 꽝찍기 끝 등 하고 move 오면 잠시 무적시간
                 {
                     isSmallPower = false;
                     speedScale = 1;
