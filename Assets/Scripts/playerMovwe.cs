@@ -172,12 +172,31 @@ public class playerMovwe : MonoBehaviour
             yield return null;
         } while (!changeState);
     }
+
+    [Header("FeverValues")]
+    public float feverDuration = 10f;
+    public float feverSpeed = 5;
+    public void setFever()
+    {
+        changeState = true;
+        currentState = circleStates.fever;
+    }
+    public bool isFever() { return currentState == circleStates.fever; }
     IEnumerator fever()
     {
+        float startTime = 0;
         do
         {
-
+            startTime += Time.unscaledDeltaTime;
+            if (startTime >= feverDuration)
+            {
+                changeState = true;
+                currentState = circleStates.move;
+            }
+            rotationCircle(feverSpeed);
+            inputMoveTask();
             yield return null;
+            transform.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * GetCircleRotation());////////호출 위치 수정이 필요할 수 있음
         } while (!changeState);
         isSmallPower = true;
     }
@@ -332,7 +351,7 @@ public class playerMovwe : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (dashCoolTimeTimer <= 0)
+            if (currentState!=circleStates.fever&&dashCoolTimeTimer <= 0)
             {
                 changeState = true;
                 currentState = circleStates.dash;
