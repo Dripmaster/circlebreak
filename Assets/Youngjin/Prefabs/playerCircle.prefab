@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &272154424
 Transform:
   m_ObjectHideFlags: 0
@@ -24400,8 +24400,10 @@ MonoBehaviour:
   effector: {fileID: 6722249827950139408}
   rangeMax: 4.5
   rangeMin: 3
-  turnSpeed: 1.8
-  rangeSpeed: 4
+  turnSpeed: 1.4
+  rangeSpeed: 3
+  dashCoolTime: 0.2
+  invincibleTime: 0
   chargeDuration: 0.5
   chargeDistance: 0.6
   boomToCenterDuration: 0.1
