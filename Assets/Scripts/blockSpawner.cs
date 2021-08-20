@@ -12,6 +12,14 @@ public class blockSpawner : MonoBehaviour
 
     float scaleFactor;
     Vector2 normalScale;
+
+
+
+
+    [Header("SpawnValues")]
+    public int SpawnCount = 10;
+    public float TimeOfSpawn = 0.5f;
+
     void Awake()
     {
         
@@ -30,9 +38,7 @@ public class blockSpawner : MonoBehaviour
         transform.localScale = normalScale * scaleFactor;
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            SpawnBlocks();
-            cutCenter();
-            p.setBoom();
+            p.setBoom(TimeOfSpawn,this);
         }
     }
     public void cutCenter(float scaleF = 0.5f)
@@ -59,7 +65,6 @@ public class blockSpawner : MonoBehaviour
         if (collision.tag == "Player")
         {
             p.centerCollisionEnter(this);
-            Debug.Log("aa");
         }
     }
 
