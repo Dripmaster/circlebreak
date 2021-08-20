@@ -11,14 +11,16 @@ public class blockSpawner : MonoBehaviour
     public float fillSpeed = 1;
 
     float scaleFactor;
+    float toScaleFactor;
     Vector2 normalScale;
-
+    float eTime =  10000;
 
 
 
     [Header("SpawnValues")]
     public int SpawnCount = 10;
     public float TimeOfSpawn = 0.5f;
+    public float ShrinkDuration = 0.5f;
 
     void Awake()
     {
@@ -33,17 +35,33 @@ public class blockSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {//이렇게 해도 되고 FSM으로 idle일땐 차오르고 꽝찍어서 쪼그라드는 STATE도 있고 그렇게 해도 되고 그건 나중에..
-        scaleFactor += Time.deltaTime* fillSpeed;
 
-        transform.localScale = normalScale * scaleFactor;
-        if (Input.GetKeyDown(KeyCode.Q))
+            if (eTime <= ShrinkDuration)
+            {
+                eTime += Time.unscaledDeltaTime;
+                float x;
+                x = Mathf.Lerp(scaleFactor, toScaleFactor, eTime / ShrinkDuration);
+                transform.localScale = normalScale * x;
+                if (eTime >= ShrinkDuration)
+                {
+                    scaleFactor = x;
+                }
+            }
+            else if(!p.isBoom())
+            {
+                scaleFactor += Time.deltaTime * fillSpeed;
+                transform.localScale = normalScale * scaleFactor;
+            }
+        if (!p.isDie()&&!p.isBoom()&&Input.GetKeyDown(KeyCode.Q))
         {
-            p.setBoom(TimeOfSpawn,this);
+            p.setBoom(this);
         }
+        
     }
     public void cutCenter(float scaleF = 0.5f)
     {
-        scaleFactor = scaleF;
+        toScaleFactor = scaleF;
+        eTime = 0;
     }
     public void SpawnBlocks(int count = 10,float timeOfSpawn = 0.5f)
     {

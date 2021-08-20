@@ -86,8 +86,8 @@ public class playerMovwe : MonoBehaviour
             if (isSmallPower)
             {
                 StartTime += Time.unscaledDeltaTime;
-                speedScale = StartTime/0.2f;
-                if (StartTime>=0.2f)//대쉬끝, 꽝찍기 끝 등 하고 move 오면 잠시 무적시간
+                speedScale = StartTime/0.4f;
+                if (StartTime>=0.4f)//대쉬끝, 꽝찍기 끝 등 하고 move 오면 잠시 무적시간
                 {
                     isSmallPower = false;
                     speedScale = 1;
@@ -104,6 +104,8 @@ public class playerMovwe : MonoBehaviour
         effector.StartDash();
         float startTime = 0;
         float dashSpeed;
+
+        isSmallPower = true;
         do
         {
             dashSpeed = effector.GetDashSpeed();
@@ -155,7 +157,7 @@ public class playerMovwe : MonoBehaviour
     public float chargeDuration = 0.2f;
     public float boomToCenterDuration = 0.1f;
     public float returnDuration = 0.2f;
-    float waitForSpawnDuration;
+    public float waitForSpawnDuration = 0.5f;
     blockSpawner spawner;
     bool isSpawned = false;
 
@@ -174,8 +176,11 @@ public class playerMovwe : MonoBehaviour
                 if (eTime <= chargeDuration)
                 {//공중 날기
                     float rati = eTime / chargeDuration;
-                    rati = 1 + rati*0.1f;
 
+                    float x;
+                    x = Mathf.Lerp(0, 0.1f, rati);
+
+                    rati = 1 + x;
                     Vector2 newMove = new Vector2(bigCircleRatio.x * Range * rati * math.cos(-timeStack), bigCircleRatio.y * Range * rati * math.sin(-timeStack));
 
                     newMove = Quaternion.Euler(0, 0, transform.parent.rotation.eulerAngles.z) * newMove;
@@ -186,7 +191,12 @@ public class playerMovwe : MonoBehaviour
                 else if (eTime <= boomToCenterDuration + chargeDuration)
                 {//용암에 쾅
                     float rati = (eTime-chargeDuration) / (boomToCenterDuration);
-                    rati = 1 - rati;
+                    
+
+                    float x;
+                    x = Mathf.Lerp(0, 1f, rati);
+
+                    rati = 1 - x;
 
                     Vector2 newMove = new Vector2(bigCircleRatio.x * Range * rati * math.cos(-timeStack), bigCircleRatio.y * Range * rati * math.sin(-timeStack));
 
@@ -197,7 +207,6 @@ public class playerMovwe : MonoBehaviour
             }
             if (isSpawned)
             {
-                
                 float rati = (eTime - chargeDuration) / (boomToCenterDuration);
                 eeTime += Time.unscaledDeltaTime;
                 if (eeTime <= waitForSpawnDuration)
@@ -207,7 +216,11 @@ public class playerMovwe : MonoBehaviour
                 else if (eeTime <= waitForSpawnDuration + returnDuration)
                 {//제자리로
 
-                    rati = 1-rati +  rati * (eeTime-waitForSpawnDuration) / returnDuration;
+                    float x;
+                    x = Mathf.Lerp(0,1,(eeTime - waitForSpawnDuration) / returnDuration);
+                    rati = 1 - rati + rati * x;
+
+
                     Vector2 newMove = new Vector2(bigCircleRatio.x * Range * rati * math.cos(-timeStack), bigCircleRatio.y * Range * rati * math.sin(-timeStack));
 
                     newMove = Quaternion.Euler(0, 0, transform.parent.rotation.eulerAngles.z) * newMove;
@@ -225,12 +238,21 @@ public class playerMovwe : MonoBehaviour
         } while (!changeState);
         isSmallPower = true;
     }
-    public void setBoom(float timeOfSpawn, blockSpawner spawner)
+    public void setBoom(blockSpawner spawner)
     {
         currentState = circleStates.boom;
         changeState = true;
-        waitForSpawnDuration = timeOfSpawn;
         this.spawner = spawner;
+
+    }
+    public bool isBoom()
+    {
+        return currentState == circleStates.boom;
+
+    }
+    public bool isDie()
+    {
+        return currentState == circleStates.die;
 
     }
     IEnumerator idle()
@@ -296,11 +318,11 @@ public class playerMovwe : MonoBehaviour
     }
     public bool isDashOrFever()
     {
-        return currentState == circleStates.dash || currentState == circleStates.fever || isSmallPower;
+        return currentState == circleStates.dash || currentState == circleStates.fever;
     }
     public void blockCollisionEnter(blockBase block)
     {
-        if (currentState != circleStates.die && currentState != circleStates.boom)
+        if (currentState != circleStates.die && currentState != circleStates.boom && !isSmallPower)
         {
             currentState = circleStates.die;
             changeState = true;
@@ -316,8 +338,7 @@ public class playerMovwe : MonoBehaviour
         }
         else
         {
-
-            if (currentState != circleStates.die)
+            if (currentState != circleStates.die && !isSmallPower)
             {
                 currentState = circleStates.die;
                 changeState = true;
