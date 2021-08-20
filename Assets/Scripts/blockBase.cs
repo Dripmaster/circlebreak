@@ -59,7 +59,10 @@ public class blockBase : MonoBehaviour
         if(!isSpawning&&collision.tag == "Player")
         {
             if(_playerMove.isDashOrFever())
-            gameObject.SetActive(false);
+            {
+                _playerMove.effector.OnBlockBreak();
+                gameObject.SetActive(false);
+            }
             else
             {
                 _playerMove.blockCollisionEnter(this);

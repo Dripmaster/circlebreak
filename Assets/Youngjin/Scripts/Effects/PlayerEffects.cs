@@ -44,6 +44,7 @@ public class PlayerEffects : MonoBehaviour
         //slow motion + camera zoom in (exp)
         currentDashSpeed = 0f;
         cameraEffector.SetFollow(transform.position / 2);
+        effectsManager.StartParticle(effectsManager.preDashParticle);
         StartCoroutine(ZoomCamera(preDashZoomMagnitude, preDashDuration, CurveType.Exponential));
         float eTime = 0f;
         while (eTime < preDashDuration)
@@ -86,7 +87,7 @@ public class PlayerEffects : MonoBehaviour
             eTime += Time.unscaledDeltaTime;
         }
         eTime = 0f;
-        //Time.timeScale = 0.5f;
+        Time.timeScale = 0.8f;
         while(eTime < boomWaitInAirDuration)
         {
             yield return null;
@@ -96,7 +97,16 @@ public class PlayerEffects : MonoBehaviour
         cameraEffector.SetFollow(new Vector3(0, 0, 0));
         StartCoroutine(ZoomCamera(0, 0.1f, CurveType.Linear));
     }
-    
+    public void OnBoom()
+    {
+        StartCoroutine(OnBoomCoroutine());
+    }
+    IEnumerator OnBoomCoroutine()
+    {
+        effectsManager.StartParticle(effectsManager.boomCircleParticle);
+        cameraEffector.Shake(0.7f, 0.5f);
+        yield return null;
+    }
 
     IEnumerator ZoomCamera(float zoomTarget, float duration, CurveType curveType)
     {
@@ -119,7 +129,11 @@ public class PlayerEffects : MonoBehaviour
         }
         cameraEffector.SetZoom(zoomTarget);
     }
-
+    public void OnBlockBreak()
+    {
+        effectsManager.StartParticle(effectsManager.blockDestroyParticle);
+        cameraEffector.Shake();
+    }
     public float GetDashSpeed()
     {
         return currentDashSpeed;
