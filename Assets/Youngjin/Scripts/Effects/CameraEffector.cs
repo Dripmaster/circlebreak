@@ -16,7 +16,7 @@ public class CameraEffector : MonoBehaviour
     {
         cameraComponent = GetComponent<Camera>();
         originalSize = cameraComponent.orthographicSize;
-        originalPos = transform.position;
+        originalPos = transform.parent.position;
     }
     public void SetZoom(float magnitude)
     {
@@ -30,7 +30,11 @@ public class CameraEffector : MonoBehaviour
     private void Update()
     {
         {
-            transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * followSpeed);
+            transform.parent.position = Vector3.Lerp(transform.parent.position, targetPos, Time.deltaTime * followSpeed);
         }
+    }
+    public void Shake(float magnitude = 0.75f, float duration = 0.35f)
+    {
+        StartCoroutine(VectorUtils.Shake(transform, magnitude, duration));
     }
 }

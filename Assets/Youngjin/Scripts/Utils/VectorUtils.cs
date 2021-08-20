@@ -51,4 +51,21 @@ class VectorUtils
     {
         return vector.x * vector.x + vector.y * vector.y + vector.z * vector.z;
     }
+    public static IEnumerator Shake(Transform t, float magnitude = 10f, float duration = 0.4f)
+    {
+        float eTime = 0f;
+        float frameTime = 0f;
+        float m = magnitude;
+        Vector3 originalPos = new Vector3(0,0,0);
+        while (eTime < duration)
+        {
+            eTime += Time.deltaTime;
+            frameTime += Time.deltaTime;
+            t.localPosition = new Vector3(Random.Range(-1f, 1f) * m, Random.Range(-1f, 1f) * m, t.localPosition.z);
+
+            m = magnitude * (1 - eTime / duration) * Time.timeScale;
+            yield return null;
+        }
+        t.localPosition = originalPos;
+    }
 }
