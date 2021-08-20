@@ -21,6 +21,8 @@ public class playerMovwe : MonoBehaviour
     public float rangeMin =2;
     public float turnSpeed = 1;
     public float rangeSpeed = 1;
+    public float dashCoolTime = 0.5f;
+    float dashCoolTimeTimer = 0f;
 
     bool isSmallPower;
     Vector2 normalCircleScale;
@@ -83,6 +85,10 @@ public class playerMovwe : MonoBehaviour
         float speedScale = 1;
         do
         {
+            if (dashCoolTimeTimer >= 0)
+            {
+                dashCoolTimeTimer -= Time.unscaledDeltaTime;
+            }
             if (isSmallPower)
             {
                 StartTime += Time.unscaledDeltaTime;
@@ -106,6 +112,7 @@ public class playerMovwe : MonoBehaviour
         float dashSpeed;
 
         isSmallPower = true;
+        dashCoolTimeTimer = dashCoolTime;
         do
         {
             dashSpeed = effector.GetDashSpeed();
@@ -288,7 +295,10 @@ public class playerMovwe : MonoBehaviour
         bigCircleRatio = Vector2.one;
         isSmallPower = true;
     }
-
+    public float getTheta()
+    {
+        return timeStack;
+    }
     void inputMoveTask()
     {
         if (Input.GetKey(KeyCode.UpArrow))
@@ -302,8 +312,11 @@ public class playerMovwe : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            changeState = true;
-            currentState = circleStates.dash;
+            if (dashCoolTimeTimer <= 0)
+            {
+                changeState = true;
+                currentState = circleStates.dash;
+            }
         }
         
     }
@@ -334,11 +347,11 @@ public class playerMovwe : MonoBehaviour
         {
             spawner.cutCenter();
             isSpawned = true;
-            spawner.SpawnBlocks(spawner.SpawnCount, waitForSpawnDuration);
+            spawner.SpawnBlocks(spawner.SpawnCount, spawner.TimeOfSpawn);
         }
         else
         {
-            if (currentState != circleStates.die && !isSmallPower)
+            if (currentState != circleStates.die)
             {
                 currentState = circleStates.die;
                 changeState = true;

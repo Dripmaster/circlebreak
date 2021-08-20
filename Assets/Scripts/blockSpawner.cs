@@ -21,6 +21,7 @@ public class blockSpawner : MonoBehaviour
     public int SpawnCount = 10;
     public float TimeOfSpawn = 0.5f;
     public float ShrinkDuration = 0.5f;
+    public float passiveSpawnTime = 1;
 
     void Awake()
     {
@@ -30,6 +31,22 @@ public class blockSpawner : MonoBehaviour
     {
         scaleFactor = 1;
         normalScale = transform.localScale;
+        StartCoroutine(spawn());
+    }
+
+    IEnumerator spawn()
+    {
+        float eTime = 0;
+        do
+        {
+            eTime += Time.unscaledDeltaTime;
+            if (eTime >= passiveSpawnTime)
+            {
+                eTime = 0;
+                SpawnBlock();
+            }
+            yield return null;
+        } while (true);
     }
 
     // Update is called once per frame
@@ -72,10 +89,24 @@ public class blockSpawner : MonoBehaviour
             var g = Instantiate(blockObject);
             g.transform.parent = transform.parent;
             g.transform.localPosition = Vector2.zero;
-            float theta = Random.Range(0,Mathf.PI*2);
+            float theta = Random.Range(0,Mathf.PI*1.5f);
+            theta = p.getTheta() - theta;
             float Range = Random.Range(RangeMin, RangeMax);
             g.GetComponent<blockBase>().setDest(theta,Range,timeOfSpawn,p);
         }
+    }
+    public void SpawnBlock()
+    {
+        float RangeMin = p.rangeMin;
+        float RangeMax = p.rangeMax;
+
+            var g = Instantiate(blockObject);
+            g.transform.parent = transform.parent;
+            g.transform.localPosition = Vector2.zero;
+            float theta = Random.Range(0, Mathf.PI /2);
+        theta = p.getTheta()+Mathf.PI +theta-Mathf.PI/4;
+            float Range = Random.Range(RangeMin, RangeMax);
+            g.GetComponent<blockBase>().setDest(theta, Range, TimeOfSpawn, p);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
