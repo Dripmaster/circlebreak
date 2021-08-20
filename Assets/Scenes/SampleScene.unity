@@ -143,6 +143,8 @@ MonoBehaviour:
   blockObject: {fileID: 2895154627238896035, guid: 0ffd60a05f2165d458d547bb8e27f462, type: 3}
   p: {fileID: 1885887277}
   fillSpeed: 0.1
+  SpawnCount: 10
+  TimeOfSpawn: 0.5
 --- !u!58 &165650756
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -500,6 +502,18 @@ PrefabInstance:
     - target: {fileID: 6722249828709662662, guid: 7689dda58f27f3b4996ea27ac58c32db, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6722249828709662663, guid: 7689dda58f27f3b4996ea27ac58c32db, type: 3}
+      propertyPath: chargeDuration
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6722249828709662663, guid: 7689dda58f27f3b4996ea27ac58c32db, type: 3}
+      propertyPath: returnDuration
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6722249828709662663, guid: 7689dda58f27f3b4996ea27ac58c32db, type: 3}
+      propertyPath: boomToCenterDuration
+      value: 0.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7689dda58f27f3b4996ea27ac58c32db, type: 3}

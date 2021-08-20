@@ -80,17 +80,20 @@ public class playerMovwe : MonoBehaviour
     {
         float StartTime = 0;
         isSmallPower = true;
+        float speedScale = 1;
         do
         {
             if (isSmallPower)
             {
                 StartTime += Time.unscaledDeltaTime;
-                if(StartTime>=0.2f)//대쉬끝, 꽝찍기 끝 등 하고 move 오면 잠시 무적시간
+                speedScale = StartTime/0.2f;
+                if (StartTime>=0.2f)//대쉬끝, 꽝찍기 끝 등 하고 move 오면 잠시 무적시간
                 {
                     isSmallPower = false;
+                    speedScale = 1;
                 }
             }
-            rotationCircle(turnSpeed);
+            rotationCircle(turnSpeed*speedScale);
             inputMoveTask();
             yield return null;
             transform.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * GetCircleRotation());////////호출 위치 수정이 필요할 수 있음
@@ -147,26 +150,87 @@ public class playerMovwe : MonoBehaviour
         } while (!changeState);
         isSmallPower = true;
     }
+
+    [Header("BoomValues")]
+    public float chargeDuration = 0.2f;
+    public float boomToCenterDuration = 0.1f;
+    public float returnDuration = 0.2f;
+    float waitForSpawnDuration;
+    blockSpawner spawner;
+    bool isSpawned = false;
+
     IEnumerator boom()
     {
         float eTime = 0;
+        float eeTime = 0;
+        isSpawned = false;
         //영진::startBoom();//꽝찍는거시작함
         do
         {
-            eTime += Time.unscaledDeltaTime;
-            if (eTime >= 0.5f)//영진::boomDuration이용
+            if (!isSpawned)
             {
-                changeState = true;
-                currentState = circleStates.move;
+                eTime += Time.unscaledDeltaTime;
+                if (eTime <= chargeDuration)
+                {//공중 날기
+                    float rati = eTime / chargeDuration;
+                    rati = 1 + rati*0.1f;
+
+                    Vector2 newMove = new Vector2(bigCircleRatio.x * Range * rati * math.cos(-timeStack), bigCircleRatio.y * Range * rati * math.sin(-timeStack));
+
+                    newMove = Quaternion.Euler(0, 0, transform.parent.rotation.eulerAngles.z) * newMove;
+                    newMove += (Vector2)transform.parent.position;
+                    rigidbody.MovePosition(newMove);
+
+                }
+                else if (eTime <= boomToCenterDuration + chargeDuration)
+                {//용암에 쾅
+                    float rati = (eTime-chargeDuration) / (boomToCenterDuration);
+                    rati = 1 - rati;
+
+                    Vector2 newMove = new Vector2(bigCircleRatio.x * Range * rati * math.cos(-timeStack), bigCircleRatio.y * Range * rati * math.sin(-timeStack));
+
+                    newMove = Quaternion.Euler(0, 0, transform.parent.rotation.eulerAngles.z) * newMove;
+                    newMove += (Vector2)transform.parent.position;
+                    rigidbody.MovePosition(newMove);
+                }
             }
+            if (isSpawned)
+            {
+                
+                float rati = (eTime - chargeDuration) / (boomToCenterDuration);
+                eeTime += Time.unscaledDeltaTime;
+                if (eeTime <= waitForSpawnDuration)
+                {//쾅찍고 대기
+
+                }
+                else if (eeTime <= waitForSpawnDuration + returnDuration)
+                {//제자리로
+
+                    rati = 1-rati +  rati * (eeTime-waitForSpawnDuration) / returnDuration;
+                    Vector2 newMove = new Vector2(bigCircleRatio.x * Range * rati * math.cos(-timeStack), bigCircleRatio.y * Range * rati * math.sin(-timeStack));
+
+                    newMove = Quaternion.Euler(0, 0, transform.parent.rotation.eulerAngles.z) * newMove;
+                    newMove += (Vector2)transform.parent.position;
+                    rigidbody.MovePosition(newMove);
+                }
+                else
+                {
+                    changeState = true;
+                    currentState = circleStates.move;
+                }
+            }
+            
             yield return null;
         } while (!changeState);
         isSmallPower = true;
     }
-    public void setBoom()
+    public void setBoom(float timeOfSpawn, blockSpawner spawner)
     {
         currentState = circleStates.boom;
         changeState = true;
+        waitForSpawnDuration = timeOfSpawn;
+        this.spawner = spawner;
+
     }
     IEnumerator idle()
     {
@@ -235,7 +299,7 @@ public class playerMovwe : MonoBehaviour
     }
     public void blockCollisionEnter(blockBase block)
     {
-        if (currentState != circleStates.die)
+        if (currentState != circleStates.die && currentState != circleStates.boom)
         {
             currentState = circleStates.die;
             changeState = true;
@@ -243,10 +307,20 @@ public class playerMovwe : MonoBehaviour
     }
     public void centerCollisionEnter(blockSpawner center)
     {
-        if (currentState != circleStates.die)
+        if (currentState == circleStates.boom)
         {
-            currentState = circleStates.die;
-            changeState = true;
+            spawner.cutCenter();
+            isSpawned = true;
+            spawner.SpawnBlocks(spawner.SpawnCount, waitForSpawnDuration);
+        }
+        else
+        {
+
+            if (currentState != circleStates.die)
+            {
+                currentState = circleStates.die;
+                changeState = true;
+            }
         }
     }
 }
