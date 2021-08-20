@@ -6,10 +6,15 @@ public class yoloScript : MonoBehaviour
 {
 
     bool isTriggerStart;
+    bool isUsed;
     public playerMovwe player;
     // Start is called before the first frame update
     void Awake()
     {
+    }
+    private void OnEnable()
+    {
+        isUsed = false;
     }
 
     // Update is called once per frame
@@ -19,7 +24,7 @@ public class yoloScript : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (player.isDashOrFever()&& collision.tag == "Player")
+        if (!isUsed&& player.isDashOrFever()&& collision.tag == "Player")
         {
             isTriggerStart = true;
         }
@@ -34,6 +39,8 @@ public class yoloScript : MonoBehaviour
                 if (isTriggerStart)
                 {
                     player.setFever();
+                    isUsed = true;
+                    gameObject.SetActive(false);
                 }
             }
 
