@@ -145,6 +145,7 @@ MonoBehaviour:
   fillSpeed: 0.1
   SpawnCount: 10
   TimeOfSpawn: 0.5
+  ShrinkDuration: 0.5
 --- !u!58 &165650756
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -482,6 +483,10 @@ PrefabInstance:
       propertyPath: dashParticle
       value: 
       objectReference: {fileID: 1530697295}
+    - target: {fileID: 6722249827950139408, guid: 7689dda58f27f3b4996ea27ac58c32db, type: 3}
+      propertyPath: playerScript
+      value: 
+      objectReference: {fileID: 1885887277}
     - target: {fileID: 6722249827950139408, guid: 7689dda58f27f3b4996ea27ac58c32db, type: 3}
       propertyPath: cameraEffector
       value: 
