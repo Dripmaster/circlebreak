@@ -12,6 +12,7 @@ public class PlayerEffects : MonoBehaviour
     [Header("References")]
     [SerializeField] CameraEffector cameraEffector;
     [SerializeField] EffectsManager effectsManager;
+    [SerializeField] playerMovwe playerScript;
 
     [Header("Design Settings")]
     [SerializeField] Color mainColor;
@@ -23,6 +24,10 @@ public class PlayerEffects : MonoBehaviour
     [SerializeField] float preDashZoomMagnitude;
     [SerializeField] float realDashDuration;
     [SerializeField] float dashSlowDownDuration;
+
+    [Header("Boom values")]
+    [SerializeField] float boomZoom;
+    [SerializeField] float boomWaitInAirDuration;
 
     float currentDashSpeed;
 
@@ -66,6 +71,32 @@ public class PlayerEffects : MonoBehaviour
         //end
         currentDashSpeed = 1;
     }
+    public void StartBoom()
+    {
+        StartCoroutine(BoomCoroutine());
+    }
+    IEnumerator BoomCoroutine()
+    {
+        float eTime = 0f;
+        cameraEffector.SetFollow(transform.position / 2);
+        StartCoroutine(ZoomCamera(boomZoom, playerScript.chargeDuration, CurveType.Exponential));
+        while (eTime < playerScript.chargeDuration - boomWaitInAirDuration)
+        {
+            yield return null;
+            eTime += Time.unscaledDeltaTime;
+        }
+        eTime = 0f;
+        //Time.timeScale = 0.5f;
+        while(eTime < boomWaitInAirDuration)
+        {
+            yield return null;
+            eTime += Time.unscaledDeltaTime;
+        }
+        Time.timeScale = 1f;
+        cameraEffector.SetFollow(new Vector3(0, 0, 0));
+        StartCoroutine(ZoomCamera(0, 0.1f, CurveType.Linear));
+    }
+    
 
     IEnumerator ZoomCamera(float zoomTarget, float duration, CurveType curveType)
     {

@@ -165,6 +165,7 @@ public class playerMovwe : MonoBehaviour
         float eeTime = 0;
         isSpawned = false;
         //영진::startBoom();//꽝찍는거시작함
+        effector.StartBoom();
         do
         {
             if (!isSpawned)

@@ -88,6 +88,9 @@ MonoBehaviour:
   rangeMin: 3
   turnSpeed: 1.8
   rangeSpeed: 4
+  chargeDuration: 0.2
+  boomToCenterDuration: 0.1
+  returnDuration: 0.2
 --- !u!1001 &1667886813632484565
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -153,7 +156,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5363713085479927914, guid: ba1da0aa90c1c914495029aeb183583a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5363713086786747244, guid: ba1da0aa90c1c914495029aeb183583a, type: 3}
       propertyPath: ColorModule.gradient.maxGradient.atime0
@@ -202,7 +205,7 @@ PrefabInstance:
     - target: {fileID: 5363713086844390597, guid: ba1da0aa90c1c914495029aeb183583a, type: 3}
       propertyPath: effectsManager
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1667886813694333506}
     - target: {fileID: 5363713086844390598, guid: ba1da0aa90c1c914495029aeb183583a, type: 3}
       propertyPath: m_SortingLayer
       value: 2
@@ -291,5 +294,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1d12cae19f6c5434ab78ed0b6556c737, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1667886813694333506 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 63981207, guid: ba1da0aa90c1c914495029aeb183583a, type: 3}
+  m_PrefabInstance: {fileID: 1667886813632484565}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1dacb5e2913b63438420b56e3ceee98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
