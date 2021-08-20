@@ -102,8 +102,6 @@ public class blockSpawner : MonoBehaviour
             float theta;
             do
             {
-                
-
                 if (thetas[thetasNum])
                 {
                     thetasNum -= 1;
