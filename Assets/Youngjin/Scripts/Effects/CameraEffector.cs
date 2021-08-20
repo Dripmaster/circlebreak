@@ -33,7 +33,7 @@ public class CameraEffector : MonoBehaviour
             transform.parent.position = Vector3.Lerp(transform.parent.position, targetPos, Time.deltaTime * followSpeed);
         }
     }
-    public void Shake(float magnitude = 0.75f, float duration = 0.35f)
+    public void Shake(float magnitude = 0.5f, float duration = 0.35f)
     {
         StartCoroutine(VectorUtils.Shake(transform, magnitude, duration));
     }

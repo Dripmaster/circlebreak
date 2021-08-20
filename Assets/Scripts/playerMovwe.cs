@@ -13,7 +13,7 @@ public class playerMovwe : MonoBehaviour
     /// </summary>
 
     [Header("References")]
-    [SerializeField] PlayerEffects effector;
+    public  PlayerEffects effector;
     new Rigidbody2D rigidbody;
 
     [Header("Values")]
@@ -163,6 +163,7 @@ public class playerMovwe : MonoBehaviour
 
     [Header("BoomValues")]
     public float chargeDuration = 0.2f;
+    public float chargeDistance = 0.3f;
     public float boomToCenterDuration = 0.1f;
     public float returnDuration = 0.2f;
     public float waitForSpawnDuration = 0.5f;
@@ -183,13 +184,9 @@ public class playerMovwe : MonoBehaviour
                 eTime += Time.unscaledDeltaTime;
                 if (eTime <= chargeDuration)
                 {//공중 날기
-                    float rati = eTime / chargeDuration;
-
-                    float x;
-                    x = Mathf.Lerp(0, 0.1f, rati);
-
-                    rati = 1 + x;
-                    Vector2 newMove = new Vector2(bigCircleRatio.x * Range * rati * math.cos(-timeStack), bigCircleRatio.y * Range * rati * math.sin(-timeStack));
+                    float x = eTime / chargeDuration;
+                    float distance = Mathf.Lerp(0, chargeDistance, TimeCurves.ExponentialMirrored(x));
+                    Vector2 newMove = new Vector2(bigCircleRatio.x * (Range + distance) * math.cos(-timeStack), bigCircleRatio.y * (Range + distance) * math.sin(-timeStack));
 
                     newMove = Quaternion.Euler(0, 0, transform.parent.rotation.eulerAngles.z) * newMove;
                     newMove += (Vector2)transform.parent.position;
@@ -225,7 +222,8 @@ public class playerMovwe : MonoBehaviour
                 {//제자리로
 
                     float x;
-                    x = Mathf.Lerp(0,1,(eeTime - waitForSpawnDuration) / returnDuration);
+                    float r = (eeTime - waitForSpawnDuration) / returnDuration;
+                    x = Mathf.Lerp(0,1,TimeCurves.ExponentialMirrored(r));
                     rati = 1 - rati + rati * x;
 
 
@@ -346,6 +344,7 @@ public class playerMovwe : MonoBehaviour
     {
         if (currentState == circleStates.boom)
         {
+            effector.OnBoom();
             spawner.cutCenter();
             isSpawned = true;
             spawner.SpawnBlocks(spawner.SpawnCount, spawner.TimeOfSpawn);
