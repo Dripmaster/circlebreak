@@ -6,6 +6,7 @@ public class blockSpawner : MonoBehaviour
 {
     // Start is called before the first frame update
     public GameObject blockObject;
+    public GameObject wallObject;
     public playerMovwe p;
 
     public float fillSpeed = 1;
@@ -25,8 +26,9 @@ public class blockSpawner : MonoBehaviour
     public int massiveSpawnDegreeDivideCount = 27;
     [Header("PassiveSpawnValues")]
     public float passiveSpawnTime = 1;
-    public float passiveSafetyZoneDegree= 45f;
-
+    public float passiveDangerZoneDegree= 45f;
+    public int WallSpawnCount = 5;
+    int wallspawnCounts = 0;
     void Awake()
     {
         
@@ -36,6 +38,7 @@ public class blockSpawner : MonoBehaviour
         scaleFactor = 1;
         normalScale = transform.localScale;
         StartCoroutine(spawn());
+        wallspawnCounts = 0;
     }
 
     IEnumerator spawn()
@@ -102,8 +105,6 @@ public class blockSpawner : MonoBehaviour
             float theta;
             do
             {
-                
-
                 if (thetas[thetasNum])
                 {
                     thetasNum -= 1;
@@ -131,12 +132,21 @@ public class blockSpawner : MonoBehaviour
     {
         float RangeMin = p.rangeMin;
         float RangeMax = p.rangeMax;
-
-            var g = Instantiate(blockObject);
+        wallspawnCounts++;
+        GameObject g;
+        if (wallspawnCounts >= WallSpawnCount)
+        {
+            wallspawnCounts = 0;
+            g = Instantiate(wallObject);
+        }
+        else
+        {
+            g = Instantiate(blockObject);
+        }
             g.transform.parent = transform.parent;
             g.transform.localPosition = Vector2.zero;
-            float theta = Random.Range(0, Mathf.PI /2);
-        theta = p.getTheta()+Mathf.PI +theta-passiveSafetyZoneDegree*Mathf.Deg2Rad;
+            float theta = Random.Range(0, passiveDangerZoneDegree * Mathf.Deg2Rad);
+        theta = p.getTheta()+Mathf.PI +theta- passiveDangerZoneDegree * Mathf.Deg2Rad/2;
             float Range = Random.Range(RangeMin, RangeMax);
             g.GetComponent<blockBase>().setDest(theta, Range, TimeOfSpawn, p);
     }

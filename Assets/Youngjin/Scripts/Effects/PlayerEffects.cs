@@ -54,6 +54,7 @@ public class PlayerEffects : MonoBehaviour
             Time.timeScale = Mathf.Lerp(1, 0.4f, 1 - Mathf.Pow((x - 1), 2));
             eTime += Time.unscaledDeltaTime;
         }
+        playerScript.setDashCollider(true);
         effectsManager.StartParticle(effectsManager.dashParticle);
         effectsManager.StartParticle(effectsManager.dashBurstParticlePrimary);
 
@@ -131,7 +132,7 @@ public class PlayerEffects : MonoBehaviour
     }
     public void OnBlockBreak()
     {
-        effectsManager.StartParticle(effectsManager.blockDestroyParticle);
+        Instantiate(effectsManager.blockDestroyPrefab,transform.position, Quaternion.identity);
         cameraEffector.Shake();
     }
     public float GetDashSpeed()

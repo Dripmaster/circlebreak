@@ -2,17 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class blockBase : MonoBehaviour
+public class wallBase : blockBase
 {
-    public playerMovwe _playerMove;
-    protected Vector2 dest;
-    protected float timeOfSpawn;
-    protected float eTime;
-    protected bool isSpawning;
+    public int countOfDestroy = 2;
+    public float destroyDuration = 0.3f;
+    bool isBreak;
     // Start is called before the first frame update
     void Awake()
     {
-        
     }
 
     // Update is called once per frame
@@ -34,41 +31,37 @@ public class blockBase : MonoBehaviour
             newDest += (Vector2)transform.parent.position;
             transform.position = Vector2.Lerp(transform.parent.position, newDest, eTime / timeOfSpawn);
         }
+        if (isBreak)
+        {
+            eTime += Time.deltaTime;
+            if (eTime >= destroyDuration)
+            {
+                gameObject.SetActive(false);
+            }
+        }
     }
     private void OnEnable()
     {
         isSpawning = false;
+        isBreak = false;
         eTime = 0;
-    }
-    public void setDest(float theta, float Range,float _timeOfSpawn,playerMovwe p)
-    {
-        _playerMove = p;
-        isSpawning = true;
-
-        dest = Vector2.zero;
-
-        dest.x = Range*Mathf.Cos(-theta);
-        dest.y = Range*Mathf.Sin(-theta);
-
-        transform.localRotation = Quaternion.Euler(0, 0,Mathf.Rad2Deg*-theta);
-
-        timeOfSpawn = _timeOfSpawn;
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(!isSpawning&&collision.tag == "Player")
+        if(!isBreak && !isSpawning&&collision.tag == "Player")
         {
-            if(!_playerMove.isDashOrFever())
-            {
-                _playerMove.blockCollisionEnter(this);
-            }
+             _playerMove.wallCollisionEnter(this);
         }
-        if (!isSpawning && collision.tag == "dashCollider")
+    }
+    public void OnLineEnter(Collider2D collision)
+    {
+        if (!_playerMove.isDie()&& !isBreak && !isSpawning && collision.tag == "Player")
         {
-            if (_playerMove.isDashOrFever())
+            countOfDestroy -= 1;
+            if (countOfDestroy <= 0)
             {
-                _playerMove.effector.OnBlockBreak();
-                gameObject.SetActive(false);
+                isBreak = true;
+                eTime = 0;
             }
         }
     }
