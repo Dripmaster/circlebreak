@@ -7,12 +7,13 @@ public class MapManager : MonoBehaviour
 
     [Header("References")]
     public playerMovwe player;
+    public blockSpawner centerSpawner;
     protected List<ActionClass> Actions;
     void Awake()
     {
         
     }
-    private void OnEnable()
+    protected void OnEnable()
     {
         Actions = new List<ActionClass>();
         StartCoroutine(mainRoutine());
