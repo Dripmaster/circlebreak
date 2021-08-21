@@ -5,6 +5,7 @@ using UnityEngine;
 public class blockBase : MonoBehaviour
 {
     [SerializeField] protected BlockEffects effector;
+    [SerializeField] public SpriteRenderer spriteRenderer;
     public playerMovwe _playerMove;
     protected Vector2 dest;
     protected float timeOfSpawn;
@@ -16,7 +17,6 @@ public class blockBase : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        
     }
 
     // Update is called once per frame

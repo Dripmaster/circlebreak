@@ -73,6 +73,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effector: {fileID: 987058590612432958}
+  spriteRenderer: {fileID: 1057866559830506367}
   _playerMove: {fileID: 0}
   countOfDestroy: 2
   destroyDuration: 0.3

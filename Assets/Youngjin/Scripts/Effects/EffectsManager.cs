@@ -18,8 +18,13 @@ public class EffectsManager : MonoBehaviour
     public ParticleSystem dieParticle2;
 
     public ParticleSystem boomCircleParticle;
-    public ParticleSystem boomCircleParticle1;
-    public ParticleSystem boomCircleParticle2;
+    public ParticleSystem boomParticle1;
+    public ParticleSystem boomParticle2;
+    public ParticleSystem boomParticle3;
+    public ParticleSystem boomParticle4;
+
+    public ParticleSystem blockDestroyCircleParticle;
+    public ParticleSystem blockDestroyParticle;
 
     public void StartParticle(ParticleSystem particle)
     {
@@ -38,8 +43,12 @@ public class EffectsManager : MonoBehaviour
         SetColor(dieParticle1, mainColor);
         SetColor(dieParticle2, secondColor);
         SetColor(boomCircleParticle, coreColor);
-        SetColor(boomCircleParticle1, coreColor);
-        SetColor(boomCircleParticle2, coreColor);
+        SetColor(boomParticle1, coreColor);
+        SetColor(boomParticle2, coreColor);
+        SetColor(boomParticle3, mainColor);
+        SetColor(boomParticle4, mainColor);
+        SetColor(blockDestroyCircleParticle, coreColor);
+        SetColor(blockDestroyParticle, coreColor);
     }
     void SetColor(ParticleSystem particle, Color color)
     {

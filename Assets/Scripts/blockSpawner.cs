@@ -22,6 +22,10 @@ public class blockSpawner : MonoBehaviour
     bool newState;
     bool boomStart;
 
+    [Header("Colors")]
+    [SerializeField] Color blockColor;
+    [SerializeField] Color wallColor;
+
     [Header("MassiveSpawnValues")]
     public float TimeOfSpawn = 0.5f;
     public float ShrinkDuration = 0.5f;
@@ -64,7 +68,6 @@ public class blockSpawner : MonoBehaviour
     }
     public void DeActivate()
     {
-        enabled = false;
         StopAllCoroutines();
     }
     IEnumerator spawn()
@@ -196,6 +199,14 @@ public class blockSpawner : MonoBehaviour
         var g = Instantiate(obj);
         g.transform.parent = transform.parent;
         g.transform.localPosition = Vector2.zero;
+        if(t == blockType.block)
+        {
+            g.GetComponent<blockBase>().spriteRenderer.color = blockColor;
+        }
+        else if(t== blockType.wall)
+        {
+            g.GetComponent<blockBase>().spriteRenderer.color = wallColor;
+        }
         return g;
     }
     public void SpawnBlocks()
@@ -258,7 +269,7 @@ public class blockSpawner : MonoBehaviour
         else
         {
             RangeIdx = UnityEngine.Random.Range(0, RangeDivCount);
-            g = generateObject(blockType.wall);
+            g = generateObject(blockType.block);
         }
             float theta = UnityEngine.Random.Range(0, passiveDangerZoneDegree * Mathf.Deg2Rad);
         theta = p.getTheta()+Mathf.PI +theta- passiveDangerZoneDegree * Mathf.Deg2Rad/2;

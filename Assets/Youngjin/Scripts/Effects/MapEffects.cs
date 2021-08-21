@@ -17,6 +17,7 @@ public class MapEffects : MonoBehaviour
     [SerializeField] float dieWaitDuration;
     [SerializeField] float dieWhiteCoverDuration;
     [SerializeField] float dieWhiteCoverScale;
+    [SerializeField] float gameClearDestroyDelay;
 
     private void Start()
     {
@@ -35,6 +36,23 @@ public class MapEffects : MonoBehaviour
     {
         player.GameClear();
         blockSpawner.DeActivate();
+        StartCoroutine(GameClearCoroutine());
+    }
+    IEnumerator GameClearCoroutine()
+    {
+        yield return new WaitForSeconds(gameClearDestroyDelay);
+        var blocks = GameObject.FindGameObjectsWithTag("block");
+        cameraEffector.Shake(0.6f, blocks.Length*0.1f);
+        foreach(GameObject go in blocks)
+        {
+            go.SetActive(false);
+            player.effector.OnBlockBreak();
+
+            GameObject g = Instantiate(player.effector.effectsManager.blockDestroyPrefab, go.transform.position, Quaternion.identity);
+            g.SetActive(true);
+            yield return new WaitForSeconds(0.1f);
+        }
+
     }
     public void OnDead()
     {

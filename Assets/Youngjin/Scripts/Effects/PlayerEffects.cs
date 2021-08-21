@@ -11,7 +11,7 @@ public class PlayerEffects : MonoBehaviour
 
     [Header("References")]
     [SerializeField] CameraEffector cameraEffector;
-    [SerializeField] EffectsManager effectsManager;
+    [SerializeField] public EffectsManager effectsManager;
     [SerializeField] playerMovwe playerScript;
     [SerializeField] LevelManager levelManager;
     [SerializeField] MapEffects mapEffector;
@@ -156,7 +156,8 @@ public class PlayerEffects : MonoBehaviour
     }
     public void OnBlockBreak()
     {
-        Instantiate(effectsManager.blockDestroyPrefab,transform.position, Quaternion.identity);
+        GameObject g = Instantiate(effectsManager.blockDestroyPrefab,transform.position, Quaternion.identity);
+        g.SetActive(true);
         cameraEffector.Shake();
         levelManager.SetScore(levelManager.Score + levelManager.NormalWallScore);
     }
