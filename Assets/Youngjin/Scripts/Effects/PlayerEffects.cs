@@ -19,7 +19,7 @@ public class PlayerEffects : MonoBehaviour
     [Header("Design Settings")]
     [SerializeField] Color mainColor;
     [SerializeField] Color secondColor;
-    [SerializeField] Color coreColor;
+    [SerializeField] public Color coreColor;
 
     [Header("Dash values")]
     [SerializeField] float dashSpeed;
