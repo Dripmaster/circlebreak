@@ -258,7 +258,7 @@ public class blockSpawner : MonoBehaviour
         else
         {
             RangeIdx = UnityEngine.Random.Range(0, RangeDivCount);
-            g = generateObject(blockType.wall);
+            g = generateObject(blockType.block);
         }
             float theta = UnityEngine.Random.Range(0, passiveDangerZoneDegree * Mathf.Deg2Rad);
         theta = p.getTheta()+Mathf.PI +theta- passiveDangerZoneDegree * Mathf.Deg2Rad/2;
@@ -297,5 +297,12 @@ public class blockSpawner : MonoBehaviour
         rangeSetCount++;
 
         return rangeCount;
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(p.isBoom()&&collision.tag == "Player")
+        {
+            p.centerCollisionEnter(this);
+        }   
     }
 }
