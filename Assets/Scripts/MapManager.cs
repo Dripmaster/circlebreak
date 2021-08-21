@@ -8,7 +8,7 @@ public class MapManager : MonoBehaviour
     [Header("References")]
     public playerMovwe player;
     public blockSpawner centerSpawner;
-    protected List<ActionClass> Actions;
+    [SerializeField] protected List<ActionClass> Actions;
     void Awake()
     {
     }
@@ -31,6 +31,14 @@ public class MapManager : MonoBehaviour
     {
         public float startTime;
         public string coroutineName;
+        public ActionClass(float startTime, string coroutineName)
+        {
+            this.startTime = startTime;
+            this.coroutineName = coroutineName;
+        }
+        public ActionClass()
+        {
+        }
     }
     IEnumerator test()
     {
@@ -43,7 +51,7 @@ public class MapManager : MonoBehaviour
         Debug.Log("test2");
         yield return null;
     }
-    IEnumerator mainRoutine()
+    public IEnumerator mainRoutine()
     {
         float startTime = 0;
         int idx = 0;
@@ -51,7 +59,7 @@ public class MapManager : MonoBehaviour
         {
             if (Actions.Count>0&&!player.isReady() && !player.isClear() && !player.isDie())
             {
-                startTime += Time.deltaTime;
+                startTime += Time.unscaledDeltaTime;
                 if (idx >= Actions.Count)
                 {
                     idx = 0;
