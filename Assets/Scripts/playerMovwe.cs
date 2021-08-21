@@ -172,6 +172,7 @@ public class playerMovwe : MonoBehaviour
         block = 0,
         wall = 1,
         center = 2,
+        lazor = 3,
     }
     DieCause dieCause; 
     IEnumerator die()
@@ -210,6 +211,15 @@ public class playerMovwe : MonoBehaviour
             transform.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * GetCircleRotation());////////호출 위치 수정이 필요할 수 있음
         } while (!changeState);
         isSmallPower = true;
+    }
+    public bool isSpecial()
+    {
+        return currentState == circleStates.clear ||
+             currentState == circleStates.boom ||
+              currentState == circleStates.die ||
+               currentState == circleStates.dash ||
+                currentState == circleStates.fever
+            ;
     }
     public bool isClear()
     {
@@ -446,6 +456,15 @@ public class playerMovwe : MonoBehaviour
     public bool isDashOrFever()
     {
         return currentState == circleStates.dash || currentState == circleStates.fever;
+    }
+    public void LazorEnter(LazerBase lazor)
+    {
+        if (!isSpecial() && !isSmallPower)
+        {
+            currentState = circleStates.die;
+            changeState = true;
+            dieCause = DieCause.lazor;
+        }
     }
     public void blockCollisionEnter(blockBase block)
     {

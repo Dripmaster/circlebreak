@@ -20,13 +20,8 @@ public class LazerBase : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision) {
         if(collision.tag == "Player") {
-            if(!_playerMove.isDashOrFever()) {
-                _playerMove.blockCollisionEnter(new blockBase());
-            }
-        }
-        if(collision.tag == "dashCollider") {
-            if (_playerMove.isDashOrFever()) {
-                _playerMove.effector.OnBlockBreak();
+            if(!_playerMove.isSpecial()) {
+                _playerMove.LazorEnter(this);
             }
         }
     }
