@@ -30,6 +30,10 @@ public class SelectSceneManager : MonoBehaviour
     {
         animator = GetComponent<Animator>();
     }
+    private void Start()
+    {
+        Init();
+    }
     IEnumerator MoveMap(int dir)
     {
         if ((dir == 1 && currentPoint == mapPoints.Length - 1)
@@ -51,6 +55,17 @@ public class SelectSceneManager : MonoBehaviour
         playerTransform.transform.position = new Vector3(mapPoints[currentPoint].transform.position.x,0,0);
         isMovable = true;
         StartCoroutine(ZoomCamera(0f, 0.3f));
+    }
+    public void Init()
+    {
+        currentPoint = DataBridge.Singleton.currentPoint;
+        if(currentPoint != 0)
+        {
+            playerTransform.transform.position = new Vector3(mapPoints[currentPoint].transform.position.x, 0, 0);
+            cameraEffector.SetFollow(new Vector3(mapPoints[currentPoint].position.x, 0, 0));
+            cameraEffector.transform.parent.position = new Vector3(mapPoints[currentPoint].position.x, 0, 0);
+
+        }
     }
     IEnumerator ZoomCamera(float zoomTarget, float duration)
     {
@@ -103,6 +118,7 @@ public class SelectSceneManager : MonoBehaviour
         }
         mapPoints[currentPoint].localScale = new Vector3(sceneChangeCircleScale, sceneChangeCircleScale, 1);
         spriteRenderer.color = transitionColors[currentPoint];
+        DataBridge.Singleton.currentPoint = currentPoint;
         //Change Scene
         if(sceneNames[currentPoint] != "")
             SceneManager.LoadScene(sceneNames[currentPoint]);

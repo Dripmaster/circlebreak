@@ -216,6 +216,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1521859505}
     - target: {fileID: 6722249827479925416, guid: a2e8e2c225efbf747a85ac30f6633dc7, type: 3}
+      propertyPath: blockSpawner
+      value: 
+      objectReference: {fileID: 1445725449}
+    - target: {fileID: 6722249827479925416, guid: a2e8e2c225efbf747a85ac30f6633dc7, type: 3}
       propertyPath: levelManager
       value: 
       objectReference: {fileID: 200207727}
@@ -461,6 +465,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1527010422369735343, guid: d07502f73e2de1d498d6709b8acd05ba, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1527010422369735343, guid: d07502f73e2de1d498d6709b8acd05ba, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1527010422582163998, guid: d07502f73e2de1d498d6709b8acd05ba, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

@@ -15,11 +15,12 @@ public class PlayerEffects : MonoBehaviour
     [SerializeField] playerMovwe playerScript;
     [SerializeField] LevelManager levelManager;
     [SerializeField] MapEffects mapEffector;
+    [SerializeField] blockSpawner blockSpawner;
 
     [Header("Design Settings")]
     [SerializeField] Color mainColor;
     [SerializeField] Color secondColor;
-    [SerializeField] public Color coreColor;
+    Color coreColor;
 
     [Header("Dash values")]
     [SerializeField] float dashSpeed;
@@ -44,6 +45,10 @@ public class PlayerEffects : MonoBehaviour
     private void Awake()
     {
         effectsManager.InitColors(mainColor, secondColor, coreColor);
+    }
+    private void Update()
+    {
+        coreColor = blockSpawner.MainColor;
     }
     public void TurnWalkParticle(bool on)
     {

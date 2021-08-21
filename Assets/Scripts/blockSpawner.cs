@@ -6,11 +6,16 @@ using UnityEngine.SocialPlatforms;
 
 public class blockSpawner : MonoBehaviour
 {
+    public Color MainColor
+    {
+        get { return spriteRenderer.color; }
+    }
     // Start is called before the first frame update
     public GameObject blockObject;
     public GameObject wallObject;
     public GameObject smallCircle;
     public playerMovwe p;
+    SpriteRenderer spriteRenderer;
 
     public float fillSpeed = 1;
 
@@ -23,8 +28,8 @@ public class blockSpawner : MonoBehaviour
     bool boomStart;
 
     [Header("Colors")]
-    [SerializeField] Color blockColor;
     [SerializeField] Color wallColor;
+    Color blockColor;
 
     [Header("MassiveSpawnValues")]
     public float TimeOfSpawn = 0.5f;
@@ -48,7 +53,7 @@ public class blockSpawner : MonoBehaviour
 
     void Awake()
     {
-        
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
     private void OnEnable()
     {
@@ -159,7 +164,7 @@ public class blockSpawner : MonoBehaviour
             p.setBoom(this);
             boomStart = true;
         }
-        
+        blockColor = spriteRenderer.color;
     }
     public void cutCenter(float scaleF = 0.5f)
     {

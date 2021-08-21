@@ -215,6 +215,8 @@ public class playerMovwe : MonoBehaviour
     {
         changeState = true;
         currentState = circleStates.clear;
+        effector.GetComponent<SpriteRenderer>().sortingLayerName = "UI";
+        effector.GetComponent<SpriteRenderer>().sortingOrder = 1;
     }
     public bool isReady()
     {
@@ -237,7 +239,6 @@ public class playerMovwe : MonoBehaviour
         float eTime = 0;
         isSmallPower = true;
         float speedScale = 0;
-        effector.TurnWalkParticle(true);
         do
         {
             if (eTime <= clearSpeedStopDuration)
@@ -249,11 +250,11 @@ public class playerMovwe : MonoBehaviour
                     speedScale = 1;
                 }
             }
-            rotationCircle(turnSpeed * (1-speedScale));
+            if(1-speedScale > 0)
+                rotationCircle(turnSpeed * (1-speedScale));
             yield return null;
             transform.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * GetCircleRotation());////////호출 위치 수정이 필요할 수 있음
         } while (!changeState);
-        effector.TurnWalkParticle(false);
         isSmallPower = false;
     }
     [Header("BoomValues")]
