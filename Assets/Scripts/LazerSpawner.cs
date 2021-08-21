@@ -31,17 +31,17 @@ public class LazerSpawner : MonoBehaviour
     
         var g = Instantiate(robotPrefab);
 
-        Vector3 screen = Camera.main.ViewportToWorldPoint(new Vector3(0,1,0));
+        Vector3 screen =new Vector3(Screen.width/200,Screen.height/200,1);
         Vector2 robotSize = g.GetComponent<SpriteRenderer>().bounds.size;
 
         int direction = Random.Range(0, 2);
         float spawnPositionY = Random.Range(-screen.y + 1, screen.y - robotSize.y - 1);
         if(direction == 0) {
-            source = new Vector2(screen.x - robotSize.x / 2 - 1, spawnPositionY);
+            source = new Vector2(-screen.x - robotSize.x / 2 - 1, spawnPositionY);
             destination = new Vector2(-7, spawnPositionY);
         }
         else {
-            source = new Vector2(-screen.x + robotSize.x / 2 + 1, spawnPositionY);
+            source = new Vector2(screen.x + robotSize.x / 2 + 1, spawnPositionY);
             destination = new Vector2(7, spawnPositionY);
 
             g.GetComponent<LazerRobot>().transform.rotation = Quaternion.Euler(0, 0, 180);
