@@ -22,6 +22,7 @@ public class wallBase : blockBase
             {
                 eTime = timeOfSpawn;
                 isSpawning = false;
+                effector.OnLand();
             }
             Vector2 newDest = dest;
             newDest.x *= _playerMove.GetBigCircleRatio().x;

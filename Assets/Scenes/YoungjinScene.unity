@@ -314,10 +314,42 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 6722249827426485505, guid: a2e8e2c225efbf747a85ac30f6633dc7, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6722249827426485505, guid: a2e8e2c225efbf747a85ac30f6633dc7, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6722249827426485505, guid: a2e8e2c225efbf747a85ac30f6633dc7, type: 3}
+      propertyPath: InitialModule.startSize.minScalar
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6722249827426485505, guid: a2e8e2c225efbf747a85ac30f6633dc7, type: 3}
+      propertyPath: InitialModule.startSpeed.minScalar
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 6722249827479925416, guid: a2e8e2c225efbf747a85ac30f6633dc7, type: 3}
       propertyPath: cameraEffector
       value: 
       objectReference: {fileID: 286819682}
+    - target: {fileID: 6722249828262428170, guid: a2e8e2c225efbf747a85ac30f6633dc7, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6722249828262428170, guid: a2e8e2c225efbf747a85ac30f6633dc7, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6722249828262428170, guid: a2e8e2c225efbf747a85ac30f6633dc7, type: 3}
+      propertyPath: InitialModule.startSize.minScalar
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6722249828262428170, guid: a2e8e2c225efbf747a85ac30f6633dc7, type: 3}
+      propertyPath: InitialModule.startSpeed.minScalar
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 6722249828909340031, guid: a2e8e2c225efbf747a85ac30f6633dc7, type: 3}
       propertyPath: dashCoolTime
       value: 0

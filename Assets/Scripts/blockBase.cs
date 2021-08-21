@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class blockBase : MonoBehaviour
 {
-    [SerializeField] BlockEffects effector;
+    [SerializeField] protected BlockEffects effector;
     public playerMovwe _playerMove;
     protected Vector2 dest;
     protected float timeOfSpawn;
@@ -62,7 +62,6 @@ public class blockBase : MonoBehaviour
         {
             if(!_playerMove.isDashOrFever())
             {
-                _playerMove.effector.OnBlockBreak();
                 _playerMove.blockCollisionEnter(this);
             }
             if (_playerMove.isFever())
