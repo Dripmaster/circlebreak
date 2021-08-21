@@ -10,6 +10,8 @@ public class EffectsManager : MonoBehaviour
     public ParticleSystem dashParticle;
     public ParticleSystem dashBurstParticlePrimary;
     public ParticleSystem dashBurstParticleSecondary;
+    public ParticleSystem turnParticleUp;
+    public ParticleSystem turnParticleDown;
 
     public ParticleSystem boomCircleParticle;
 
@@ -23,6 +25,8 @@ public class EffectsManager : MonoBehaviour
         SetColor(dashParticle, mainColor);
         SetColor(dashBurstParticlePrimary, mainColor);
         SetColor(dashBurstParticleSecondary, secondColor);
+        SetColor(turnParticleDown, mainColor);
+        SetColor(turnParticleUp, mainColor);
 
     }
     void SetColor(ParticleSystem particle, Color color)

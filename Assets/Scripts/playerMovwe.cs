@@ -340,6 +340,11 @@ public class playerMovwe : MonoBehaviour
     }
     void inputMoveTask()
     {
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+            effector.OnTurn(true);
+        else if (Input.GetKeyDown(KeyCode.DownArrow))
+            effector.OnTurn(false);
+
         if (Input.GetKey(KeyCode.UpArrow))
         {
             Range += Time.deltaTime* rangeSpeed;

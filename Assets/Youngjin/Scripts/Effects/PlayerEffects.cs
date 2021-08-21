@@ -35,6 +35,13 @@ public class PlayerEffects : MonoBehaviour
     {
         effectsManager.InitColors(mainColor, secondColor);
     }
+    public void OnTurn(bool isUp)
+    {
+        if (isUp)
+            effectsManager.StartParticle(effectsManager.turnParticleUp);
+        else
+            effectsManager.StartParticle(effectsManager.turnParticleDown);
+    }
     public void StartDash()
     {
         StartCoroutine(DashEffect());
@@ -43,7 +50,7 @@ public class PlayerEffects : MonoBehaviour
     {
         //slow motion + camera zoom in (exp)
         currentDashSpeed = 0f;
-        cameraEffector.SetFollow(transform.position / 2);
+        cameraEffector.SetFollow(transform.position * 0.7f);
         effectsManager.StartParticle(effectsManager.preDashParticle);
         StartCoroutine(ZoomCamera(preDashZoomMagnitude, preDashDuration, CurveType.Exponential));
         float eTime = 0f;
@@ -80,7 +87,7 @@ public class PlayerEffects : MonoBehaviour
     IEnumerator BoomCoroutine()
     {
         float eTime = 0f;
-        cameraEffector.SetFollow(transform.position / 2);
+        cameraEffector.SetFollow(transform.position * 1f);
         StartCoroutine(ZoomCamera(boomZoom, playerScript.chargeDuration, CurveType.Exponential));
         while (eTime < playerScript.chargeDuration - boomWaitInAirDuration)
         {
