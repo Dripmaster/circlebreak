@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
@@ -9,7 +9,7 @@ using UnityEngine.Android;
 public class playerMovwe : MonoBehaviour
 {
     /// <summary>
-    /// º¯¼ö ÁöÁ¤ÇÏ´Â °÷
+    /// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½
     /// </summary>
 
     [Header("References")]
@@ -103,7 +103,7 @@ public class playerMovwe : MonoBehaviour
             if (isSmallPower)
             {
                 StartTime += Time.unscaledDeltaTime;
-                if (StartTime>= invincibleTime)//´ë½¬³¡, ²ÎÂï±â ³¡ µî ÇÏ°í move ¿À¸é Àá½Ã ¹«Àû½Ã°£
+                if (StartTime>= invincibleTime)//ï¿½ë½¬ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½Ï°ï¿½ move ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ã°ï¿½
                 {
                     isSmallPower = false;
                     speedScale = 1;
@@ -121,7 +121,7 @@ public class playerMovwe : MonoBehaviour
             rotationCircle(turnSpeed*speedScale);
             inputMoveTask();
             yield return null;
-            transform.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * GetCircleRotation());////////È£Ãâ À§Ä¡ ¼öÁ¤ÀÌ ÇÊ¿äÇÒ ¼ö ÀÖÀ½
+            transform.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * GetCircleRotation());////////È£ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         } while (!changeState);
         effector.TurnWalkParticle(false);
     }
@@ -149,7 +149,7 @@ public class playerMovwe : MonoBehaviour
                 currentState = circleStates.move;
             }
             yield return null;
-            transform.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * GetCircleRotation());////////È£Ãâ À§Ä¡ ¼öÁ¤ÀÌ ÇÊ¿äÇÒ ¼ö ÀÖÀ½
+            transform.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * GetCircleRotation());////////È£ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         } while (!changeState);
         cap.enabled = false;
         isSmallPower = true;
@@ -174,11 +174,11 @@ public class playerMovwe : MonoBehaviour
         wall = 1,
         center = 2,
         lazor = 3,
+        star = 4,
     }
     DieCause dieCause; 
     IEnumerator die()
     {
-        Debug.Log("Á×ÀºÀÌÀ¯: "+dieCause);
         if(dieCause == DieCause.center)
             effector.effectsManager.StartParticle(effector.effectsManager.boomCircleParticle);
         else
@@ -213,7 +213,7 @@ public class playerMovwe : MonoBehaviour
             rotationCircle(feverSpeed);
             inputMoveTask();
             yield return null;
-            transform.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * GetCircleRotation());////////È£Ãâ À§Ä¡ ¼öÁ¤ÀÌ ÇÊ¿äÇÒ ¼ö ÀÖÀ½
+            transform.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * GetCircleRotation());////////È£ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         } while (!changeState);
         isSmallPower = true;
     }
@@ -272,7 +272,7 @@ public class playerMovwe : MonoBehaviour
             if(1-speedScale > 0)
                 rotationCircle(turnSpeed * (1-speedScale));
             yield return null;
-            transform.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * GetCircleRotation());////////È£Ãâ À§Ä¡ ¼öÁ¤ÀÌ ÇÊ¿äÇÒ ¼ö ÀÖÀ½
+            transform.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * GetCircleRotation());////////È£ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         } while (!changeState);
         isSmallPower = false;
     }
@@ -290,7 +290,7 @@ public class playerMovwe : MonoBehaviour
         float eTime = 0;
         float eeTime = 0;
         isSpawned = false;
-        //¿µÁø::startBoom();//²ÎÂï´Â°Å½ÃÀÛÇÔ
+        //ï¿½ï¿½ï¿½ï¿½::startBoom();//ï¿½ï¿½ï¿½ï¿½Â°Å½ï¿½ï¿½ï¿½ï¿½ï¿½
         effector.StartBoom();
         do
         {
@@ -298,7 +298,7 @@ public class playerMovwe : MonoBehaviour
             {
                 eTime += Time.unscaledDeltaTime;
                 if (eTime <= chargeDuration)
-                {//°øÁß ³¯±â
+                {//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                     float x = eTime / chargeDuration;
                     float distance = Mathf.Lerp(0, chargeDistance, TimeCurves.ExponentialMirrored(x));
                     Vector2 newMove = new Vector2(bigCircleRatio.x * (Range + distance) * math.cos(-timeStack), bigCircleRatio.y * (Range + distance) * math.sin(-timeStack));
@@ -309,7 +309,7 @@ public class playerMovwe : MonoBehaviour
 
                 }
                 else if (eTime <= boomToCenterDuration + chargeDuration)
-                {//¿ë¾Ï¿¡ Äç
+                {//ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½
                     float rati = (eTime-chargeDuration) / (boomToCenterDuration);
                     
 
@@ -330,11 +330,11 @@ public class playerMovwe : MonoBehaviour
                 float rati = (eTime - chargeDuration) / (boomToCenterDuration);
                 eeTime += Time.unscaledDeltaTime;
                 if (eeTime <= waitForSpawnDuration)
-                {//ÄçÂï°í ´ë±â
+                {//ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 
                 }
                 else if (eeTime <= waitForSpawnDuration + returnDuration)
-                {//Á¦ÀÚ¸®·Î
+                {//ï¿½ï¿½ï¿½Ú¸ï¿½ï¿½ï¿½
 
                     float x;
                     float r = (eeTime - waitForSpawnDuration) / returnDuration;
@@ -392,12 +392,12 @@ public class playerMovwe : MonoBehaviour
 
         Vector2 currentBigCircleScale = transform.parent.localScale;
         bigCircleRatio = currentBigCircleScale / normalCircleScale;
-        if (Input.GetKey(KeyCode.Alpha5) && Input.GetKey(KeyCode.Alpha0) && Input.GetKeyDown(KeyCode.R))//debug¿ë ¸®¼Â
+        if (Input.GetKey(KeyCode.Alpha5) && Input.GetKey(KeyCode.Alpha0) && Input.GetKeyDown(KeyCode.R))//debugï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         {
             initValues();
             ReadyDone();
         }
-        if (Input.GetKey(KeyCode.Alpha5)&& Input.GetKey(KeyCode.Alpha0) && Input.GetKeyDown(KeyCode.C))//debug¿ë Ä¡Æ®Å°
+        if (Input.GetKey(KeyCode.Alpha5)&& Input.GetKey(KeyCode.Alpha0) && Input.GetKeyDown(KeyCode.C))//debugï¿½ï¿½ Ä¡Æ®Å°
         {
             changeState = true;
             currentState = circleStates.clear;
@@ -456,7 +456,7 @@ public class playerMovwe : MonoBehaviour
         dash = 2,
         die = 3,
         fever = 4,
-        boom = 5,//(²ÎÂï´Â»óÅÂ)
+        boom = 5,//(ï¿½ï¿½ï¿½ï¿½Â»ï¿½ï¿½ï¿½)
         clear = 6,
     }
     public bool isDashOrFever()
@@ -470,6 +470,15 @@ public class playerMovwe : MonoBehaviour
             currentState = circleStates.die;
             changeState = true;
             dieCause = DieCause.lazor;
+        }
+    }
+    public void starCollisionEnter(AttackStarScript lazor)
+    {
+        if (!isSpecial() && !isSmallPower)
+        {
+            currentState = circleStates.die;
+            changeState = true;
+            dieCause = DieCause.star;
         }
     }
     public void blockCollisionEnter(blockBase block)

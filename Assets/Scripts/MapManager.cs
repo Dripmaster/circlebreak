@@ -26,6 +26,10 @@ public class MapManager : MonoBehaviour
     {
 
     }
+    public virtual void onDie()
+    {
+
+    }
     [System.Serializable]
     public class ActionClass
     {

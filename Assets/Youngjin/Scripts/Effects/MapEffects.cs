@@ -122,6 +122,7 @@ public class MapEffects : MonoBehaviour
     {
         StartCoroutine(Die());
         blockSpawner.DeActivate();
+        mapManager.onDie();
     }
     IEnumerator Die()
     {
