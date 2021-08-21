@@ -11,7 +11,6 @@ public class MapManager : MonoBehaviour
     protected List<ActionClass> Actions;
     void Awake()
     {
-        
     }
     protected void OnEnable()
     {
@@ -22,6 +21,10 @@ public class MapManager : MonoBehaviour
     void Update()
     {
         
+    }
+    public virtual void OnReadyDone()
+    {
+
     }
     [System.Serializable]
     public class ActionClass

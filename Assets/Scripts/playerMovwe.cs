@@ -161,7 +161,8 @@ public class playerMovwe : MonoBehaviour
 
         newMove = Quaternion.Euler(0,0,transform.parent.rotation.eulerAngles.z)*newMove;
         newMove += (Vector2)transform.parent.position;
-        rigidbody.MovePosition(newMove);
+        //rigidbody.MovePosition(newMove);
+        transform.position = newMove;
         if (timeStack >= math.PI * 2)
         {
             timeStack -= math.PI * 2;
@@ -172,6 +173,7 @@ public class playerMovwe : MonoBehaviour
         block = 0,
         wall = 1,
         center = 2,
+        lazor = 3,
     }
     DieCause dieCause; 
     IEnumerator die()
@@ -211,6 +213,15 @@ public class playerMovwe : MonoBehaviour
         } while (!changeState);
         isSmallPower = true;
     }
+    public bool isSpecial()
+    {
+        return currentState == circleStates.clear ||
+             currentState == circleStates.boom ||
+              currentState == circleStates.die ||
+               currentState == circleStates.dash ||
+                currentState == circleStates.fever
+            ;
+    }
     public bool isClear()
     {
         return currentState == circleStates.clear;
@@ -219,6 +230,8 @@ public class playerMovwe : MonoBehaviour
     {
         changeState = true;
         currentState = circleStates.clear;
+        effector.GetComponent<SpriteRenderer>().sortingLayerName = "UI";
+        effector.GetComponent<SpriteRenderer>().sortingOrder = 1;
     }
     public bool isReady()
     {
@@ -241,7 +254,6 @@ public class playerMovwe : MonoBehaviour
         float eTime = 0;
         isSmallPower = true;
         float speedScale = 0;
-        effector.TurnWalkParticle(true);
         do
         {
             if (eTime <= clearSpeedStopDuration)
@@ -253,11 +265,11 @@ public class playerMovwe : MonoBehaviour
                     speedScale = 1;
                 }
             }
-            rotationCircle(turnSpeed * (1-speedScale));
+            if(1-speedScale > 0)
+                rotationCircle(turnSpeed * (1-speedScale));
             yield return null;
             transform.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * GetCircleRotation());////////호출 위치 수정이 필요할 수 있음
         } while (!changeState);
-        effector.TurnWalkParticle(false);
         isSmallPower = false;
     }
     [Header("BoomValues")]
@@ -446,6 +458,15 @@ public class playerMovwe : MonoBehaviour
     public bool isDashOrFever()
     {
         return currentState == circleStates.dash || currentState == circleStates.fever;
+    }
+    public void LazorEnter(LazerBase lazor)
+    {
+        if (!isSpecial() && !isSmallPower)
+        {
+            currentState = circleStates.die;
+            changeState = true;
+            dieCause = DieCause.lazor;
+        }
     }
     public void blockCollisionEnter(blockBase block)
     {

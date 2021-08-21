@@ -29280,7 +29280,6 @@ MonoBehaviour:
   smallCircle: {fileID: 5306423705269767823}
   p: {fileID: 6722249828909340031}
   fillSpeed: 0.1
-  blockColor: {r: 1, g: 0.46274513, b: 0.10980393, a: 1}
   wallColor: {r: 0.9380294, g: 0.3443396, b: 1, a: 1}
   TimeOfSpawn: 0.3
   ShrinkDuration: 0.15
@@ -29785,6 +29784,10 @@ PrefabInstance:
       value: 0.1760413
       objectReference: {fileID: 0}
     - target: {fileID: 6722249827950139408, guid: 7689dda58f27f3b4996ea27ac58c32db, type: 3}
+      propertyPath: blockSpawner
+      value: 
+      objectReference: {fileID: 1346742581}
+    - target: {fileID: 6722249827950139408, guid: 7689dda58f27f3b4996ea27ac58c32db, type: 3}
       propertyPath: cameraEffector
       value: 
       objectReference: {fileID: 0}
@@ -29885,12 +29888,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6722249828709662663, guid: 7689dda58f27f3b4996ea27ac58c32db, type: 3}
+      propertyPath: feverDuration
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6722249828709662663, guid: 7689dda58f27f3b4996ea27ac58c32db, type: 3}
       propertyPath: chargeDuration
       value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 6722249828709662663, guid: 7689dda58f27f3b4996ea27ac58c32db, type: 3}
       propertyPath: returnDuration
-      value: 0.4
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 6722249828709662663, guid: 7689dda58f27f3b4996ea27ac58c32db, type: 3}
       propertyPath: boomToCenterDuration
@@ -29899,6 +29906,10 @@ PrefabInstance:
     - target: {fileID: 6722249828709662663, guid: 7689dda58f27f3b4996ea27ac58c32db, type: 3}
       propertyPath: waitForSpawnDuration
       value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 6722249828709662663, guid: 7689dda58f27f3b4996ea27ac58c32db, type: 3}
+      propertyPath: clearSpeedStopDuration
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6722249828709662656, guid: 7689dda58f27f3b4996ea27ac58c32db, type: 3}
