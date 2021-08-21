@@ -174,11 +174,11 @@ public class playerMovwe : MonoBehaviour
         wall = 1,
         center = 2,
         lazor = 3,
+        star = 4,
     }
     DieCause dieCause; 
     IEnumerator die()
     {
-        Debug.Log("Á×ÀºÀÌÀ¯: "+dieCause);
         effector.OnDead();
         do
         {
@@ -466,6 +466,15 @@ public class playerMovwe : MonoBehaviour
             currentState = circleStates.die;
             changeState = true;
             dieCause = DieCause.lazor;
+        }
+    }
+    public void starCollisionEnter(AttackStarScript lazor)
+    {
+        if (!isSpecial() && !isSmallPower)
+        {
+            currentState = circleStates.die;
+            changeState = true;
+            dieCause = DieCause.star;
         }
     }
     public void blockCollisionEnter(blockBase block)

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.SocialPlatforms;
 
@@ -299,8 +300,53 @@ public class blockSpawner : MonoBehaviour
         RangeIdx = UnityEngine.Random.Range(0, RangeDivCount);
         float theta = UnityEngine.Random.Range(0, passiveDangerZoneDegree * Mathf.Deg2Rad);
         theta = p.getTheta() + Mathf.PI + theta - passiveDangerZoneDegree * Mathf.Deg2Rad / 2;
-        g.GetComponent<blockBase>().setDest(theta, RangeMin + RangeLevel * RangeIdx, TimeOfSpawn, p);
+        if (g.GetComponent<blockBase>() != null)
+        {
+            g.GetComponent<blockBase>().setDest(theta, RangeMin + RangeLevel * RangeIdx, TimeOfSpawn, p);
+        }
+        else if(g.GetComponent<AttackStarScript>()!=null)
+        {
+            g.GetComponent<AttackStarScript>().setDest(theta, RangeMin + RangeLevel * RangeIdx, TimeOfSpawn, p);
+        }
         return g;
+    }
+    public void SpawnButton(GameObject obj, int count)
+    {
+        float RangeMin = p.rangeMin;
+        float RangeMax = p.rangeMax;
+        bool[] thetas = new bool[massiveSpawnDegreeDivideCount];
+        float divTheta = ((p.FowardDir * (-Mathf.Deg2Rad * 90) )) / thetas.Length;
+        int thetasNum = 0;
+        for (int i = 0; i < count; i++)
+        {
+            GameObject g = generateObject(obj);
+
+            int thetaNum = UnityEngine.Random.Range(1, thetas.Length);
+            float theta;
+            do
+            {
+                if (thetas[thetasNum])
+                {
+                    thetasNum -= 1;
+                }
+                else
+                {
+                    thetaNum -= 1;
+                    if (thetaNum > 0)
+                        thetasNum -= 1;
+                }
+
+                if (thetasNum < 0)
+                {
+                    thetasNum = thetas.Length - 1;
+                }
+            } while (thetaNum > 0);
+
+            theta = p.getTheta() - divTheta * (thetasNum) - divTheta+Mathf.Deg2Rad * 120;
+
+            float Range = UnityEngine.Random.Range(RangeMin, RangeMax);
+            g.GetComponent<AttackStarScript>().setDest(theta, Range, TimeOfSpawn, p);
+        }
     }
     bool[] usedRange;
     int rangeCount;
