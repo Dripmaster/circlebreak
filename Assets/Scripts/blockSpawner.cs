@@ -59,7 +59,7 @@ public class blockSpawner : MonoBehaviour
 
             if (eTime <= ShrinkDuration)
             {
-                eTime += Time.unscaledDeltaTime;
+                eTime += Time.deltaTime;
                 float x;
                 x = Mathf.Lerp(scaleFactor, toScaleFactor, eTime / ShrinkDuration);
                 transform.localScale = normalScale * x;
@@ -137,6 +137,7 @@ public class blockSpawner : MonoBehaviour
         theta = p.getTheta()+Mathf.PI +theta- passiveDangerZoneDegree * Mathf.Deg2Rad/2;
             float Range = Random.Range(RangeMin, RangeMax);
             g.GetComponent<blockBase>().setDest(theta, Range, TimeOfSpawn, p);
+        g.GetComponentInChildren<Animator>().SetFloat("Speed", 1 / TimeOfSpawn);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

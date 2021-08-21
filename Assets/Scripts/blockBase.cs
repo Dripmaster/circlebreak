@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class blockBase : MonoBehaviour
 {
+    [SerializeField] BlockEffects effector;
     public playerMovwe _playerMove;
+
     Vector2 dest;
     float timeOfSpawn;
     float eTime;
@@ -25,6 +27,7 @@ public class blockBase : MonoBehaviour
             {
                 eTime = timeOfSpawn;
                 isSpawning = false;
+                effector.OnLand();
             }
             Vector2 newDest = dest;
             newDest.x *= _playerMove.GetBigCircleRatio().x;

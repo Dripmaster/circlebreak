@@ -1,13 +1,17 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class BlockEffects : MonoBehaviour
 {
-    /*[SerializeField] GameObject blockDestroyParticle;
-    private void OnDisable()
+    [SerializeField] Animator animator;
+    private void Awake()
     {
-        Camera.main.GetComponent<CameraEffector>().Shake();
-        Instantiate(blockDestroyParticle, transform.position, Quaternion.identity);
-    }*/
+    }
+
+    internal void OnLand()
+    {
+        animator.SetTrigger("Land");
+    }
 }
