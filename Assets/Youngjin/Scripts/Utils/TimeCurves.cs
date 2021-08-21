@@ -11,8 +11,11 @@ public static class TimeCurves
     {
         return Mathf.Pow(t, 2);
     }
-    /*public static float ExponentialPingPong(float t)
+    public static float ExponentialPingPong(float t)
     {
-
-    }*/
+        if (t < 0.5f)
+            return Mathf.Pow(t * 2, 3) / 2;
+        else
+            return Mathf.Pow((t-1) * 2, 3) / 2 + 1;
+    }
 }

@@ -10,6 +10,9 @@ public class blockBase : MonoBehaviour
     protected float timeOfSpawn;
     protected float eTime;
     protected bool isSpawning;
+
+
+    
     // Start is called before the first frame update
     void Awake()
     {
@@ -42,7 +45,7 @@ public class blockBase : MonoBehaviour
         isSpawning = false;
         eTime = 0;
     }
-    public void setDest(float theta, float Range,float _timeOfSpawn,playerMovwe p)
+    public void setDest(float theta, float Range,float _timeOfSpawn, playerMovwe p)
     {
         _playerMove = p;
         isSpawning = true;
@@ -55,6 +58,8 @@ public class blockBase : MonoBehaviour
         transform.localRotation = Quaternion.Euler(0, 0,Mathf.Rad2Deg*-theta);
 
         timeOfSpawn = _timeOfSpawn;
+
+        GetComponentInChildren<Animator>().SetFloat("Speed", 1 / _timeOfSpawn);
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {

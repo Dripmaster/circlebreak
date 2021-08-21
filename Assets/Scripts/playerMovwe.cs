@@ -92,6 +92,7 @@ public class playerMovwe : MonoBehaviour
         float eTime = 0;
         isSmallPower = true;
         float speedScale = 0;
+        effector.TurnWalkParticle(true);
         do
         {
             if (dashCoolTimeTimer >= 0)
@@ -121,6 +122,7 @@ public class playerMovwe : MonoBehaviour
             yield return null;
             transform.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * GetCircleRotation());////////호출 위치 수정이 필요할 수 있음
         } while (!changeState);
+        effector.TurnWalkParticle(false);
     }
     public void setDashCollider(bool value)
     {
@@ -166,9 +168,9 @@ public class playerMovwe : MonoBehaviour
     }
     IEnumerator die()
     {
+            effector.OnDead();
         do
         {
-           
             yield return null;
         } while (!changeState);
     }
@@ -199,6 +201,19 @@ public class playerMovwe : MonoBehaviour
             transform.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * GetCircleRotation());////////호출 위치 수정이 필요할 수 있음
         } while (!changeState);
         isSmallPower = true;
+    }
+
+    public void ReadyDone()
+    {
+        changeState = true;
+        currentState = circleStates.move;
+    }
+    IEnumerator ready()
+    {
+        do
+        {
+            yield return null;
+        } while (!changeState);
     }
 
     [Header("BoomValues")]
@@ -327,7 +342,7 @@ public class playerMovwe : MonoBehaviour
     {
         timeStack = -math.PI / 2;
         Range = 3;
-        currentState = circleStates.move;
+        currentState = circleStates.ready;
         changeState = true;
         fowardDirection = 1;
         normalCircleScale = transform.parent.localScale;
@@ -366,6 +381,7 @@ public class playerMovwe : MonoBehaviour
     }
     enum circleStates
     {
+        ready = -1,
         idle = 0,
         move = 1,
         dash = 2,

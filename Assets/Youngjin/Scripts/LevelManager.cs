@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
+    public int Score { get { return currentScore; } }
+
     [Header("References")]
     [SerializeField] Text targetScoreText;
     [SerializeField] Text currentScoreText;
@@ -12,19 +15,24 @@ public class LevelManager : MonoBehaviour
 
     [Header("Level Settings")]
     [SerializeField] int targetScore;
-    [SerializeField] int currentScore;
+    public int NormalWallScore;
 
     [Header("Score Effect Setings")]
     [SerializeField] float scoreEffectScale;
     [SerializeField] float currentScoreEffectDuration;
+    [SerializeField] float targetScoreWaitDuration;
     [SerializeField] float targetScoreEffectDuration;
 
     IEnumerator currentScoreCoroutine;
+    int currentShownScore;
+    int currentScore = 0;
 
-    public void SetCurrentScoreText(int score)
+
+    public void SetScore(int score)
     {
         if (score > targetScore)
             score = targetScore;
+        currentScore = score;
         if (currentScoreCoroutine != null)
             StopCoroutine(currentScoreCoroutine);
         currentScoreCoroutine = SetCurrentScore(score);
@@ -33,21 +41,21 @@ public class LevelManager : MonoBehaviour
     IEnumerator SetCurrentScore(int score)
     {
         float eTime = 0f;
-        int initialScore = currentScore;
+        int initialScore = currentShownScore;
         Debug.Log(initialScore + " to " + score);
         while (eTime < currentScoreEffectDuration)
         {
             yield return null;
             eTime += Time.unscaledDeltaTime;
             float x = eTime / currentScoreEffectDuration;
-            currentScore = (int)Mathf.Lerp(initialScore, score, x);
-            scoreBar.value = currentScore;
+            currentShownScore = (int)Mathf.Lerp(initialScore, score, x);
+            scoreBar.value = currentShownScore;
             currentScoreText.transform.localScale
                 = Mathf.Lerp(scoreEffectScale, 1, TimeCurves.ExponentialMirrored(x)) * new Vector2(1, 1);
-            currentScoreText.text = string.Format("{0:#,###}", currentScore);
+            currentScoreText.text = string.Format("{0:#,###}", currentShownScore);
 
         }
-        currentScoreText.text = string.Format("{0:#,###}", score);
+        currentScoreText.text = string.Format("{0:#,###}", currentScore);
         currentScoreText.transform.localScale = new Vector3(1, 1, 1);
 
     }
@@ -58,19 +66,13 @@ public class LevelManager : MonoBehaviour
 
         scoreBar.maxValue = targetScore;
         scoreBar.value = 0;
-    }
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.T))
-            StartCoroutine(SetTargetScore());
-        if (Input.GetKeyDown(KeyCode.Y))
-            SetCurrentScoreText(currentScore + 1000);
-
+        StartCoroutine(SetTargetScore());
     }
     IEnumerator SetTargetScore()
     {
         float eTime = 0f;
         int currentValue = 0;
+        yield return new WaitForSeconds(targetScoreWaitDuration);
         while(eTime < targetScoreEffectDuration)
         {
             yield return null;
@@ -83,5 +85,9 @@ public class LevelManager : MonoBehaviour
         }
         targetScoreText.text = string.Format("/{0:#,###}", targetScore);
         targetScoreText.transform.localScale = new Vector3(1, 1, 1);
+    }
+    public void ChangeScene()
+    {
+        SceneManager.LoadScene("StageSelectScene");
     }
 }

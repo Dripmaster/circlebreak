@@ -13,10 +13,13 @@ public class PlayerEffects : MonoBehaviour
     [SerializeField] CameraEffector cameraEffector;
     [SerializeField] EffectsManager effectsManager;
     [SerializeField] playerMovwe playerScript;
+    [SerializeField] LevelManager levelManager;
+    [SerializeField] MapEffects mapEffector;
 
     [Header("Design Settings")]
     [SerializeField] Color mainColor;
     [SerializeField] Color secondColor;
+    [SerializeField] Color coreColor;
 
     [Header("Dash values")]
     [SerializeField] float dashSpeed;
@@ -31,9 +34,23 @@ public class PlayerEffects : MonoBehaviour
 
     float currentDashSpeed;
 
+    public void OnDead()
+    {
+        effectsManager.StartParticle(effectsManager.dieParticle);
+        cameraEffector.Shake(0.75f, 0.4f);
+        GetComponent<SpriteRenderer>().enabled = false;
+        mapEffector.OnDead();
+    }
     private void Awake()
     {
-        effectsManager.InitColors(mainColor, secondColor);
+        effectsManager.InitColors(mainColor, secondColor, coreColor);
+    }
+    public void TurnWalkParticle(bool on)
+    {
+        if (on)
+            effectsManager.StartParticle(effectsManager.walkParticle);
+        else
+            effectsManager.walkParticle.gameObject.SetActive(false);
     }
     public void OnTurn(bool isUp)
     {
@@ -141,6 +158,7 @@ public class PlayerEffects : MonoBehaviour
     {
         Instantiate(effectsManager.blockDestroyPrefab,transform.position, Quaternion.identity);
         cameraEffector.Shake();
+        levelManager.SetScore(levelManager.Score + levelManager.NormalWallScore);
     }
     public float GetDashSpeed()
     {

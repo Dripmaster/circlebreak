@@ -1,39 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-7728163225031292464
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b77c5407dc277943b591ade9e6b18c5, type: 3}
-  m_Name: LensDistortion
-  m_EditorClassIdentifier: 
-  active: 0
-  enabled:
-    overrideState: 1
-    value: 1
-  intensity:
-    overrideState: 1
-    value: 4
-  intensityX:
-    overrideState: 1
-    value: 0.869
-  intensityY:
-    overrideState: 1
-    value: 0.787
-  centerX:
-    overrideState: 1
-    value: 0.29
-  centerY:
-    overrideState: 1
-    value: 0.63
-  scale:
-    overrideState: 1
-    value: 1
 --- !u!114 &-348089212585112296
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -52,7 +18,7 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 8.17
+    value: 8.11
   threshold:
     overrideState: 1
     value: 1.1
@@ -96,7 +62,7 @@ MonoBehaviour:
   settings:
   - {fileID: -348089212585112296}
   - {fileID: 1437585828778843373}
-  - {fileID: -7728163225031292464}
+  - {fileID: 3919523910376236971}
   - {fileID: 5085620351853941824}
 --- !u!114 &1437585828778843373
 MonoBehaviour:
@@ -120,9 +86,43 @@ MonoBehaviour:
     defaultState: 1
   intensity:
     overrideState: 1
-    value: 0.089
+    value: 0.111
   fastMode:
     overrideState: 1
+    value: 1
+--- !u!114 &3919523910376236971
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b77c5407dc277943b591ade9e6b18c5, type: 3}
+  m_Name: LensDistortion
+  m_EditorClassIdentifier: 
+  active: 0
+  enabled:
+    overrideState: 1
+    value: 1
+  intensity:
+    overrideState: 1
+    value: 0
+  intensityX:
+    overrideState: 0
+    value: 1
+  intensityY:
+    overrideState: 0
+    value: 1
+  centerX:
+    overrideState: 0
+    value: 0
+  centerY:
+    overrideState: 0
+    value: 0
+  scale:
+    overrideState: 0
     value: 1
 --- !u!114 &5085620351853941824
 MonoBehaviour:

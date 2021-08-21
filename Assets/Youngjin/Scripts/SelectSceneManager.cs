@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SelectSceneManager : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] string[] SceneNames;
+    [SerializeField] string[] sceneNames;
     [SerializeField] CameraEffector cameraEffector;
     [SerializeField] Transform[] mapPoints;
     [SerializeField] Color[] transitionColors;
@@ -103,6 +104,8 @@ public class SelectSceneManager : MonoBehaviour
         mapPoints[currentPoint].localScale = new Vector3(sceneChangeCircleScale, sceneChangeCircleScale, 1);
         spriteRenderer.color = transitionColors[currentPoint];
         //Change Scene
+        if(sceneNames[currentPoint] != "")
+            SceneManager.LoadScene(sceneNames[currentPoint]);
     }
     public void OnEnterAnimDone()
     {

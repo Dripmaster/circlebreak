@@ -692,7 +692,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcca1948f4d556c4eba06e6d81ae7ddb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SceneNames: []
+  sceneNames:
+  - 
+  - YJScene
+  - 
+  - 
+  - 
   cameraEffector: {fileID: 1773564908}
   mapPoints:
   - {fileID: 1916668951}
