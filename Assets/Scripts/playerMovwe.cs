@@ -202,6 +202,10 @@ public class playerMovwe : MonoBehaviour
         } while (!changeState);
         isSmallPower = true;
     }
+    public void GameClear()
+    {
+
+    }
 
     public void ReadyDone()
     {
@@ -299,6 +303,7 @@ public class playerMovwe : MonoBehaviour
         } while (!changeState);
         isSmallPower = true;
     }
+
     public void setBoom(blockSpawner spawner)
     {
         currentState = circleStates.boom;
@@ -306,6 +311,7 @@ public class playerMovwe : MonoBehaviour
         this.spawner = spawner;
 
     }
+
     public bool isBoom()
     {
         return currentState == circleStates.boom;
@@ -324,6 +330,7 @@ public class playerMovwe : MonoBehaviour
             yield return null;
         } while (!changeState);
     }
+
     void Update()
     {
 

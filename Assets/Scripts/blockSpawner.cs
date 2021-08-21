@@ -44,13 +44,21 @@ public class blockSpawner : MonoBehaviour
     {
         scaleFactor = 1;
         normalScale = transform.localScale;
-        StartCoroutine(spawn());
-        StartCoroutine(idle());
         wallspawnCounts = 0;
         rangeSetCount = 0;
         rangeCount = 0;
         usedRange = new bool[RangeDivCount];
         newState = false;
+    }
+    public void Activate()
+    {
+        StartCoroutine(spawn());
+        StartCoroutine(idle());
+    }
+    public void DeActivate()
+    {
+        enabled = false;
+        StopAllCoroutines();
     }
     IEnumerator spawn()
     {

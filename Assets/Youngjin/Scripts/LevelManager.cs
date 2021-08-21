@@ -12,6 +12,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] Text targetScoreText;
     [SerializeField] Text currentScoreText;
     [SerializeField] Slider scoreBar;
+    [SerializeField] MapEffects mapEffector;
 
     [Header("Level Settings")]
     [SerializeField] int targetScore;
@@ -37,12 +38,16 @@ public class LevelManager : MonoBehaviour
             StopCoroutine(currentScoreCoroutine);
         currentScoreCoroutine = SetCurrentScore(score);
         StartCoroutine(currentScoreCoroutine);
+
+        if(score == targetScore)
+        {
+            mapEffector.OnGameClear();
+        }
     }
     IEnumerator SetCurrentScore(int score)
     {
         float eTime = 0f;
         int initialScore = currentShownScore;
-        Debug.Log(initialScore + " to " + score);
         while (eTime < currentScoreEffectDuration)
         {
             yield return null;

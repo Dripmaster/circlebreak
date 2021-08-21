@@ -9987,6 +9987,17 @@ ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 5458349, guid: a2e8e2c225efbf747a85ac30f6633dc7, type: 3}
   m_PrefabInstance: {fileID: 1346742578}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1445725449 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1346742581, guid: a2e8e2c225efbf747a85ac30f6633dc7, type: 3}
+  m_PrefabInstance: {fileID: 1346742578}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17c16169440f3184a95ff5d55f5e96f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1466389690
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20278,6 +20289,10 @@ PrefabInstance:
       propertyPath: whiteCover
       value: 
       objectReference: {fileID: 1865597954}
+    - target: {fileID: 4333857717509344879, guid: 4d0a9341a00862445a3b392f69f66834, type: 3}
+      propertyPath: blockSpawner
+      value: 
+      objectReference: {fileID: 1445725449}
     - target: {fileID: 4333857717509344879, guid: 4d0a9341a00862445a3b392f69f66834, type: 3}
       propertyPath: levelManager
       value: 

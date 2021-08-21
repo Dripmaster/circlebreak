@@ -7,9 +7,10 @@ public class MapEffects : MonoBehaviour
     [Header("References")]
     [SerializeField] CameraEffector cameraEffector;
     [SerializeField] Canvas canvas;
-    [SerializeField] playerMovwe player;
+    [SerializeField] public playerMovwe player;
     [SerializeField] SpriteRenderer whiteCover;
     [SerializeField] LevelManager levelManager;
+    [SerializeField] public blockSpawner blockSpawner;
 
     [Header("Effect Values")]
     [SerializeField] float InitialZoomOutDuration;
@@ -28,10 +29,17 @@ public class MapEffects : MonoBehaviour
         yield return StartCoroutine(cameraEffector.SetZoomCoroutine(0, InitialZoomOutDuration, TimeCurves.ExponentialPingPong));
         canvas.renderMode = RenderMode.ScreenSpaceCamera;
         player.ReadyDone();
+        blockSpawner.Activate();
+    }
+    public void OnGameClear()
+    {
+        player.GameClear();
+        blockSpawner.DeActivate();
     }
     public void OnDead()
     {
         StartCoroutine(Die());
+        blockSpawner.DeActivate();
     }
     IEnumerator Die()
     {
