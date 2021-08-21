@@ -141,12 +141,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blockObject: {fileID: 2895154627238896035, guid: 0ffd60a05f2165d458d547bb8e27f462, type: 3}
+  wallObject: {fileID: 0}
+  smallCircle: {fileID: 0}
   p: {fileID: 1885887277}
   fillSpeed: 0.1
-  SpawnCount: 10
+  blockColor: {r: 0, g: 0, b: 0, a: 0}
+  wallColor: {r: 0, g: 0, b: 0, a: 0}
   TimeOfSpawn: 0.5
   ShrinkDuration: 0.5
+  massiveSafetyZoneDegree: 90
+  massiveSpawnDegreeDivideCount: 27
   passiveSpawnTime: 1
+  passiveDangerZoneDegree: 45
+  WallSpawnCount: 5
+  spawnLageScale: 1.1
+  spawnLageScaleDuration: 0.3
+  RangeDivCount: 4
+  RangeOfLevel1: 2.5
+  CountOfSpawnLevel1: 5
+  RangeOfLevel2: 4.5
+  CountOfSpawnLevel2: 7
+  CountOfSpawnLevel3: 9
 --- !u!58 &165650756
 CircleCollider2D:
   m_ObjectHideFlags: 0
