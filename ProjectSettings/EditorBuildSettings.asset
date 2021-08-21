@@ -18,7 +18,7 @@ EditorBuildSettings:
     path: Assets/Scenes/ymScene3.unity
     guid: fcdd2ec9e0bcf3d449a032ab8b0602ee
   - enabled: 1
-    path: Assets/Scenes/YJScene.unity
+    path: Assets/Scenes/GameSceneBase.unity
     guid: d7c412cbfbdf4ef43a2a99a38f263e36
   - enabled: 1
     path: Assets/Scenes/IntroScene.unity

@@ -42,8 +42,9 @@ public class PlayerEffects : MonoBehaviour
         GetComponent<SpriteRenderer>().enabled = false;
         mapEffector.OnDead();
     }
-    private void Awake()
+    private void Start()
     {
+        coreColor = blockSpawner.MainColor;
         effectsManager.InitColors(mainColor, secondColor, coreColor);
     }
     private void Update()
