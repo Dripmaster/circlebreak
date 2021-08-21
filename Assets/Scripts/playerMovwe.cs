@@ -156,7 +156,7 @@ public class playerMovwe : MonoBehaviour
     }
     void rotationCircle(float speed)
     {
-        timeStack += Time.deltaTime * speed * fowardDirection;
+        timeStack += Time.deltaTime * speed * FowardDir;
         Vector2 newMove = new Vector2(bigCircleRatio.x * Range * math.cos(-timeStack), bigCircleRatio.y * Range * math.sin(-timeStack));
 
         newMove = Quaternion.Euler(0,0,transform.parent.rotation.eulerAngles.z)*newMove;
@@ -397,7 +397,7 @@ public class playerMovwe : MonoBehaviour
         Range = 3;
         currentState = circleStates.ready;
         changeState = true;
-        fowardDirection = 1;
+        FowardDir = 1;
         normalCircleScale = transform.parent.localScale;
         bigCircleRatio = Vector2.one;
         isSmallPower = true;

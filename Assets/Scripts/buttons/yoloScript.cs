@@ -33,6 +33,7 @@ public class yoloScript : buttonBase
                 {
                     _playerMove.setFever();
                     isUsed = true;
+                    isBreak = true;
                     gameObject.SetActive(false);
                 }
             }
