@@ -49,16 +49,19 @@ public class wallBase : blockBase
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(!_playerMove.isFever()&&!isBreak && !isSpawning&&collision.tag == "Player")
+        if (collision.tag == "Player")
         {
-             _playerMove.wallCollisionEnter(this);
-        }else
-        if (_playerMove.isFever())
-        {
-            _playerMove.effector.OnBlockBreak();//OnWallBreak?
-            gameObject.SetActive(false);
+            if (!_playerMove.isFever() && !isBreak && !isSpawning)
+            {
+                _playerMove.wallCollisionEnter(this);
+            }
+            else
+            if (_playerMove.isFever())
+            {
+                _playerMove.effector.OnBlockBreak();//OnWallBreak?
+                gameObject.SetActive(false);
+            }
         }
-        
     }
     public void OnLineEnter(Collider2D collision)
     {

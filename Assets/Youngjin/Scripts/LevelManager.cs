@@ -42,7 +42,6 @@ public class LevelManager : MonoBehaviour
     {
         float eTime = 0f;
         int initialScore = currentShownScore;
-        Debug.Log(initialScore + " to " + score);
         while (eTime < currentScoreEffectDuration)
         {
             yield return null;

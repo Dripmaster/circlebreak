@@ -74,6 +74,11 @@ public class blockBase : MonoBehaviour
                 _playerMove.effector.OnBlockBreak();
                 gameObject.SetActive(false);
             }
+            if (_playerMove.isBoom())
+            {
+                _playerMove.effector.OnBlockBreak();
+                gameObject.SetActive(false);
+            }
         }
         if (!isSpawning && collision.tag == "dashCollider")
         {

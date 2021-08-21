@@ -83,7 +83,7 @@ public class playerMovwe : MonoBehaviour
         while (true)
         {
             changeState = false;
-            yield return StartCoroutine(Enum.GetName(typeof(circleStates), currentState));
+            yield return StartCoroutine(currentState.ToString());
         }
     }
     IEnumerator move()
@@ -166,9 +166,17 @@ public class playerMovwe : MonoBehaviour
             timeStack -= math.PI * 2;
         }
     }
+    enum DieCause
+    {
+        block = 0,
+        wall = 1,
+        center = 2,
+    }
+    DieCause dieCause; 
     IEnumerator die()
     {
-            effector.OnDead();
+        Debug.Log("Á×ÀºÀÌÀ¯: "+dieCause);
+        effector.OnDead();
         do
         {
             yield return null;
@@ -399,14 +407,17 @@ public class playerMovwe : MonoBehaviour
         {
             currentState = circleStates.die;
             changeState = true;
+
+            dieCause = DieCause.block;
         }
     }
     public void wallCollisionEnter(blockBase block)
     {
-        if (currentState != circleStates.die && currentState != circleStates.boom)
+        if (currentState != circleStates.die)
         {
             currentState = circleStates.die;
             changeState = true;
+            dieCause = DieCause.wall;
         }
     }
     public void centerCollisionEnter(blockSpawner center)
@@ -416,7 +427,7 @@ public class playerMovwe : MonoBehaviour
             effector.OnBoom();
             spawner.cutCenter();
             isSpawned = true;
-            spawner.SpawnBlocks(spawner.SpawnCount, spawner.TimeOfSpawn);
+            spawner.SpawnBlocks();
         }
         else
         {
@@ -424,6 +435,7 @@ public class playerMovwe : MonoBehaviour
             {
                 currentState = circleStates.die;
                 changeState = true;
+                dieCause = DieCause.center;
             }
         }
     }
