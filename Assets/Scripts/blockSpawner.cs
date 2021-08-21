@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 
 public class blockSpawner : MonoBehaviour
 {
@@ -16,7 +18,7 @@ public class blockSpawner : MonoBehaviour
     Vector2 normalScale;
     float eTime =  10000;
 
-
+    bool newState;
 
     [Header("MassiveSpawnValues")]
     public int SpawnCount = 10;
@@ -28,7 +30,12 @@ public class blockSpawner : MonoBehaviour
     public float passiveSpawnTime = 1;
     public float passiveDangerZoneDegree= 45f;
     public int WallSpawnCount = 5;
+    public float spawnLageScale = 1.1f;
+    public float spawnLageScaleDuration = 0.3f;
+    [Header("GeneralValues")]
+    public int RangeDivCount = 4;
     int wallspawnCounts = 0;
+
     void Awake()
     {
         
@@ -38,9 +45,13 @@ public class blockSpawner : MonoBehaviour
         scaleFactor = 1;
         normalScale = transform.localScale;
         StartCoroutine(spawn());
+        StartCoroutine(idle());
         wallspawnCounts = 0;
+        rangeSetCount = 0;
+        rangeCount = 0;
+        usedRange = new bool[RangeDivCount];
+        newState = false;
     }
-
     IEnumerator spawn()
     {
         float eTime = 0;
@@ -50,32 +61,74 @@ public class blockSpawner : MonoBehaviour
             if (eTime >= passiveSpawnTime)
             {
                 eTime = 0;
+                newState = true;
+                yield return StartCoroutine(spawn_scale(spawnLageScaleDuration));
                 SpawnBlock();
+                yield return StartCoroutine(spawn_scale(spawnLageScaleDuration,-1));
+                newState = false;
             }
             yield return null;
         } while (true);
     }
-
-    // Update is called once per frame
-    void Update()
-    {//이렇게 해도 되고 FSM으로 idle일땐 차오르고 꽝찍어서 쪼그라드는 STATE도 있고 그렇게 해도 되고 그건 나중에..
-
-            if (eTime <= ShrinkDuration)
+    float tempScaleFactor;
+    IEnumerator spawn_scale(float duration,int dir = 1)
+    {
+        float eTime = 0;
+        do
+        {
+            eTime += Time.unscaledDeltaTime;
+            float x;
+            
+            if (dir == -1)
             {
-                eTime += Time.deltaTime;
-                float x;
-                x = Mathf.Lerp(scaleFactor, toScaleFactor, eTime / ShrinkDuration);
-                transform.localScale = normalScale * x;
-                if (eTime >= ShrinkDuration)
+                x = Mathf.Lerp(scaleFactor, tempScaleFactor, eTime / duration);
+            }
+            else
+            {
+                x = Mathf.Lerp(scaleFactor, scaleFactor * spawnLageScale, eTime / duration);
+            }
+            transform.localScale = normalScale * x;
+            if (eTime >= duration)
+            {
+                if (dir==1)
                 {
-                    scaleFactor = x;
+                    tempScaleFactor = scaleFactor;
+                }
+                scaleFactor = x;
+                break;
+            }
+            yield return null;
+        } while (true);
+    }
+    IEnumerator idle()
+    {
+        do
+        {
+            if (!newState)
+            {
+                if (eTime <= ShrinkDuration)
+                {
+                    eTime += Time.deltaTime;
+                    float x;
+                    x = Mathf.Lerp(scaleFactor, toScaleFactor, eTime / ShrinkDuration);
+                    transform.localScale = normalScale * x;
+                    if (eTime >= ShrinkDuration)
+                    {
+                        scaleFactor = x;
+                    }
+                }
+                else if (!p.isBoom())
+                {
+                    scaleFactor += Time.deltaTime * fillSpeed;
+                    transform.localScale = normalScale * scaleFactor;
                 }
             }
-            else if(!p.isBoom())
-            {
-                scaleFactor += Time.deltaTime * fillSpeed;
-                transform.localScale = normalScale * scaleFactor;
-            }
+            yield return null;
+        } while (true);
+    }
+    // Update is called once per frame
+    void Update()
+    {            
         if (!p.isDie()&&!p.isBoom()&&Input.GetKeyDown(KeyCode.Q))
         {
             p.setBoom(this);
@@ -101,7 +154,7 @@ public class blockSpawner : MonoBehaviour
             g.transform.parent = transform.parent;
             g.transform.localPosition = Vector2.zero;
 
-            int thetaNum = Random.Range(1, thetas.Length);
+            int thetaNum = UnityEngine.Random.Range(1, thetas.Length);
             float theta;
             do
             {
@@ -124,7 +177,7 @@ public class blockSpawner : MonoBehaviour
 
             theta =p.getTheta() - divTheta * (thetasNum)-divTheta;
 
-            float Range = Random.Range(RangeMin, RangeMax);
+            float Range = UnityEngine.Random.Range(RangeMin, RangeMax);
             g.GetComponent<blockBase>().setDest(theta,Range,timeOfSpawn,p);
         }
     }
@@ -132,25 +185,64 @@ public class blockSpawner : MonoBehaviour
     {
         float RangeMin = p.rangeMin;
         float RangeMax = p.rangeMax;
+        float RangeMinToMax = RangeMax - RangeMin;
+        float RangeLevel = RangeMinToMax / RangeDivCount;
+        
         wallspawnCounts++;
         GameObject g;
+
+        int RangeIdx =0;
         if (wallspawnCounts >= WallSpawnCount)
         {
             wallspawnCounts = 0;
             g = Instantiate(wallObject);
+            RangeIdx = getRandomRangeWallidx(UnityEngine.Random.Range(0, RangeDivCount));
         }
         else
         {
+            RangeIdx = UnityEngine.Random.Range(0, RangeDivCount);
             g = Instantiate(blockObject);
         }
             g.transform.parent = transform.parent;
             g.transform.localPosition = Vector2.zero;
-            float theta = Random.Range(0, passiveDangerZoneDegree * Mathf.Deg2Rad);
+            float theta = UnityEngine.Random.Range(0, passiveDangerZoneDegree * Mathf.Deg2Rad);
         theta = p.getTheta()+Mathf.PI +theta- passiveDangerZoneDegree * Mathf.Deg2Rad/2;
-            float Range = Random.Range(RangeMin, RangeMax);
-            g.GetComponent<blockBase>().setDest(theta, Range, TimeOfSpawn, p);
-    }
+            g.GetComponent<blockBase>().setDest(theta, RangeMin + RangeLevel * RangeIdx, TimeOfSpawn, p);
 
+    }
+    bool[] usedRange;
+    int rangeCount;
+    int rangeSetCount;
+    int getRandomRangeWallidx(int idx)
+    {
+        if (rangeSetCount >= RangeDivCount)
+        {
+            usedRange = new bool[RangeDivCount];
+        }
+        int id = idx;
+        do
+        {
+            if (usedRange[rangeCount])
+            {
+                rangeCount -= 1;
+            }
+            else
+            {
+                id -= 1;
+                if (id > 0)
+                    rangeCount -= 1;
+            }
+
+            if (rangeCount < 0)
+            {
+                rangeCount = usedRange.Length - 1;
+            }
+        } while (id > 0);
+
+        rangeSetCount++;
+
+        return rangeCount;
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Player")
