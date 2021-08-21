@@ -930,6 +930,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8cf3b7ac5122d3e4681b048fa1ef6f7e, type: 3}
+--- !u!114 &2851818056513033006 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1001033507, guid: 8cf3b7ac5122d3e4681b048fa1ef6f7e, type: 3}
+  m_PrefabInstance: {fileID: 2851818056513033005}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0eb91cc692edbd3478b59a67d7de8440, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3985731617741297494
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1086,6 +1097,10 @@ PrefabInstance:
       propertyPath: background
       value: 
       objectReference: {fileID: 1346742579}
+    - target: {fileID: 4333857717509344879, guid: 4d0a9341a00862445a3b392f69f66834, type: 3}
+      propertyPath: mapManager
+      value: 
+      objectReference: {fileID: 2851818056513033006}
     - target: {fileID: 4333857717509344879, guid: 4d0a9341a00862445a3b392f69f66834, type: 3}
       propertyPath: blockSpawner
       value: 

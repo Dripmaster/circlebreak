@@ -13,6 +13,7 @@ public class MapEffects : MonoBehaviour
     [SerializeField] public blockSpawner blockSpawner;
     [SerializeField] Transform background;
     [SerializeField] GameObject spawnerExplosionPrefab;
+    [SerializeField] MapManager mapManager;
 
     [Header("Effect Values")]
     [SerializeField] float InitialZoomOutDuration;
@@ -35,6 +36,7 @@ public class MapEffects : MonoBehaviour
         canvas.renderMode = RenderMode.ScreenSpaceCamera;
         player.ReadyDone();
         blockSpawner.Activate();
+        mapManager.OnReadyDone();
     }
     public void OnGameClear()
     {
