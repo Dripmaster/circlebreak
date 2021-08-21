@@ -9832,6 +9832,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1346742581, guid: a2e8e2c225efbf747a85ac30f6633dc7, type: 3}
+      propertyPath: smallCircle
+      value: 
+      objectReference: {fileID: 2006938469}
+    - target: {fileID: 1346742581, guid: a2e8e2c225efbf747a85ac30f6633dc7, type: 3}
       propertyPath: levelManager
       value: 
       objectReference: {fileID: 200207727}
@@ -19959,6 +19963,11 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &2006938469 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5306423705269767823, guid: a2e8e2c225efbf747a85ac30f6633dc7, type: 3}
+  m_PrefabInstance: {fileID: 1346742578}
+  m_PrefabAsset: {fileID: 0}
 --- !u!223 &2011951786 stripped
 Canvas:
   m_CorrespondingSourceObject: {fileID: 1527010422582164001, guid: d07502f73e2de1d498d6709b8acd05ba, type: 3}
