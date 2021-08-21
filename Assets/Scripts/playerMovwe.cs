@@ -161,7 +161,8 @@ public class playerMovwe : MonoBehaviour
 
         newMove = Quaternion.Euler(0,0,transform.parent.rotation.eulerAngles.z)*newMove;
         newMove += (Vector2)transform.parent.position;
-        rigidbody.MovePosition(newMove);
+        //rigidbody.MovePosition(newMove);
+        transform.position = newMove;
         if (timeStack >= math.PI * 2)
         {
             timeStack -= math.PI * 2;
