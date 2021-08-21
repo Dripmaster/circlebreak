@@ -154,7 +154,7 @@ public class blockSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {            
-        if (!p.isReady()&&!p.isDashOrFever()&&!p.isDie()&&!p.isBoom()&&Input.GetKeyDown(KeyCode.Q))
+        if (!p.isClear()&&!p.isReady()&&!p.isDashOrFever()&&!p.isDie()&&!p.isBoom()&&Input.GetKeyDown(KeyCode.Q))
         {
             p.setBoom(this);
             boomStart = true;

@@ -211,6 +211,10 @@ public class playerMovwe : MonoBehaviour
         } while (!changeState);
         isSmallPower = true;
     }
+    public bool isClear()
+    {
+        return currentState == circleStates.clear;
+    }
     public void GameClear()
     {
         changeState = true;
