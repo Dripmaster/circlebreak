@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class blockBase : MonoBehaviour
 {
+    [SerializeField] protected BlockEffects effector;
+    [SerializeField] public SpriteRenderer spriteRenderer;
     public playerMovwe _playerMove;
     protected Vector2 dest;
     protected float timeOfSpawn;
     protected float eTime;
     protected bool isSpawning;
+
+
+    
     // Start is called before the first frame update
     void Awake()
     {
-        
     }
 
     // Update is called once per frame
@@ -25,6 +29,7 @@ public class blockBase : MonoBehaviour
             {
                 eTime = timeOfSpawn;
                 isSpawning = false;
+                effector.OnLand();
             }
             Vector2 newDest = dest;
             newDest.x *= _playerMove.GetBigCircleRatio().x;
@@ -40,7 +45,7 @@ public class blockBase : MonoBehaviour
         isSpawning = false;
         eTime = 0;
     }
-    public void setDest(float theta, float Range,float _timeOfSpawn,playerMovwe p)
+    public void setDest(float theta, float Range,float _timeOfSpawn, playerMovwe p)
     {
         _playerMove = p;
         isSpawning = true;
@@ -53,6 +58,8 @@ public class blockBase : MonoBehaviour
         transform.localRotation = Quaternion.Euler(0, 0,Mathf.Rad2Deg*-theta);
 
         timeOfSpawn = _timeOfSpawn;
+
+        GetComponentInChildren<Animator>().SetFloat("Speed", 1 / _timeOfSpawn);
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -61,6 +68,16 @@ public class blockBase : MonoBehaviour
             if(!_playerMove.isDashOrFever())
             {
                 _playerMove.blockCollisionEnter(this);
+            }
+            if (_playerMove.isFever())
+            {
+                _playerMove.effector.OnBlockBreak();
+                gameObject.SetActive(false);
+            }
+            if (_playerMove.isBoom())
+            {
+                _playerMove.effector.OnBlockBreak();
+                gameObject.SetActive(false);
             }
         }
         if (!isSpawning && collision.tag == "dashCollider")

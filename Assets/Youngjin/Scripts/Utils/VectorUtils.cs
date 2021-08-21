@@ -27,7 +27,7 @@ class VectorUtils
     /// <returns>negative if left is smaller, 0 if same, 1 if left is bigger</returns>
     public static float CompareSize(Vector2 left, Vector2 right)
     {
-        return left.x * left.x + left.y * left.y - right.x * right.x + right.y * right.y;
+        return left.x * left.x + left.y * left.y - (right.x * right.x + right.y * right.y);
     }
     /// <summary>
     /// Compares magnitude of the vector with a float not using square root and returns diffrence

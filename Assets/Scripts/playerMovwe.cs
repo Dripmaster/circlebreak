@@ -25,6 +25,7 @@ public class playerMovwe : MonoBehaviour
     public float rangeSpeed = 1;
     public float invincibleTime = 0.4f;
     public float moveSpeedReloadTime = 0.4f;
+    public float clearSpeedStopDuration = 3f;
 
     [Header("DashValues")]
     public float dashCoolTime = 0.5f;
@@ -83,7 +84,7 @@ public class playerMovwe : MonoBehaviour
         while (true)
         {
             changeState = false;
-            yield return StartCoroutine(Enum.GetName(typeof(circleStates), currentState));
+            yield return StartCoroutine(currentState.ToString());
         }
     }
     IEnumerator move()
@@ -92,6 +93,7 @@ public class playerMovwe : MonoBehaviour
         float eTime = 0;
         isSmallPower = true;
         float speedScale = 0;
+        effector.TurnWalkParticle(true);
         do
         {
             if (dashCoolTimeTimer >= 0)
@@ -111,7 +113,7 @@ public class playerMovwe : MonoBehaviour
             {
                 speedScale = Mathf.Lerp(0, 1, eTime / moveSpeedReloadTime);
                 eTime += Time.unscaledDeltaTime;
-                if (eTime >= speedScale)
+                if (eTime >= moveSpeedReloadTime)
                 {
                     speedScale = 1;
                 }
@@ -121,6 +123,7 @@ public class playerMovwe : MonoBehaviour
             yield return null;
             transform.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * GetCircleRotation());////////호출 위치 수정이 필요할 수 있음
         } while (!changeState);
+        effector.TurnWalkParticle(false);
     }
     public void setDashCollider(bool value)
     {
@@ -164,24 +167,99 @@ public class playerMovwe : MonoBehaviour
             timeStack -= math.PI * 2;
         }
     }
+    enum DieCause
+    {
+        block = 0,
+        wall = 1,
+        center = 2,
+    }
+    DieCause dieCause; 
     IEnumerator die()
     {
+        Debug.Log("죽은이유: "+dieCause);
+        effector.OnDead();
         do
         {
-           
             yield return null;
         } while (!changeState);
     }
+
+    [Header("FeverValues")]
+    public float feverDuration = 10f;
+    public float feverSpeed = 5;
+    public void setFever()
+    {
+        changeState = true;
+        currentState = circleStates.fever;
+    }
+    public bool isFever() { return currentState == circleStates.fever; }
     IEnumerator fever()
     {
+        float startTime = 0;
         do
         {
-
+            startTime += Time.unscaledDeltaTime;
+            if (startTime >= feverDuration)
+            {
+                changeState = true;
+                currentState = circleStates.move;
+            }
+            rotationCircle(feverSpeed);
+            inputMoveTask();
             yield return null;
+            transform.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * GetCircleRotation());////////호출 위치 수정이 필요할 수 있음
         } while (!changeState);
         isSmallPower = true;
     }
-
+    public bool isClear()
+    {
+        return currentState == circleStates.clear;
+    }
+    public void GameClear()
+    {
+        changeState = true;
+        currentState = circleStates.clear;
+    }
+    public bool isReady()
+    {
+        return currentState == circleStates.ready;
+    }
+    public void ReadyDone()
+    {
+        changeState = true;
+        currentState = circleStates.move;
+    }
+    IEnumerator ready()
+    {
+        do
+        {
+            yield return null;
+        } while (!changeState);
+    }
+    IEnumerator clear()
+    {
+        float eTime = 0;
+        isSmallPower = true;
+        float speedScale = 0;
+        effector.TurnWalkParticle(true);
+        do
+        {
+            if (eTime <= clearSpeedStopDuration)
+            {
+                speedScale = Mathf.Lerp(0, 1, eTime / clearSpeedStopDuration);
+                eTime += Time.unscaledDeltaTime;
+                if (eTime >= clearSpeedStopDuration)
+                {
+                    speedScale = 1;
+                }
+            }
+            rotationCircle(turnSpeed * (1-speedScale));
+            yield return null;
+            transform.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * GetCircleRotation());////////호출 위치 수정이 필요할 수 있음
+        } while (!changeState);
+        effector.TurnWalkParticle(false);
+        isSmallPower = false;
+    }
     [Header("BoomValues")]
     public float chargeDuration = 0.2f;
     public float chargeDistance = 0.3f;
@@ -265,6 +343,7 @@ public class playerMovwe : MonoBehaviour
         } while (!changeState);
         isSmallPower = true;
     }
+
     public void setBoom(blockSpawner spawner)
     {
         currentState = circleStates.boom;
@@ -272,6 +351,7 @@ public class playerMovwe : MonoBehaviour
         this.spawner = spawner;
 
     }
+
     public bool isBoom()
     {
         return currentState == circleStates.boom;
@@ -290,14 +370,21 @@ public class playerMovwe : MonoBehaviour
             yield return null;
         } while (!changeState);
     }
+
     void Update()
     {
 
         Vector2 currentBigCircleScale = transform.parent.localScale;
         bigCircleRatio = currentBigCircleScale / normalCircleScale;
-        if (Input.GetKeyDown(KeyCode.R))//debug용 리셋
+        if (Input.GetKey(KeyCode.Alpha5) && Input.GetKey(KeyCode.Alpha0) && Input.GetKeyDown(KeyCode.R))//debug용 리셋
         {
             initValues();
+            ReadyDone();
+        }
+        if (Input.GetKey(KeyCode.Alpha5)&& Input.GetKey(KeyCode.Alpha0) && Input.GetKeyDown(KeyCode.C))//debug용 치트키
+        {
+            changeState = true;
+            currentState = circleStates.clear;
         }
     }
     public float GetCircleRotation()
@@ -308,7 +395,7 @@ public class playerMovwe : MonoBehaviour
     {
         timeStack = -math.PI / 2;
         Range = 3;
-        currentState = circleStates.move;
+        currentState = circleStates.ready;
         changeState = true;
         fowardDirection = 1;
         normalCircleScale = transform.parent.localScale;
@@ -321,6 +408,11 @@ public class playerMovwe : MonoBehaviour
     }
     void inputMoveTask()
     {
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+            effector.OnTurn(true);
+        else if (Input.GetKeyDown(KeyCode.DownArrow))
+            effector.OnTurn(false);
+
         if (Input.GetKey(KeyCode.UpArrow))
         {
             Range += Time.deltaTime* rangeSpeed;
@@ -332,7 +424,7 @@ public class playerMovwe : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (dashCoolTimeTimer <= 0)
+            if (currentState!=circleStates.fever&&dashCoolTimeTimer <= 0)
             {
                 changeState = true;
                 currentState = circleStates.dash;
@@ -342,12 +434,14 @@ public class playerMovwe : MonoBehaviour
     }
     enum circleStates
     {
+        ready = -1,
         idle = 0,
         move = 1,
         dash = 2,
         die = 3,
         fever = 4,
         boom = 5,//(꽝찍는상태)
+        clear = 6,
     }
     public bool isDashOrFever()
     {
@@ -359,14 +453,17 @@ public class playerMovwe : MonoBehaviour
         {
             currentState = circleStates.die;
             changeState = true;
+
+            dieCause = DieCause.block;
         }
     }
     public void wallCollisionEnter(blockBase block)
     {
-        if (currentState != circleStates.die && currentState != circleStates.boom)
+        if (currentState != circleStates.die)
         {
             currentState = circleStates.die;
             changeState = true;
+            dieCause = DieCause.wall;
         }
     }
     public void centerCollisionEnter(blockSpawner center)
@@ -376,7 +473,7 @@ public class playerMovwe : MonoBehaviour
             effector.OnBoom();
             spawner.cutCenter();
             isSpawned = true;
-            spawner.SpawnBlocks(spawner.SpawnCount, spawner.TimeOfSpawn);
+            spawner.SpawnBlocks();
         }
         else
         {
@@ -384,6 +481,7 @@ public class playerMovwe : MonoBehaviour
             {
                 currentState = circleStates.die;
                 changeState = true;
+                dieCause = DieCause.center;
             }
         }
     }

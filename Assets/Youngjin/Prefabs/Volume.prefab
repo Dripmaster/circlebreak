@@ -38,12 +38,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 329229799173025815}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sharedProfile: {fileID: 11400000, guid: ee98efb843eab9242afec8444d2cf4c7, type: 2}
+  sharedProfile: {fileID: 11400000, guid: 20851b20b69982040883856f1573c5f6, type: 2}
   isGlobal: 1
   blendDistance: 0
   weight: 1

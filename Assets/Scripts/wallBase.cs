@@ -6,14 +6,14 @@ public class wallBase : blockBase
 {
     public int countOfDestroy = 2;
     public float destroyDuration = 0.3f;
-    bool isBreak;
+    protected bool isBreak;
     // Start is called before the first frame update
     void Awake()
     {
     }
 
     // Update is called once per frame
-    void Update()
+    protected void Update()
     {
         if (isSpawning)
         {
@@ -22,6 +22,7 @@ public class wallBase : blockBase
             {
                 eTime = timeOfSpawn;
                 isSpawning = false;
+                effector.OnLand();
             }
             Vector2 newDest = dest;
             newDest.x *= _playerMove.GetBigCircleRatio().x;
@@ -40,7 +41,7 @@ public class wallBase : blockBase
             }
         }
     }
-    private void OnEnable()
+    protected void OnEnable()
     {
         isSpawning = false;
         isBreak = false;
@@ -48,9 +49,18 @@ public class wallBase : blockBase
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(!isBreak && !isSpawning&&collision.tag == "Player")
+        if (collision.tag == "Player")
         {
-             _playerMove.wallCollisionEnter(this);
+            if (!_playerMove.isFever() && !isBreak && !isSpawning)
+            {
+                _playerMove.wallCollisionEnter(this);
+            }
+            else
+            if (_playerMove.isFever())
+            {
+                _playerMove.effector.OnBlockBreak();//OnWallBreak?
+                gameObject.SetActive(false);
+            }
         }
     }
     public void OnLineEnter(Collider2D collision)

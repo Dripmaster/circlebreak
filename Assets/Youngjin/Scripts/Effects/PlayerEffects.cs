@@ -11,12 +11,15 @@ public class PlayerEffects : MonoBehaviour
 
     [Header("References")]
     [SerializeField] CameraEffector cameraEffector;
-    [SerializeField] EffectsManager effectsManager;
+    [SerializeField] public EffectsManager effectsManager;
     [SerializeField] playerMovwe playerScript;
+    [SerializeField] LevelManager levelManager;
+    [SerializeField] MapEffects mapEffector;
 
     [Header("Design Settings")]
     [SerializeField] Color mainColor;
     [SerializeField] Color secondColor;
+    [SerializeField] public Color coreColor;
 
     [Header("Dash values")]
     [SerializeField] float dashSpeed;
@@ -31,9 +34,30 @@ public class PlayerEffects : MonoBehaviour
 
     float currentDashSpeed;
 
+    public void OnDead()
+    {
+        effectsManager.StartParticle(effectsManager.dieParticle);
+        cameraEffector.Shake(0.75f, 0.4f);
+        GetComponent<SpriteRenderer>().enabled = false;
+        mapEffector.OnDead();
+    }
     private void Awake()
     {
-        effectsManager.InitColors(mainColor, secondColor);
+        effectsManager.InitColors(mainColor, secondColor, coreColor);
+    }
+    public void TurnWalkParticle(bool on)
+    {
+        if (on)
+            effectsManager.StartParticle(effectsManager.walkParticle);
+        else
+            effectsManager.walkParticle.gameObject.SetActive(false);
+    }
+    public void OnTurn(bool isUp)
+    {
+        if (isUp)
+            effectsManager.StartParticle(effectsManager.turnParticleUp);
+        else
+            effectsManager.StartParticle(effectsManager.turnParticleDown);
     }
     public void StartDash()
     {
@@ -43,7 +67,7 @@ public class PlayerEffects : MonoBehaviour
     {
         //slow motion + camera zoom in (exp)
         currentDashSpeed = 0f;
-        cameraEffector.SetFollow(transform.position / 2);
+        cameraEffector.SetFollow(transform.position * 0.7f);
         effectsManager.StartParticle(effectsManager.preDashParticle);
         StartCoroutine(ZoomCamera(preDashZoomMagnitude, preDashDuration, CurveType.Exponential));
         float eTime = 0f;
@@ -80,7 +104,7 @@ public class PlayerEffects : MonoBehaviour
     IEnumerator BoomCoroutine()
     {
         float eTime = 0f;
-        cameraEffector.SetFollow(transform.position / 2);
+        cameraEffector.SetFollow(transform.position * 1f);
         StartCoroutine(ZoomCamera(boomZoom, playerScript.chargeDuration, CurveType.Exponential));
         while (eTime < playerScript.chargeDuration - boomWaitInAirDuration)
         {
@@ -132,8 +156,10 @@ public class PlayerEffects : MonoBehaviour
     }
     public void OnBlockBreak()
     {
-        Instantiate(effectsManager.blockDestroyPrefab,transform.position, Quaternion.identity);
+        GameObject g = Instantiate(effectsManager.blockDestroyPrefab,transform.position, Quaternion.identity);
+        g.SetActive(true);
         cameraEffector.Shake();
+        levelManager.SetScore(levelManager.Score + levelManager.NormalWallScore);
     }
     public float GetDashSpeed()
     {
