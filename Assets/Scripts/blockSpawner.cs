@@ -159,7 +159,7 @@ public class blockSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {            
-        if (!p.isReady()&&!p.isDashOrFever()&&!p.isDie()&&!p.isBoom()&&Input.GetKeyDown(KeyCode.Q))
+        if (!p.isClear()&&!p.isReady()&&!p.isDashOrFever()&&!p.isDie()&&!p.isBoom()&&Input.GetKeyDown(KeyCode.Q))
         {
             p.setBoom(this);
             boomStart = true;
@@ -212,6 +212,13 @@ public class blockSpawner : MonoBehaviour
         {
             g.GetComponent<blockBase>().spriteRenderer.color = wallColor;
         }
+        return g;
+    }
+    public GameObject generateObject(GameObject obj)
+    {
+        var g = Instantiate(obj);
+        g.transform.parent = transform.parent;
+        g.transform.localPosition = Vector2.zero;
         return g;
     }
     public void SpawnBlocks()
@@ -279,7 +286,21 @@ public class blockSpawner : MonoBehaviour
             float theta = UnityEngine.Random.Range(0, passiveDangerZoneDegree * Mathf.Deg2Rad);
         theta = p.getTheta()+Mathf.PI +theta- passiveDangerZoneDegree * Mathf.Deg2Rad/2;
             g.GetComponent<blockBase>().setDest(theta, RangeMin + RangeLevel * RangeIdx, TimeOfSpawn, p);
+    }
+    public GameObject SpawnButton(GameObject obj)
+    {
+        float RangeMin = p.rangeMin;
+        float RangeMax = p.rangeMax;
+        float RangeMinToMax = RangeMax - RangeMin;
+        float RangeLevel = RangeMinToMax / RangeDivCount;
 
+        GameObject g = generateObject(obj); ;
+        int RangeIdx = 0;
+        RangeIdx = UnityEngine.Random.Range(0, RangeDivCount);
+        float theta = UnityEngine.Random.Range(0, passiveDangerZoneDegree * Mathf.Deg2Rad);
+        theta = p.getTheta() + Mathf.PI + theta - passiveDangerZoneDegree * Mathf.Deg2Rad / 2;
+        g.GetComponent<blockBase>().setDest(theta, RangeMin + RangeLevel * RangeIdx, TimeOfSpawn, p);
+        return g;
     }
     bool[] usedRange;
     int rangeCount;
