@@ -6,6 +6,7 @@ public class MapEffects : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] CameraEffector cameraEffector;
+    [SerializeField] Canvas canvas;
 
     [Header("Effect Values")]
     [SerializeField] float InitialZoomOutDuration;
@@ -17,7 +18,8 @@ public class MapEffects : MonoBehaviour
     IEnumerator SceneStart()
     {
         yield return null;
-        //cameraEffector.Shake(0.4f, 0.7f);
-        StartCoroutine(cameraEffector.SetZoomCoroutine(0, InitialZoomOutDuration, TimeCurves.Exponential));
+        cameraEffector.Shake(0.4f, InitialZoomOutDuration);
+        yield return StartCoroutine(cameraEffector.SetZoomCoroutine(0, InitialZoomOutDuration, TimeCurves.Exponential));
+        canvas.renderMode = RenderMode.ScreenSpaceCamera;
     }
 }

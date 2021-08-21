@@ -44,4 +44,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraEffector: {fileID: 0}
+  canvas: {fileID: 0}
   InitialZoomOutDuration: 1.5
