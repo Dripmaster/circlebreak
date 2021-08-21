@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class clockBtn : buttonBase
 {
+    [SerializeField] GameObject particle;
     TimeMapManager mgr;
     private void Awake()
     {
@@ -16,9 +17,19 @@ public class clockBtn : buttonBase
     }
     public override void buttonAction()
     {
-        _playerMove.FowardDir *= -1;
+        Camera.main.GetComponent<CameraEffector>().Shake(0.25f);
+        _playerMove.StartCoroutine(Uturn(mgr));
+        particle.transform.parent = transform.parent;
+        particle.SetActive(true);
         isBreak = true;
-        mgr.setTimesc(mgr.timesc()*-1);
+    }
+    IEnumerator Uturn(TimeMapManager mgr)
+    {
+        int dir = _playerMove.FowardDir * -1;
+        _playerMove.FowardDir = 0;
+        yield return new WaitForSeconds(0.5f);
+        _playerMove.FowardDir = dir;
+        mgr.setTimesc(mgr.timesc() * -1);
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {

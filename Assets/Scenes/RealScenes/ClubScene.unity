@@ -269,7 +269,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   robotPrefab: {fileID: 9014289327392284540, guid: dc86ec0f9f754489cbf00f34c065f93c, type: 3}
   lazerPrefab: {fileID: 1157630900359935252, guid: 4061ea14df42b4468a228214a4d299ad, type: 3}
+  lazerLinePrefab: {fileID: 6878773261054555276, guid: 5d4367fa8664247c4b7f3b57bc16fef8, type: 3}
   _playerMove: {fileID: 303325857}
+  spawnInterval: 10
 --- !u!4 &726701654
 Transform:
   m_ObjectHideFlags: 0
@@ -315,6 +317,10 @@ PrefabInstance:
       propertyPath: moveWithCustomTransform
       value: 
       objectReference: {fileID: 1346742579}
+    - target: {fileID: 201430415, guid: a2e8e2c225efbf747a85ac30f6633dc7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 540565091, guid: a2e8e2c225efbf747a85ac30f6633dc7, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -6205,6 +6211,7 @@ MonoBehaviour:
   music: {fileID: 8300000, guid: d0acfbd17660fc9468909f656c76d5a4, type: 3}
   beatInterval: 0.38
   rotateButtonPrefab: {fileID: 6109092946390401968, guid: bbd1b8e1e9d025f46a14e70d167dc92a, type: 3}
+  uturnButtonPrefab: {fileID: 1305931237064653433, guid: cd33fd07e561c7548abbef3c0b67c0db, type: 3}
   deco: {fileID: 1406982394}
   whiteCover: {fileID: 118608328}
   decoColors:

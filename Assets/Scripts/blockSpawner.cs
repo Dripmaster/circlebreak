@@ -28,7 +28,6 @@ public class blockSpawner : MonoBehaviour
     bool boomStart;
 
     [Header("Colors")]
-    [SerializeField] Color wallColor;
     Color blockColor;
 
     [Header("MassiveSpawnValues")]
@@ -210,7 +209,6 @@ public class blockSpawner : MonoBehaviour
         }
         else if(t== blockType.wall)
         {
-            g.GetComponent<blockBase>().spriteRenderer.color = wallColor;
         }
         return g;
     }

@@ -8,6 +8,7 @@ public class DataBridge : MonoBehaviour
     static DataBridge instance = null;
 
     public int currentPoint = 0;
+    public bool isClear = false;
     protected void Awake()
     {
         if (instance == null)

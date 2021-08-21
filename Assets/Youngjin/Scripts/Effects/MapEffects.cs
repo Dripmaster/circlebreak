@@ -37,6 +37,7 @@ public class MapEffects : MonoBehaviour
         player.ReadyDone();
         blockSpawner.Activate();
         mapManager.OnReadyDone();
+
     }
     public void OnGameClear()
     {

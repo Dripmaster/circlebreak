@@ -8,6 +8,7 @@ public class RotationButton : buttonBase
     public override void buttonAction() 
     {
         pressParticle.SetActive(true);
+        Camera.main.GetComponent<CameraEffector>().Shake(0.25f);
         GameObject.FindGameObjectWithTag("MapManager").GetComponent<ClubMapManager>().OnRotationButton();
     }
 }

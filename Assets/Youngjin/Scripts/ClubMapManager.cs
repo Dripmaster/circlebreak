@@ -11,6 +11,7 @@ public class ClubMapManager : MapManager
 
 
     [SerializeField] GameObject rotateButtonPrefab;
+    [SerializeField] GameObject uturnButtonPrefab;
 
     [SerializeField] GameObject deco;
     [SerializeField] SpriteRenderer whiteCover;
@@ -49,15 +50,28 @@ public class ClubMapManager : MapManager
     }
     IEnumerator SpawnRotationButton()
     {
-        yield return new WaitForSeconds(7);
-        SpawnRotation();
-        yield return new WaitForSeconds(5);
-        SpawnRotation();
+        while(true)
+        {
+            yield return new WaitForSeconds(6);
+            SpawnRotation();
+            yield return new WaitForSeconds(6);
+            SpawnRotation();
+            yield return new WaitForSeconds(6);
+            SpawnUturn();
+            yield return new WaitForSeconds(4);
+            SpawnUturn();
+        }
+
     }
     void SpawnRotation()
     {
         GameObject g = centerSpawner.SpawnButton(rotateButtonPrefab);
-        g.transform.Rotate(0, 0, 90);
+    }
+    void SpawnUturn()
+    {
+        GameObject g = centerSpawner.SpawnButton(uturnButtonPrefab);
+        if(player.FowardDir < 0)
+            g.transform.Rotate(0, 0, 180);
     }
     IEnumerator None() { yield return null; }
     IEnumerator DecoCoroutine()

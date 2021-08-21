@@ -179,6 +179,10 @@ public class playerMovwe : MonoBehaviour
     IEnumerator die()
     {
         Debug.Log("Á×ÀºÀÌÀ¯: "+dieCause);
+        if(dieCause == DieCause.center)
+            effector.effectsManager.StartParticle(effector.effectsManager.boomCircleParticle);
+        else
+            effector.effectsManager.StartParticle(effector.effectsManager.dieParticle);
         effector.OnDead();
         do
         {

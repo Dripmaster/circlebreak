@@ -28,6 +28,8 @@ public class LevelManager : MonoBehaviour
     int currentShownScore;
     int currentScore = 0;
 
+    bool countingTime = false;
+    float playedTime = 0f;
 
     public void SetScore(int score)
     {
@@ -42,6 +44,11 @@ public class LevelManager : MonoBehaviour
         if(score == targetScore)
         {
             mapEffector.OnGameClear();
+            DataBridge.Singleton.isClear = true;
+            if (PlayerPrefs.GetFloat("Record" + DataBridge.Singleton.currentPoint, float.MaxValue) > playedTime)
+                PlayerPrefs.SetFloat("Record" + DataBridge.Singleton.currentPoint, playedTime);
+            if (PlayerPrefs.GetInt("CurrentPoint", 1) == DataBridge.Singleton.currentPoint)
+                PlayerPrefs.SetInt("CurrentPoint", DataBridge.Singleton.currentPoint + 1);
         }
     }
     IEnumerator SetCurrentScore(int score)
