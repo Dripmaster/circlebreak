@@ -15,15 +15,21 @@ public class playerMovwe : MonoBehaviour
     [Header("References")]
     public  PlayerEffects effector;
     new Rigidbody2D rigidbody;
+    public CapsuleCollider2D cap;
+
 
     [Header("Values")]
     public float rangeMax =4;
     public float rangeMin =2;
     public float turnSpeed = 1;
     public float rangeSpeed = 1;
-    public float dashCoolTime = 0.5f;
     public float invincibleTime = 0.4f;
+    public float moveSpeedReloadTime = 0.4f;
+
+    [Header("DashValues")]
+    public float dashCoolTime = 0.5f;
     float dashCoolTimeTimer = 0f;
+
 
     bool isSmallPower;
     Vector2 normalCircleScale;
@@ -70,6 +76,7 @@ public class playerMovwe : MonoBehaviour
     {
         initValues();
         StartCoroutine(FSMmain());
+        cap.enabled = false;
     }
     IEnumerator FSMmain()
     {
@@ -82,6 +89,7 @@ public class playerMovwe : MonoBehaviour
     IEnumerator move()
     {
         float StartTime = 0;
+        float eTime = 0;
         isSmallPower = true;
         float speedScale = 0;
         do
@@ -93,10 +101,18 @@ public class playerMovwe : MonoBehaviour
             if (isSmallPower)
             {
                 StartTime += Time.unscaledDeltaTime;
-                speedScale = Mathf.Lerp(0,1, StartTime/ invincibleTime);
                 if (StartTime>= invincibleTime)//대쉬끝, 꽝찍기 끝 등 하고 move 오면 잠시 무적시간
                 {
                     isSmallPower = false;
+                    speedScale = 1;
+                }
+            }
+            if (eTime <= moveSpeedReloadTime)
+            {
+                speedScale = Mathf.Lerp(0, 1, eTime / moveSpeedReloadTime);
+                eTime += Time.unscaledDeltaTime;
+                if (eTime >= speedScale)
+                {
                     speedScale = 1;
                 }
             }
@@ -105,6 +121,10 @@ public class playerMovwe : MonoBehaviour
             yield return null;
             transform.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * GetCircleRotation());////////호출 위치 수정이 필요할 수 있음
         } while (!changeState);
+    }
+    public void setDashCollider(bool value)
+    {
+        cap.enabled = value;
     }
     IEnumerator dash()
     {
@@ -128,6 +148,7 @@ public class playerMovwe : MonoBehaviour
             yield return null;
             transform.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * GetCircleRotation());////////호출 위치 수정이 필요할 수 있음
         } while (!changeState);
+        cap.enabled = false;
         isSmallPower = true;
     }
     void rotationCircle(float speed)
@@ -151,12 +172,31 @@ public class playerMovwe : MonoBehaviour
             yield return null;
         } while (!changeState);
     }
+
+    [Header("FeverValues")]
+    public float feverDuration = 10f;
+    public float feverSpeed = 5;
+    public void setFever()
+    {
+        changeState = true;
+        currentState = circleStates.fever;
+    }
+    public bool isFever() { return currentState == circleStates.fever; }
     IEnumerator fever()
     {
+        float startTime = 0;
         do
         {
-
+            startTime += Time.unscaledDeltaTime;
+            if (startTime >= feverDuration)
+            {
+                changeState = true;
+                currentState = circleStates.move;
+            }
+            rotationCircle(feverSpeed);
+            inputMoveTask();
             yield return null;
+            transform.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * GetCircleRotation());////////호출 위치 수정이 필요할 수 있음
         } while (!changeState);
         isSmallPower = true;
     }
@@ -311,7 +351,7 @@ public class playerMovwe : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (dashCoolTimeTimer <= 0)
+            if (currentState!=circleStates.fever&&dashCoolTimeTimer <= 0)
             {
                 changeState = true;
                 currentState = circleStates.dash;
@@ -335,6 +375,14 @@ public class playerMovwe : MonoBehaviour
     public void blockCollisionEnter(blockBase block)
     {
         if (currentState != circleStates.die && currentState != circleStates.boom && !isSmallPower)
+        {
+            currentState = circleStates.die;
+            changeState = true;
+        }
+    }
+    public void wallCollisionEnter(blockBase block)
+    {
+        if (currentState != circleStates.die && currentState != circleStates.boom)
         {
             currentState = circleStates.die;
             changeState = true;

@@ -6,11 +6,10 @@ public class blockBase : MonoBehaviour
 {
     [SerializeField] BlockEffects effector;
     public playerMovwe _playerMove;
-
-    Vector2 dest;
-    float timeOfSpawn;
-    float eTime;
-    bool isSpawning;
+    protected Vector2 dest;
+    protected float timeOfSpawn;
+    protected float eTime;
+    protected bool isSpawning;
     // Start is called before the first frame update
     void Awake()
     {
@@ -61,14 +60,23 @@ public class blockBase : MonoBehaviour
     {
         if(!isSpawning&&collision.tag == "Player")
         {
-            if(_playerMove.isDashOrFever())
+            if(!_playerMove.isDashOrFever())
+            {
+                _playerMove.effector.OnBlockBreak();
+                _playerMove.blockCollisionEnter(this);
+            }
+            if (_playerMove.isFever())
             {
                 _playerMove.effector.OnBlockBreak();
                 gameObject.SetActive(false);
             }
-            else
+        }
+        if (!isSpawning && collision.tag == "dashCollider")
+        {
+            if (_playerMove.isDashOrFever())
             {
-                _playerMove.blockCollisionEnter(this);
+                _playerMove.effector.OnBlockBreak();
+                gameObject.SetActive(false);
             }
         }
     }
