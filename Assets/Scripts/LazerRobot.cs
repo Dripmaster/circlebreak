@@ -56,10 +56,10 @@ public class LazerRobot : MonoBehaviour
             transform.position = Vector2.Lerp(transform.position, destination, Time.deltaTime * 2);
             if(Vector2.Distance(transform.position, destination) < 0.1) {
                 RestEndDelegate endAction = () => {
-                    float innerCircleRadius = 3.0f;
+                    float innerCircleRadius = 1.25f;
                     var (innerCircleTangent1, innerCircleTangent2) = getTangentToCircle(innerCircleRadius);
 
-                    float outerCircleRadius = 4.5f;
+                    float outerCircleRadius = 3f;
                     var (outerCircleTangent1, outerCircleTangent2) = getTangentToCircle(outerCircleRadius);
 
 
