@@ -39,15 +39,23 @@ public class TimeMapManager : MapManager
     {
         base.OnEnable();
 
+        ActionClass a2 = new ActionClass();
+        a2.startTime = 9f;
+        a2.coroutineName = "spawnClock";
+        Actions.Add(a2);
+        ActionClass a5 = new ActionClass();
+        a5.startTime = 18f;
+        a5.coroutineName = "spawnClock";
+        Actions.Add(a5);
+        ActionClass a6 = new ActionClass();
+        a6.startTime = 27f;
+        a6.coroutineName = "spawnClock";
+        Actions.Add(a6);
         ActionClass a1 = new ActionClass();
-        a1.startTime = 5f;
+        a1.startTime = 30f;
         a1.coroutineName = "spawnYolo";
         Actions.Add(a1);
 
-        ActionClass a2 = new ActionClass();
-        a2.startTime = 10f;
-        a2.coroutineName = "spawnClock";
-        Actions.Add(a2);
     }
     public float timesc()
     {

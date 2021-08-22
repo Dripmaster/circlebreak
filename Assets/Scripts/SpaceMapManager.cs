@@ -25,39 +25,13 @@ public class SpaceMapManager : MapManager
         base.OnEnable();
         StartCoroutine(spawnStar());
         post = p.profile;
-        ActionClass a1 = new ActionClass();
-        a1.startTime = 2f;
-        a1.coroutineName = "colorDistort";
-        Actions.Add(a1);
-
-        ActionClass aa = new ActionClass();
-        aa.startTime = 4f;
-        aa.coroutineName = "colorDistort";
-        Actions.Add(aa);
-
-        ActionClass aaa = new ActionClass();
-        aaa.startTime = 6f;
-        aaa.coroutineName = "colorDistort";
-        Actions.Add(aaa);
-
-        ActionClass a1a = new ActionClass();
-        a1a.startTime = 8f;
-        a1a.coroutineName = "colorDistort";
-        Actions.Add(a1a);
-
-        ActionClass aaaa = new ActionClass();
-        aaaa.startTime = 10f;
-        aaaa.coroutineName = "colorDistort";
-        Actions.Add(aaaa);
-
-        ActionClass a1aa = new ActionClass();
-        a1aa.startTime = 12f;
-        a1aa.coroutineName = "colorDistort";
-        Actions.Add(a1aa);
-
         ActionClass a2 = new ActionClass();
         a2.startTime = 15f;
         a2.coroutineName = "distort";
+
+        ActionClass a3 = new ActionClass();
+        a3.startTime = 30f;
+        a3.coroutineName = "spawnYolo";
         Actions.Add(a2);
     }
     IEnumerator spawnStar()
@@ -66,7 +40,13 @@ public class SpaceMapManager : MapManager
         {
             yield return new WaitForSeconds(5);
             centerSpawner.SpawnButton(starObject,5);
-        } while (true);
+        } while (!player.isClear()&&!player.isDie());
+    }
+    IEnumerator spawnYolo()
+    {
+        GameObject g = centerSpawner.SpawnButton(YoloObject);
+        g.transform.Rotate(0, 0, 90);
+        yield return null;
     }
     LensDistortion lensDistortion;
     ChromaticAberration chromaticAberration;

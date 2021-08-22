@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class yoloScript : buttonBase
 {
-
     bool isTriggerStart;
     bool isUsed;
     // Start is called before the first frame update
