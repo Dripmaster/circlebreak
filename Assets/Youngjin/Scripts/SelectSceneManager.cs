@@ -30,6 +30,8 @@ public class SelectSceneManager : MonoBehaviour
     int currentPoint;
     Animator animator;
 
+    static bool isFirst = true;
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -37,6 +39,12 @@ public class SelectSceneManager : MonoBehaviour
     private void Start()
     {
         Init();
+        if (isFirst)
+        {
+            isFirst = false;
+        }
+        else
+            SoundManager.Singleton.PlayMusic(SoundManager.Singleton.titleMusic);
     }
     IEnumerator MoveMap(int dir)
     {
@@ -44,6 +52,8 @@ public class SelectSceneManager : MonoBehaviour
             || (dir == -1 && currentPoint == 0) ||
             (dir + currentPoint > PlayerPrefs.GetInt("CurrentPoint", 1)))
             dir = 0;
+        if(dir != 0)
+            SoundManager.Singleton.PlaySound(SoundManager.Singleton.mapMoveSound);
         cameraEffector.SetFollow(mapPoints[currentPoint + dir].position);
         StartCoroutine(ZoomCamera(moveZoom, 0.3f));
         isMovable = false;
@@ -65,14 +75,14 @@ public class SelectSceneManager : MonoBehaviour
     {
         for(int i=0; i<clearText.Length; i++)
         {
-            if(PlayerPrefs.GetFloat("Record"+i,float.MaxValue) == float.MaxValue)
+            if(PlayerPrefs.GetFloat("Record"+(i+1),float.MaxValue) == float.MaxValue)
             {
                 clearText[i].text = "";
                 timeText[i].text = "";
             }
             else
             {
-                float playedTime = PlayerPrefs.GetFloat("Record" + i, float.MaxValue);
+                float playedTime = PlayerPrefs.GetFloat("Record" + (i+1), float.MaxValue);
                 clearText[i].text = "Clear !";
                 timeText[i].text = ((int)(playedTime / 60)).ToString() + ":" + ((int)(playedTime % 60)).ToString().PadLeft(2,'0');
             }
@@ -111,6 +121,8 @@ public class SelectSceneManager : MonoBehaviour
     }
     IEnumerator SelectMap()
     {
+
+        SoundManager.Singleton.PlaySound(SoundManager.Singleton.mapSelectSound);
         animator.SetTrigger("Select");
         StartCoroutine(ZoomCamera(sceneChangeZoom, 0.5f));
         fixCameraToPlayer = true;
@@ -144,7 +156,10 @@ public class SelectSceneManager : MonoBehaviour
         DataBridge.Singleton.currentPoint = currentPoint;
         //Change Scene
         if(sceneNames[currentPoint] != "")
+        {
+            SoundManager.Singleton.StopMusic();
             SceneManager.LoadScene(sceneNames[currentPoint]);
+        }
     }
     public void OnEnterAnimDone()
     {
@@ -163,5 +178,10 @@ public class SelectSceneManager : MonoBehaviour
         }
         if (fixCameraToPlayer)
             cameraEffector.SetFollow(playerTransform.GetChild(0).position);
+
+        if(Input.GetKeyDown(KeyCode.Alpha8))
+        {
+            PlayerPrefs.DeleteAll();
+        }
     }
 }

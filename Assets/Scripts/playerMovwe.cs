@@ -2,9 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
-using UnityEditorInternal;
 using UnityEngine;
-using UnityEngine.Android;
 
 public class playerMovwe : MonoBehaviour
 {

@@ -6,6 +6,11 @@ using UnityEngine.SceneManagement;
 public class UIButtonListener : MonoBehaviour
 {
     [SerializeField] SpriteRenderer whiteCover;
+    private void Start()
+    {
+
+        SoundManager.Singleton.PlayMusic(SoundManager.Singleton.titleMusic);
+    }
     IEnumerator CoverToStartCoroutine()
     {
         float eTime = 0f;
@@ -20,10 +25,13 @@ public class UIButtonListener : MonoBehaviour
     }
     public void switchToGameScene()
     {
+        SoundManager.Singleton.PlaySound(SoundManager.Singleton.buttonClickSound);
         StartCoroutine(CoverToStartCoroutine());
     }
 
-    public void exitGame() {
+    public void exitGame()
+    {
+        SoundManager.Singleton.PlaySound(SoundManager.Singleton.buttonClickSound);
         Application.Quit();
     }
     

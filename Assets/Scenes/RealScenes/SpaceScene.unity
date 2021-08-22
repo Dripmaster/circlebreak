@@ -2123,6 +2123,14 @@ PrefabInstance:
       propertyPath: starSpawnTime
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 7406258168703119856, guid: 4133419a514b3c547a27b4821bb2728d, type: 3}
+      propertyPath: starfallSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 14e6a2f2d22954e0cb91cc128f14d673, type: 3}
+    - target: {fileID: 7406258168703119856, guid: 4133419a514b3c547a27b4821bb2728d, type: 3}
+      propertyPath: distortionSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 71cf4c64642c34a41abd9b6f80085d47, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4133419a514b3c547a27b4821bb2728d, type: 3}
 --- !u!1001 &1452143146550755103
@@ -2384,7 +2392,7 @@ PrefabInstance:
       objectReference: {fileID: 1521859505}
     - target: {fileID: 3985731617022263901, guid: 959eee265e677334c9c13343a3b65a04, type: 3}
       propertyPath: targetScore
-      value: 100000
+      value: 15000
       objectReference: {fileID: 0}
     - target: {fileID: 3985731617022263901, guid: 959eee265e677334c9c13343a3b65a04, type: 3}
       propertyPath: NormalWallScore

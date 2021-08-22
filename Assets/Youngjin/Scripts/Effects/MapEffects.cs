@@ -31,8 +31,10 @@ public class MapEffects : MonoBehaviour
     IEnumerator SceneStart()
     {
         yield return null;
+
         cameraEffector.Shake(0.2f, InitialZoomOutDuration * 0.7f);
         yield return StartCoroutine(cameraEffector.SetZoomCoroutine(0, InitialZoomOutDuration, TimeCurves.ExponentialPingPong));
+        
         canvas.renderMode = RenderMode.ScreenSpaceCamera;
         player.ReadyDone();
         blockSpawner.Activate();
@@ -47,6 +49,7 @@ public class MapEffects : MonoBehaviour
         main.startColor = blockSpawner.MainColor;
         mapManager.OnGameClear();
         StartCoroutine(GameClearCoroutine());
+        SoundManager.Singleton.PlaySound(SoundManager.Singleton.clearSound);
     }
     IEnumerator GameClearCoroutine()
     {
@@ -75,6 +78,7 @@ public class MapEffects : MonoBehaviour
         {
             go.SetActive(false);
 
+            SoundManager.Singleton.PlaySound(SoundManager.Singleton.blockBreakSound,0.4f);
             GameObject g = Instantiate(player.effector.effectsManager.blockDestroyPrefab, go.transform.position, Quaternion.identity);
             g.SetActive(true);
             yield return new WaitForSeconds(0.15f);
@@ -84,6 +88,7 @@ public class MapEffects : MonoBehaviour
         int shakeCount = 0;
         Vector3 originalPosition = player.transform.position;
         canvas.renderMode = RenderMode.WorldSpace;
+        bool isPlay = false;
         while (eTime < gameClearExplodeDuration)
         {
             yield return null;
@@ -100,6 +105,12 @@ public class MapEffects : MonoBehaviour
             }
             if (eTime > gameClearExplodeDuration/3)
             {
+                if(isPlay == false)
+                {
+                    SoundManager.Singleton.PlaySound(SoundManager.Singleton.duduMusic);
+                }
+                isPlay = true;
+                
                 float x = TimeCurves.Exponential((eTime-gameClearExplodeDuration/3) / (gameClearExplodeDuration*2/3));
                 player.transform.position = Vector3.Lerp(originalPosition, new Vector3(originalPosition.x,
                     6.5f, 0), x);

@@ -40,6 +40,7 @@ public class PlayerEffects : MonoBehaviour
         cameraEffector.Shake(0.75f, 0.4f);
         GetComponent<SpriteRenderer>().enabled = false;
         mapEffector.OnDead();
+        SoundManager.Singleton.PlaySound(SoundManager.Singleton.deathSound);
     }
     private void Start()
     {
@@ -75,6 +76,7 @@ public class PlayerEffects : MonoBehaviour
         cameraEffector.SetFollow(transform.position * 0.7f);
         effectsManager.StartParticle(effectsManager.preDashParticle);
         StartCoroutine(ZoomCamera(preDashZoomMagnitude, preDashDuration, CurveType.Exponential));
+        SoundManager.Singleton.PlaySound(SoundManager.Singleton.dashSound);
         float eTime = 0f;
         while (eTime < preDashDuration)
         {
@@ -133,6 +135,8 @@ public class PlayerEffects : MonoBehaviour
     }
     IEnumerator OnBoomCoroutine()
     {
+
+        SoundManager.Singleton.PlaySound(SoundManager.Singleton.boomSound);
         effectsManager.StartParticle(effectsManager.boomCircleParticle);
         cameraEffector.Shake(0.7f, 0.5f);
         yield return null;
@@ -161,6 +165,8 @@ public class PlayerEffects : MonoBehaviour
     }
     public void OnBlockBreak()
     {
+
+        SoundManager.Singleton.PlaySound(SoundManager.Singleton.blockBreakSound);
         GameObject g = Instantiate(effectsManager.blockDestroyPrefab,transform.position, Quaternion.identity);
         g.SetActive(true);
         cameraEffector.Shake();
