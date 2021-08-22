@@ -75,14 +75,14 @@ public class SelectSceneManager : MonoBehaviour
     {
         for(int i=0; i<clearText.Length; i++)
         {
-            if(PlayerPrefs.GetFloat("Record"+i,float.MaxValue) == float.MaxValue)
+            if(PlayerPrefs.GetFloat("Record"+(i+1),float.MaxValue) == float.MaxValue)
             {
                 clearText[i].text = "";
                 timeText[i].text = "";
             }
             else
             {
-                float playedTime = PlayerPrefs.GetFloat("Record" + i, float.MaxValue);
+                float playedTime = PlayerPrefs.GetFloat("Record" + (i+1), float.MaxValue);
                 clearText[i].text = "Clear !";
                 timeText[i].text = ((int)(playedTime / 60)).ToString() + ":" + ((int)(playedTime % 60)).ToString().PadLeft(2,'0');
             }
@@ -178,5 +178,10 @@ public class SelectSceneManager : MonoBehaviour
         }
         if (fixCameraToPlayer)
             cameraEffector.SetFollow(playerTransform.GetChild(0).position);
+
+        if(Input.GetKeyDown(KeyCode.Alpha8))
+        {
+            PlayerPrefs.DeleteAll();
+        }
     }
 }

@@ -51,6 +51,11 @@ public class LevelManager : MonoBehaviour
                 PlayerPrefs.SetInt("CurrentPoint", DataBridge.Singleton.currentPoint + 1);
         }
     }
+    private void Update()
+    {
+        if(countingTime)
+            playedTime += Time.unscaledDeltaTime;
+    }
     IEnumerator SetCurrentScore(int score)
     {
         float eTime = 0f;
@@ -97,6 +102,7 @@ public class LevelManager : MonoBehaviour
         }
         targetScoreText.text = string.Format("/{0:#,###}", targetScore);
         targetScoreText.transform.localScale = new Vector3(1, 1, 1);
+        countingTime = true;
     }
     public void ChangeScene()
     {
