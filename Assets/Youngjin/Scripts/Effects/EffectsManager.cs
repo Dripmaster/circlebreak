@@ -8,6 +8,7 @@ public class EffectsManager : MonoBehaviour
 
     public ParticleSystem preDashParticle;
     public ParticleSystem dashParticle;
+    public ParticleSystem dashCircle;
     public ParticleSystem dashBurstParticlePrimary;
     public ParticleSystem dashBurstParticleSecondary;
     public ParticleSystem turnParticleUp;

@@ -37,7 +37,6 @@ public class PlayerEffects : MonoBehaviour
 
     public void OnDead()
     {
-        effectsManager.StartParticle(effectsManager.dieParticle);
         cameraEffector.Shake(0.75f, 0.4f);
         GetComponent<SpriteRenderer>().enabled = false;
         mapEffector.OnDead();

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class SelectSceneManager : MonoBehaviour
@@ -9,9 +10,12 @@ public class SelectSceneManager : MonoBehaviour
     [SerializeField] string[] sceneNames;
     [SerializeField] CameraEffector cameraEffector;
     [SerializeField] Transform[] mapPoints;
+    [SerializeField] Transform[] bridges;
     [SerializeField] Color[] transitionColors;
     [SerializeField] Transform mapTransform;
     [SerializeField] Transform playerTransform;
+    [SerializeField] Text[] clearText;
+    [SerializeField] Text[] timeText;
 
     [Header("Effect Settings")]
     [SerializeField] float moveMapDuration;
@@ -37,8 +41,9 @@ public class SelectSceneManager : MonoBehaviour
     IEnumerator MoveMap(int dir)
     {
         if ((dir == 1 && currentPoint == mapPoints.Length - 1)
-            || (dir == -1 && currentPoint == 0))
-            yield break;
+            || (dir == -1 && currentPoint == 0) ||
+            (dir + currentPoint > PlayerPrefs.GetInt("CurrentPoint", 1)))
+            dir = 0;
         cameraEffector.SetFollow(mapPoints[currentPoint + dir].position);
         StartCoroutine(ZoomCamera(moveZoom, 0.3f));
         isMovable = false;
@@ -58,13 +63,31 @@ public class SelectSceneManager : MonoBehaviour
     }
     public void Init()
     {
+        for(int i=0; i<clearText.Length; i++)
+        {
+            if(PlayerPrefs.GetFloat("Record"+i,float.MaxValue) == float.MaxValue)
+            {
+                clearText[i].text = "";
+                timeText[i].text = "";
+            }
+            else
+            {
+                float playedTime = PlayerPrefs.GetFloat("Record" + i, float.MaxValue);
+                clearText[i].text = "Clear !";
+                timeText[i].text = ((int)(playedTime / 60)).ToString() + ":" + ((int)(playedTime % 60)).ToString().PadLeft(2,'0');
+            }
+        }
+        for(int i=PlayerPrefs.GetInt("CurrentPoint", 1) + 1; i<mapPoints.Length; i++)
+        {
+            bridges[i-1].GetComponent<SpriteRenderer>().color = new Color(0.85f, 0.85f, 0.85f);
+            mapPoints[i].GetComponent<SpriteRenderer>().color = new Color(0.85f, 0.85f, 0.85f);
+        }
         currentPoint = DataBridge.Singleton.currentPoint;
         if(currentPoint != 0)
         {
             playerTransform.transform.position = new Vector3(mapPoints[currentPoint].transform.position.x, 0, 0);
             cameraEffector.SetFollow(new Vector3(mapPoints[currentPoint].position.x, 0, 0));
             cameraEffector.transform.parent.position = new Vector3(mapPoints[currentPoint].position.x, 0, 0);
-
         }
     }
     IEnumerator ZoomCamera(float zoomTarget, float duration)

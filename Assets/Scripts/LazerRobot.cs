@@ -90,6 +90,7 @@ public class LazerRobot : MonoBehaviour
                     lazer.GetComponent<LazerBase>().transform.position = getMuzzlePosition(sizeX);
                     lazer.GetComponent<LazerBase>().transform.localScale = new Vector2(getLazerScale(sizeX), 1);
                     Destroy(lazerLine.gameObject);
+                    Camera.main.GetComponent<CameraEffector>().Shake(0.5f,0.7f);
                 };
                 
                 lazerLine = Instantiate(lazerLinePrefab, transform.position, transform.rotation);
@@ -104,7 +105,7 @@ public class LazerRobot : MonoBehaviour
         if(robotState == RobotState.SHOOTING) {
             shootingTimer += Time.deltaTime;
 
-            if(shootingTimer > 2) {
+            if(shootingTimer > 1) {
                 changeState(RobotState.EXITING, 1f);
                 Destroy(lazer.gameObject);
             }

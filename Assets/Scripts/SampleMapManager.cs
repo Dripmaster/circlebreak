@@ -7,7 +7,6 @@ using UnityEngine.UI;
 public class SampleMapManager : MapManager
 {
     public GameObject YoloObject;
-    public SoundManager soundManager;
     public AudioClip BGMclip;
     public LazerSpawner lazerSpawner;
     public blockSpawner spawner;
