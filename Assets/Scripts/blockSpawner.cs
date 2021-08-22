@@ -228,7 +228,7 @@ public class blockSpawner : MonoBehaviour
         int count = getCountofSpawn();
 
         bool[] thetas = new bool[massiveSpawnDegreeDivideCount];
-        float divTheta = ((p.FowardDir*(Mathf.PI * 2f ) -Mathf.Deg2Rad*massiveSafetyZoneDegree) )/ thetas.Length;
+        float divTheta = ((p.FowardDir*(Mathf.PI * 2f  -Mathf.Deg2Rad*massiveSafetyZoneDegree)) )/ thetas.Length;
         int thetasNum = 0;
         for (int i = 0; i < count; i++)
         {

@@ -50,11 +50,16 @@ public class TimeMapManager : MapManager
         base.OnEnable();
 
         ActionClass a2 = new ActionClass();
-        a2.startTime = 9f;
+        a2.startTime = 4f;
         a2.coroutineName = "spawnClock";
         Actions.Add(a2);
+        ActionClass a15 = new ActionClass();
+        a15.startTime = 10f;
+        a15.coroutineName = "spawnClock";
+        Actions.Add(a15);
+
         ActionClass a5 = new ActionClass();
-        a5.startTime = 18f;
+        a5.startTime = 15f;
         a5.coroutineName = "spawnClock";
         Actions.Add(a5);
         ActionClass a1 = new ActionClass();

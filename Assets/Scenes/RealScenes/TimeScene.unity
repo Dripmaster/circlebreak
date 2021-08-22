@@ -276,7 +276,7 @@ MonoBehaviour:
   lazerPrefab: {fileID: 1157630900359935252, guid: 4061ea14df42b4468a228214a4d299ad, type: 3}
   lazerLinePrefab: {fileID: 6878773261054555276, guid: 5d4367fa8664247c4b7f3b57bc16fef8, type: 3}
   _playerMove: {fileID: 303325857}
-  spawnInterval: 10
+  spawnInterval: 15
   LazorPassive: 1
 --- !u!4 &726701654
 Transform:
