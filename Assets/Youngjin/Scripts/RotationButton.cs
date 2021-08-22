@@ -10,5 +10,7 @@ public class RotationButton : buttonBase
         pressParticle.SetActive(true);
         Camera.main.GetComponent<CameraEffector>().Shake(0.25f);
         GameObject.FindGameObjectWithTag("MapManager").GetComponent<ClubMapManager>().OnRotationButton();
+
+        isBreak = true;
     }
 }

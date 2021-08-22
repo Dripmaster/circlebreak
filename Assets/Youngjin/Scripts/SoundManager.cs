@@ -4,18 +4,21 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
-    [SerializeField] AudioClip dashSound;
-    [SerializeField] AudioClip blockBreakSound;
-    [SerializeField] AudioClip boomSound;
-    [SerializeField] AudioClip yoloSound;
-    [SerializeField] AudioClip trapSound;
-    [SerializeField] AudioClip deathSound;
-    [SerializeField] AudioClip beginSound;
-    [SerializeField] AudioClip endSound;
+    public AudioClip dashSound;
+    public AudioClip blockBreakSound;
+    public AudioClip boomSound;
+    public AudioClip yoloSound;
+    public AudioClip trapSound;
+    public AudioClip deathSound;
+    public AudioClip deathSound2;
+    public AudioClip clearSound;
+    public AudioClip endSound;
 
-    [SerializeField] AudioClip buttonClickSound;
-    [SerializeField] AudioClip mapSelectSound;
-    [SerializeField] AudioClip mapMoveSound;
+    public AudioClip buttonClickSound;
+    public AudioClip mapSelectSound;
+    public AudioClip mapMoveSound;
+
+    public AudioClip titleMusic;
 
 
 
@@ -39,6 +42,7 @@ public class SoundManager : MonoBehaviour
     {
         if (music != null)
         {
+            musicSource.Stop();
             musicSource.clip = music;
             musicSource.Play();
         }

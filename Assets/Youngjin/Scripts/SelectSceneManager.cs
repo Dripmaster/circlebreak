@@ -30,6 +30,8 @@ public class SelectSceneManager : MonoBehaviour
     int currentPoint;
     Animator animator;
 
+    static bool isFirst = true;
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -37,6 +39,12 @@ public class SelectSceneManager : MonoBehaviour
     private void Start()
     {
         Init();
+        if (isFirst)
+        {
+            isFirst = false;
+        }
+        else
+            SoundManager.Singleton.PlayMusic(SoundManager.Singleton.titleMusic);
     }
     IEnumerator MoveMap(int dir)
     {
@@ -44,6 +52,8 @@ public class SelectSceneManager : MonoBehaviour
             || (dir == -1 && currentPoint == 0) ||
             (dir + currentPoint > PlayerPrefs.GetInt("CurrentPoint", 1)))
             dir = 0;
+        if(dir != 0)
+            SoundManager.Singleton.PlaySound(SoundManager.Singleton.mapMoveSound);
         cameraEffector.SetFollow(mapPoints[currentPoint + dir].position);
         StartCoroutine(ZoomCamera(moveZoom, 0.3f));
         isMovable = false;
@@ -111,6 +121,8 @@ public class SelectSceneManager : MonoBehaviour
     }
     IEnumerator SelectMap()
     {
+
+        SoundManager.Singleton.PlaySound(SoundManager.Singleton.mapSelectSound);
         animator.SetTrigger("Select");
         StartCoroutine(ZoomCamera(sceneChangeZoom, 0.5f));
         fixCameraToPlayer = true;
@@ -144,7 +156,10 @@ public class SelectSceneManager : MonoBehaviour
         DataBridge.Singleton.currentPoint = currentPoint;
         //Change Scene
         if(sceneNames[currentPoint] != "")
+        {
+            SoundManager.Singleton.StopMusic();
             SceneManager.LoadScene(sceneNames[currentPoint]);
+        }
     }
     public void OnEnterAnimDone()
     {

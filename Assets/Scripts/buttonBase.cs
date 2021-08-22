@@ -12,12 +12,16 @@ public class buttonBase : wallBase
             if (!_playerMove.isFever() && !isBreak && !isSpawning)
             {
                 buttonAction();
-                isBreak = true;
+                SoundManager.Singleton.PlaySound(SoundManager.Singleton.trapSound);
+                        isBreak = true;
             }
             else
             if (_playerMove.isFever())
             {
             }
         }
+    }
+    private void OnDestroy()
+    {
     }
 }

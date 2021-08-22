@@ -943,7 +943,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.234
+  m_Volume: 0.201
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -1039,7 +1039,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.48
+  m_Volume: 0.307
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1135,6 +1135,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9646bfd622da499449059360cc4464da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dashSound: {fileID: 8300000, guid: cdbbe496ac59f429d86f8013a321e038, type: 3}
+  blockBreakSound: {fileID: 8300000, guid: 6de0c2d6a7804447391cb0194f2c3c9d, type: 3}
+  boomSound: {fileID: 8300000, guid: c8ad00e66fb3a4f309fba1653d14b4c6, type: 3}
+  yoloSound: {fileID: 8300000, guid: fd57e0caacaa6474e9834c86a877baab, type: 3}
+  trapSound: {fileID: 8300000, guid: 65e0b2806151dc141a4d5e1698254747, type: 3}
+  deathSound: {fileID: 8300000, guid: 6e110cfc2e52ffd4f998055f05d421d8, type: 3}
+  deathSound2: {fileID: 8300000, guid: 371c8fe7dbf754c66b5e7fc0e0fa8e1c, type: 3}
+  clearSound: {fileID: 8300000, guid: 24f607de2338e9a4696578f938d4731a, type: 3}
+  endSound: {fileID: 8300000, guid: 14e6a2f2d22954e0cb91cc128f14d673, type: 3}
+  buttonClickSound: {fileID: 8300000, guid: 96c59ac477a00ac49a2913b7058868d5, type: 3}
+  mapSelectSound: {fileID: 8300000, guid: b49002a66e090469eaf946684e9ef9f0, type: 3}
+  mapMoveSound: {fileID: 8300000, guid: 7c303f313c0c57e4fb8d005f0ae65ebc, type: 3}
+  titleMusic: {fileID: 8300000, guid: 8d7e503884632c0469a0fba6c6bd6f3e, type: 3}
   sfxSource: {fileID: 1502886902}
   musicSource: {fileID: 1502886901}
 --- !u!4 &1502886904

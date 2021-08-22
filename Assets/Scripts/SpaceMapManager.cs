@@ -8,6 +8,8 @@ public class SpaceMapManager : MapManager
     public GameObject YoloObject;
     public GameObject starObject;
     public AudioClip BGMclip;
+    public AudioClip distortionSound;
+    public AudioClip starfallSound;
     public PostProcessProfile post;
     public PostProcessVolume p;
 
