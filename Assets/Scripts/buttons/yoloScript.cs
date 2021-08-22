@@ -5,6 +5,7 @@ using UnityEngine;
 public class yoloScript : buttonBase
 {
 
+    [SerializeField] GameObject particle;
     bool isTriggerStart;
     bool isUsed;
     // Start is called before the first frame update
@@ -31,6 +32,9 @@ public class yoloScript : buttonBase
             {
                 if (isTriggerStart)
                 {
+                    Camera.main.GetComponent<CameraEffector>().Shake(0.4f);
+                    particle.transform.parent = transform.parent;
+                    particle.SetActive(true);
                     _playerMove.setFever();
                     isUsed = true;
                     isBreak = true;

@@ -24408,7 +24408,7 @@ MonoBehaviour:
   clearSpeedStopDuration: 3
   dashCoolTime: 0.2
   feverDuration: 5
-  feverSpeed: 5
+  feverSpeed: 10
   chargeDuration: 0.5
   chargeDistance: 0.6
   boomToCenterDuration: 0.1

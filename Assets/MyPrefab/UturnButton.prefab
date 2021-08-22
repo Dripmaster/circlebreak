@@ -4922,7 +4922,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 12038837037434895}
   _playerMove: {fileID: 0}
   countOfDestroy: 2
-  destroyDuration: 0.3
+  destroyDuration: 1
   particle: {fileID: 1178336990962056923}
 --- !u!58 &3392015715394929772
 CircleCollider2D:

@@ -240,7 +240,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 1057866559830506367}
   _playerMove: {fileID: 0}
   countOfDestroy: 2
-  destroyDuration: 0.3
+  destroyDuration: 1
 --- !u!1 &8418707829495731860
 GameObject:
   m_ObjectHideFlags: 0
