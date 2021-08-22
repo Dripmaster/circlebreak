@@ -21,7 +21,6 @@ public class TimeMapManager : MapManager
         timeScalar = 1;
         StartCoroutine(timeCount());
         StartCoroutine(timeSpawn());
-        StartCoroutine(spawnYolo());
         soundManager.PlayMusic(BGMclip);
     }
     public override void onDie()

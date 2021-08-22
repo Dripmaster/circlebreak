@@ -10,6 +10,7 @@ public class SpaceMapManager : MapManager
     public AudioClip BGMclip;
     public PostProcessProfile post;
     public PostProcessVolume p;
+    public float starSpawnTime = 5f;
 
     public float normalTimeScale = 5;
     public override void OnReadyDone()
@@ -29,7 +30,6 @@ public class SpaceMapManager : MapManager
     {
         base.OnEnable();
         StartCoroutine(spawnStar());
-        StartCoroutine(spawnYolo());
         distorted = false;
         post = p.profile;
         ActionClass a2 = new ActionClass();
@@ -46,7 +46,7 @@ public class SpaceMapManager : MapManager
     {
         do
         {
-            yield return new WaitForSeconds(5);
+            yield return new WaitForSeconds(starSpawnTime);
             centerSpawner.SpawnButton(starObject,5);
         } while (!player.isClear()&&!player.isDie());
     }
@@ -131,7 +131,6 @@ public class SpaceMapManager : MapManager
         } while (startTime <= 0.5f);
 
         yield return null;
-
         distorted = false;
     }
 

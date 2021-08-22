@@ -10,6 +10,7 @@ public class ClubMapManager : MapManager
 
 
     [SerializeField] GameObject rotateButtonPrefab;
+    [SerializeField] GameObject yoloPrefab;
     [SerializeField] GameObject uturnButtonPrefab;
 
     [SerializeField] GameObject deco;
@@ -22,10 +23,28 @@ public class ClubMapManager : MapManager
     string pattern = "01000022110000100011";
 
     bool isRotating = false;
+    bool isGameOver = false;
 
+    void spawnYolo()
+    {
+        if (isGameOver)
+            return;
+        GameObject g = centerSpawner.SpawnButton(yoloPrefab);
+        g.transform.Rotate(0, 0, 90);
+    }
     internal void OnRotationButton()
     {
         isRotating = !isRotating;
+    }
+    public override void onDie()
+    {
+        isGameOver = true;
+        SoundManager.Singleton.StopMusic();
+    }
+    public override void OnGameClear()
+    {
+        isGameOver = true;
+        SoundManager.Singleton.StopMusic();
     }
     public override void OnReadyDone()
     {
@@ -34,7 +53,7 @@ public class ClubMapManager : MapManager
     float eTime = 0f;
     public void Update()
     {
-        if(isRotating)
+        if(isRotating && !isGameOver && !player.isBoom())
         {
             background.Rotate(new Vector3(0, 0, player.turnSpeed * Mathf.Rad2Deg) * Time.deltaTime);
         }
@@ -44,8 +63,17 @@ public class ClubMapManager : MapManager
         base.OnEnable();
         StartCoroutine(DecoCoroutine());
         StartCoroutine(SpawnRotationButton());
+        StartCoroutine(SpawnYolo());
         AddAction(new ActionClass(beatInterval * (3), "Bump"));
         AddAction(new ActionClass(beatInterval * (4), "None"));
+    }
+    IEnumerator SpawnYolo()
+    {
+        while(true)
+        {
+            yield return new WaitForSeconds(20);
+            spawnYolo();
+        }
     }
     IEnumerator SpawnRotationButton()
     {
@@ -64,10 +92,14 @@ public class ClubMapManager : MapManager
     }
     void SpawnRotation()
     {
+        if (isGameOver)
+            return;
         GameObject g = centerSpawner.SpawnButton(rotateButtonPrefab);
     }
     void SpawnUturn()
     {
+        if (isGameOver)
+            return;
         GameObject g = centerSpawner.SpawnButton(uturnButtonPrefab);
         if(player.FowardDir < 0)
             g.transform.Rotate(0, 0, 180);
@@ -77,7 +109,7 @@ public class ClubMapManager : MapManager
     {
         while(true)
         {
-            SpawnDeco();
+            StartCoroutine(SpawnDeco());
             yield return new WaitForSeconds(beatInterval);
         }
     }
@@ -118,7 +150,7 @@ public class ClubMapManager : MapManager
         }
         whiteCover.color = new Color(0, 0, 0, 0);
     }
-    void SpawnDeco()
+    IEnumerator SpawnDeco()
     {
         Vector3 pos = new Vector3(Random.Range(-Screen.width, Screen.width),
             Random.Range(-Screen.height, Screen.height), 0) / 200f;
@@ -128,9 +160,23 @@ public class ClubMapManager : MapManager
         colorIdx = (colorIdx + 1) % decoColors.Length;
         go.SetActive(true);
         count++;
+
+        if(player.isFever())
+        {
+            yield return new WaitForSeconds(beatInterval / 2);
+            pos = new Vector3(Random.Range(-Screen.width, Screen.width),
+                Random.Range(-Screen.height, Screen.height), 0) / 200f;
+            go = Instantiate(deco, pos, Quaternion.identity);
+            main = go.GetComponent<ParticleSystem>().main;
+            main.startColor = decoColors[colorIdx];
+            colorIdx = (colorIdx + 1) % decoColors.Length;
+            go.SetActive(true);
+        }
     }
     IEnumerator Bump()
     {
+        if (isGameOver)
+            yield break ;
         StartCoroutine(ShowWhite());
         float eTime = 0f;
         while (eTime < 0.3f)
@@ -140,6 +186,20 @@ public class ClubMapManager : MapManager
             eTime += Time.unscaledDeltaTime;
         }
         background.localScale = new Vector3(1, 1, 1);
+
+        if(player.isFever())
+        {
+            yield return new WaitForSeconds(beatInterval);
+            StartCoroutine(ShowWhite());
+            eTime = 0f;
+            while (eTime < 0.3f)
+            {
+                background.localScale = Mathf.Lerp(1.1f, 1, eTime / 0.3f) * new Vector3(1, 1, 1);
+                yield return null;
+                eTime += Time.unscaledDeltaTime;
+            }
+            background.localScale = new Vector3(1, 1, 1);
+        }
     }
 
 }

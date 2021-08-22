@@ -4,6 +4,21 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
+    [SerializeField] AudioClip dashSound;
+    [SerializeField] AudioClip blockBreakSound;
+    [SerializeField] AudioClip boomSound;
+    [SerializeField] AudioClip yoloSound;
+    [SerializeField] AudioClip trapSound;
+    [SerializeField] AudioClip deathSound;
+    [SerializeField] AudioClip beginSound;
+    [SerializeField] AudioClip endSound;
+
+    [SerializeField] AudioClip buttonClickSound;
+    [SerializeField] AudioClip mapSelectSound;
+    [SerializeField] AudioClip mapMoveSound;
+
+
+
     [SerializeField] AudioSource sfxSource;
     [SerializeField] AudioSource musicSource;
 

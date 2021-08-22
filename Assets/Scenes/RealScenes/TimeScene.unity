@@ -1023,7 +1023,7 @@ PrefabInstance:
       objectReference: {fileID: 1521859505}
     - target: {fileID: 3985731617022263901, guid: 959eee265e677334c9c13343a3b65a04, type: 3}
       propertyPath: targetScore
-      value: 2000
+      value: 100000
       objectReference: {fileID: 0}
     - target: {fileID: 3985731617022263901, guid: 959eee265e677334c9c13343a3b65a04, type: 3}
       propertyPath: NormalWallScore
