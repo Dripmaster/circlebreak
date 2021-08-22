@@ -9,6 +9,7 @@ public class LazerSpawner : MonoBehaviour
     public GameObject lazerPrefab;
     public GameObject lazerLinePrefab;
     public playerMovwe _playerMove;
+    public bool LazorPassive = true;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,10 +18,12 @@ public class LazerSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         spawnTimer += Time.deltaTime;
 
         if(spawnTimer > 10) {
             spawnTimer = 0f;
+            if(LazorPassive)
             spawnLazerRobot();
         }
     }
