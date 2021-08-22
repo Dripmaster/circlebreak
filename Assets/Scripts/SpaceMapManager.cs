@@ -49,6 +49,7 @@ public class SpaceMapManager : MapManager
         do
         {
             yield return new WaitForSeconds(starSpawnTime);
+            SoundManager.Singleton.PlaySound(starfallSound);
             centerSpawner.SpawnButton(starObject,5);
         } while (!player.isClear()&&!player.isDie());
     }
@@ -64,6 +65,7 @@ public class SpaceMapManager : MapManager
     {
         float v = 0;
         float startTime = 0;
+        SoundManager.Singleton.PlaySound(distortionSound);
         do
         {
             startTime += Time.deltaTime;
