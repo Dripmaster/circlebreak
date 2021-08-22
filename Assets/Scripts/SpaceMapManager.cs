@@ -16,22 +16,31 @@ public class SpaceMapManager : MapManager
     {
         soundManager.PlayMusic(BGMclip);
     }
+    bool distorted = false;
     private void Update()
     {
+        if(!distorted && player.isFever())
+        {
+            distorted = true;
+            StartCoroutine(colorDistort());
+        }
     }
     private new void OnEnable()
     {
         base.OnEnable();
         StartCoroutine(spawnStar());
+        StartCoroutine(spawnYolo());
+        distorted = false;
         post = p.profile;
         ActionClass a2 = new ActionClass();
         a2.startTime = 15f;
         a2.coroutineName = "distort";
+        Actions.Add(a2);
 
         ActionClass a3 = new ActionClass();
-        a3.startTime = 30f;
+        a3.startTime = 20;
         a3.coroutineName = "spawnYolo";
-        Actions.Add(a2);
+        Actions.Add(a3);
     }
     IEnumerator spawnStar()
     {
@@ -83,7 +92,7 @@ public class SpaceMapManager : MapManager
             lensDistortion.intensity.value = v;
         }
         yield return null;
-
+        distorted = false;
     }
     IEnumerator colorDistort()
     {
@@ -101,8 +110,10 @@ public class SpaceMapManager : MapManager
             }
             yield return null;
         } while (startTime <= 0.5f);
-
-        yield return new WaitForSeconds(0.5f);
+        do
+        {
+            yield return null;
+        } while (!player.isFever());
 
         float tmp = n;
         startTime = 0;
@@ -121,14 +132,17 @@ public class SpaceMapManager : MapManager
 
         yield return null;
 
+        distorted = false;
     }
 
     public override void onDie()
     {
+        soundManager.StopMusic();
         StartCoroutine(clearDistort());
     }
     public override void OnGameClear()
     {
+        soundManager.StopMusic();
         StartCoroutine(clearDistort());
     }
     IEnumerator clearDistort()

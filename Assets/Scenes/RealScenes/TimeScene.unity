@@ -578,6 +578,10 @@ PrefabInstance:
       value: 3.21
       objectReference: {fileID: 0}
     - target: {fileID: 6722249828909340031, guid: a2e8e2c225efbf747a85ac30f6633dc7, type: 3}
+      propertyPath: feverSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6722249828909340031, guid: a2e8e2c225efbf747a85ac30f6633dc7, type: 3}
       propertyPath: feverDuration
       value: 5
       objectReference: {fileID: 0}

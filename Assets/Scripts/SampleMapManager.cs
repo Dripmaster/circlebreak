@@ -22,6 +22,17 @@ public class SampleMapManager : MapManager
         soundManager.PlayMusic(BGMclip);
         StartCoroutine(tutorial());
     }
+    public override void onDie()
+    {
+        base.onDie();
+        soundManager.StopMusic();
+    }
+    public override void OnGameClear()
+    {
+        base.OnGameClear();
+
+        soundManager.StopMusic();
+    }
     private new void OnEnable()
     {
         base.OnEnable();
@@ -37,7 +48,7 @@ public class SampleMapManager : MapManager
         yield return new WaitForSeconds(3);
         img.gameObject.SetActive(true);
         text2.gameObject.SetActive(true);
-        yield return StartCoroutine(waitForKey(KeyCode.Q));
+        yield return StartCoroutine(waitForKey(KeyCode.C));
         img.gameObject.SetActive(false);
         text2.gameObject.SetActive(false);
         yield return new WaitForSeconds(1);
