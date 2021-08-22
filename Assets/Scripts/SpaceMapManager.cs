@@ -7,7 +7,7 @@ public class SpaceMapManager : MapManager
 {
     public GameObject YoloObject;
     public GameObject starObject;
-    public SoundManager soundManager;
+    SoundManager soundManager = SoundManager.Singleton;
     public AudioClip BGMclip;
     public PostProcessProfile post;
     public PostProcessVolume p;
@@ -145,6 +145,10 @@ public class SpaceMapManager : MapManager
     }
 
     public override void onDie()
+    {
+        StartCoroutine(clearDistort());
+    }
+    public override void OnGameClear()
     {
         StartCoroutine(clearDistort());
     }

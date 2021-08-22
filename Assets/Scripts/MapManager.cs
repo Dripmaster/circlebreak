@@ -30,6 +30,14 @@ public class MapManager : MonoBehaviour
     {
 
     }
+    public virtual void OnYolo()
+    {
+
+    }
+    public virtual void OnGameClear()
+    {
+
+    }
     [System.Serializable]
     public class ActionClass
     {

@@ -45,6 +45,7 @@ public class MapEffects : MonoBehaviour
         blockSpawner.DeActivate();
         var main = spawnerExplosionPrefab.GetComponent<ParticleSystem>().main;
         main.startColor = blockSpawner.MainColor;
+        mapManager.OnGameClear();
         StartCoroutine(GameClearCoroutine());
     }
     IEnumerator GameClearCoroutine()

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ClubMapManager : MapManager
 {
-    [SerializeField] SoundManager soundManager;
+    SoundManager soundManager = SoundManager.Singleton;
     [SerializeField] AudioClip music;
 
     [SerializeField] float beatInterval = 0.37f;

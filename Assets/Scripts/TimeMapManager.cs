@@ -7,7 +7,7 @@ public class TimeMapManager : MapManager
     public GameObject ClockObject;
     public GameObject YoloObject;
     public GameObject ClockBtnObject;
-    public SoundManager soundManager;
+    SoundManager soundManager = SoundManager.Singleton;
     public AudioClip BGMclip;
     public GameObject bigNiddle;
     public GameObject smallNiddle;

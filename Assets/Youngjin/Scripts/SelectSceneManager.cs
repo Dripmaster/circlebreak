@@ -41,8 +41,9 @@ public class SelectSceneManager : MonoBehaviour
     IEnumerator MoveMap(int dir)
     {
         if ((dir == 1 && currentPoint == mapPoints.Length - 1)
-            || (dir == -1 && currentPoint == 0))
-            yield break;
+            || (dir == -1 && currentPoint == 0) ||
+            (dir + currentPoint > PlayerPrefs.GetInt("CurrentPoint", 1)))
+            dir = 0;
         cameraEffector.SetFollow(mapPoints[currentPoint + dir].position);
         StartCoroutine(ZoomCamera(moveZoom, 0.3f));
         isMovable = false;
@@ -76,9 +77,9 @@ public class SelectSceneManager : MonoBehaviour
                 timeText[i].text = ((int)(playedTime / 60)).ToString() + ":" + ((int)(playedTime % 60)).ToString().PadLeft(2,'0');
             }
         }
-        for(int i=PlayerPrefs.GetInt("CurrentPoint", 1) + 1; i<clearText.Length; i++)
+        for(int i=PlayerPrefs.GetInt("CurrentPoint", 1) + 1; i<mapPoints.Length; i++)
         {
-            bridges[i].GetComponent<SpriteRenderer>().color = new Color(0.85f, 0.85f, 0.85f);
+            bridges[i-1].GetComponent<SpriteRenderer>().color = new Color(0.85f, 0.85f, 0.85f);
             mapPoints[i].GetComponent<SpriteRenderer>().color = new Color(0.85f, 0.85f, 0.85f);
         }
         currentPoint = DataBridge.Singleton.currentPoint;

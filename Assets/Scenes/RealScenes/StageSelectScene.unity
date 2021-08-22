@@ -996,9 +996,9 @@ MonoBehaviour:
   transitionColors:
   - {r: 0, g: 0, b: 0, a: 0}
   - {r: 1, g: 0.51365054, b: 0.15566039, a: 1}
-  - {r: 0, g: 0, b: 0, a: 0}
-  - {r: 0, g: 0, b: 0, a: 0}
-  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0.6509804, g: 0.65882355, b: 0.7058824, a: 1}
+  - {r: 0.6117647, g: 0.44313726, b: 0.24705882, a: 1}
+  - {r: 1, g: 0.5411765, b: 0.9490196, a: 1}
   mapTransform: {fileID: 1948673954}
   playerTransform: {fileID: 943544436}
   clearText:
