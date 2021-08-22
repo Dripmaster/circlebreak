@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class yoloScript : buttonBase
 {
-
     [SerializeField] GameObject particle;
     bool isTriggerStart;
     bool isUsed;

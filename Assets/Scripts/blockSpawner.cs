@@ -160,7 +160,7 @@ public class blockSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {            
-        if (!p.isClear()&&!p.isReady()&&!p.isDashOrFever()&&!p.isDie()&&!p.isBoom()&&Input.GetKeyDown(KeyCode.Q))
+        if (!p.isClear()&&!p.isReady()&&!p.isDashOrFever()&&!p.isDie()&&!p.isBoom()&&Input.GetKeyDown(KeyCode.C))
         {
             p.setBoom(this);
             boomStart = true;
@@ -228,7 +228,7 @@ public class blockSpawner : MonoBehaviour
         int count = getCountofSpawn();
 
         bool[] thetas = new bool[massiveSpawnDegreeDivideCount];
-        float divTheta = ((p.FowardDir*(Mathf.PI * 2f ) -Mathf.Deg2Rad*massiveSafetyZoneDegree) )/ thetas.Length;
+        float divTheta = ((p.FowardDir*(Mathf.PI * 2f  -Mathf.Deg2Rad*massiveSafetyZoneDegree)) )/ thetas.Length;
         int thetasNum = 0;
         for (int i = 0; i < count; i++)
         {

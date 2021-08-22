@@ -276,7 +276,7 @@ MonoBehaviour:
   lazerPrefab: {fileID: 1157630900359935252, guid: 4061ea14df42b4468a228214a4d299ad, type: 3}
   lazerLinePrefab: {fileID: 6878773261054555276, guid: 5d4367fa8664247c4b7f3b57bc16fef8, type: 3}
   _playerMove: {fileID: 303325857}
-  spawnInterval: 10
+  spawnInterval: 15
   LazorPassive: 1
 --- !u!4 &726701654
 Transform:
@@ -576,6 +576,10 @@ PrefabInstance:
     - target: {fileID: 6722249828909340030, guid: a2e8e2c225efbf747a85ac30f6633dc7, type: 3}
       propertyPath: m_LocalPosition.y
       value: 3.21
+      objectReference: {fileID: 0}
+    - target: {fileID: 6722249828909340031, guid: a2e8e2c225efbf747a85ac30f6633dc7, type: 3}
+      propertyPath: feverSpeed
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6722249828909340031, guid: a2e8e2c225efbf747a85ac30f6633dc7, type: 3}
       propertyPath: feverDuration
@@ -1019,11 +1023,11 @@ PrefabInstance:
       objectReference: {fileID: 1521859505}
     - target: {fileID: 3985731617022263901, guid: 959eee265e677334c9c13343a3b65a04, type: 3}
       propertyPath: targetScore
-      value: 2000
+      value: 100000
       objectReference: {fileID: 0}
     - target: {fileID: 3985731617022263901, guid: 959eee265e677334c9c13343a3b65a04, type: 3}
       propertyPath: NormalWallScore
-      value: 1
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 3985731617022263901, guid: 959eee265e677334c9c13343a3b65a04, type: 3}
       propertyPath: targetScoreText

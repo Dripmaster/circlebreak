@@ -370,8 +370,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "Q\uBC84\uD2BC\uC744 \uB20C\uB7EC \uCC28\uC624\uB974\uB294 \uC6A9\uC554\uD574\uC18C\n\uD574\uC18C\uD558\uC9C0
-    \uC54A\uC73C\uBA74 \uAC8C\uC784\uC624\uBC84!"
+  m_Text: "C\uBC84\uD2BC\uC744 \uB20C\uB7EC \uCC28\uC624\uB974\uB294 \uC911\uC2EC\uC6D0
+    \uC904\uC774\uAE30\n\uD574\uC18C\uD558\uC9C0 \uC54A\uC73C\uBA74 \uAC8C\uC784\uC624\uBC84!"
 --- !u!222 &320020924
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -504,6 +504,7 @@ MonoBehaviour:
   lazerPrefab: {fileID: 1157630900359935252, guid: 4061ea14df42b4468a228214a4d299ad, type: 3}
   lazerLinePrefab: {fileID: 6878773261054555276, guid: 5d4367fa8664247c4b7f3b57bc16fef8, type: 3}
   _playerMove: {fileID: 303325857}
+  spawnInterval: 10
   LazorPassive: 0
 --- !u!4 &726701654
 Transform:
@@ -757,6 +758,10 @@ PrefabInstance:
     - target: {fileID: 6722249828909340030, guid: a2e8e2c225efbf747a85ac30f6633dc7, type: 3}
       propertyPath: m_LocalPosition.y
       value: 3.38
+      objectReference: {fileID: 0}
+    - target: {fileID: 6722249828909340031, guid: a2e8e2c225efbf747a85ac30f6633dc7, type: 3}
+      propertyPath: feverSpeed
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6722249828909340031, guid: a2e8e2c225efbf747a85ac30f6633dc7, type: 3}
       propertyPath: feverDuration

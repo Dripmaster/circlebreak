@@ -17,11 +17,22 @@ public class TimeMapManager : MapManager
     float yoloScalar;
     public override void OnReadyDone()
     {
-        soundManager.PlayMusic(BGMclip);
         timeCounter = 0;
         timeScalar = 1;
         StartCoroutine(timeCount());
         StartCoroutine(timeSpawn());
+        soundManager.PlayMusic(BGMclip);
+    }
+    public override void onDie()
+    {
+        base.onDie();
+        soundManager.StopMusic();
+    }
+    public override void OnGameClear()
+    {
+        base.OnGameClear();
+
+        soundManager.StopMusic();
     }
     private void Update()
     {
@@ -38,15 +49,24 @@ public class TimeMapManager : MapManager
     {
         base.OnEnable();
 
+        ActionClass a2 = new ActionClass();
+        a2.startTime = 4f;
+        a2.coroutineName = "spawnClock";
+        Actions.Add(a2);
+        ActionClass a15 = new ActionClass();
+        a15.startTime = 10f;
+        a15.coroutineName = "spawnClock";
+        Actions.Add(a15);
+
+        ActionClass a5 = new ActionClass();
+        a5.startTime = 15f;
+        a5.coroutineName = "spawnClock";
+        Actions.Add(a5);
         ActionClass a1 = new ActionClass();
-        a1.startTime = 5f;
+        a1.startTime = 20f;
         a1.coroutineName = "spawnYolo";
         Actions.Add(a1);
 
-        ActionClass a2 = new ActionClass();
-        a2.startTime = 10f;
-        a2.coroutineName = "spawnClock";
-        Actions.Add(a2);
     }
     public float timesc()
     {

@@ -450,6 +450,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9646bfd622da499449059360cc4464da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dashSound: {fileID: 0}
+  blockBreakSound: {fileID: 0}
+  boomSound: {fileID: 0}
+  yoloSound: {fileID: 0}
+  trapSound: {fileID: 0}
+  deathSound: {fileID: 0}
+  beginSound: {fileID: 0}
+  endSound: {fileID: 0}
+  buttonClickSound: {fileID: 0}
+  mapSelectSound: {fileID: 0}
+  mapMoveSound: {fileID: 0}
   sfxSource: {fileID: 542150379}
   musicSource: {fileID: 542150378}
 --- !u!4 &542150381
@@ -6292,7 +6303,7 @@ PrefabInstance:
       objectReference: {fileID: 1521859505}
     - target: {fileID: 3985731617022263901, guid: 959eee265e677334c9c13343a3b65a04, type: 3}
       propertyPath: targetScore
-      value: 10000
+      value: 200000
       objectReference: {fileID: 0}
     - target: {fileID: 3985731617022263901, guid: 959eee265e677334c9c13343a3b65a04, type: 3}
       propertyPath: NormalWallScore

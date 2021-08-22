@@ -12,62 +12,51 @@ public class SpaceMapManager : MapManager
     public AudioClip starfallSound;
     public PostProcessProfile post;
     public PostProcessVolume p;
+    public float starSpawnTime = 5f;
 
     public float normalTimeScale = 5;
     public override void OnReadyDone()
     {
         soundManager.PlayMusic(BGMclip);
     }
+    bool distorted = false;
     private void Update()
     {
+        if(!distorted && player.isFever())
+        {
+            distorted = true;
+            StartCoroutine(colorDistort());
+        }
     }
     private new void OnEnable()
     {
         base.OnEnable();
         StartCoroutine(spawnStar());
+        distorted = false;
         post = p.profile;
-        ActionClass a1 = new ActionClass();
-        a1.startTime = 2f;
-        a1.coroutineName = "colorDistort";
-        Actions.Add(a1);
-
-        ActionClass aa = new ActionClass();
-        aa.startTime = 4f;
-        aa.coroutineName = "colorDistort";
-        Actions.Add(aa);
-
-        ActionClass aaa = new ActionClass();
-        aaa.startTime = 6f;
-        aaa.coroutineName = "colorDistort";
-        Actions.Add(aaa);
-
-        ActionClass a1a = new ActionClass();
-        a1a.startTime = 8f;
-        a1a.coroutineName = "colorDistort";
-        Actions.Add(a1a);
-
-        ActionClass aaaa = new ActionClass();
-        aaaa.startTime = 10f;
-        aaaa.coroutineName = "colorDistort";
-        Actions.Add(aaaa);
-
-        ActionClass a1aa = new ActionClass();
-        a1aa.startTime = 12f;
-        a1aa.coroutineName = "colorDistort";
-        Actions.Add(a1aa);
-
         ActionClass a2 = new ActionClass();
         a2.startTime = 15f;
         a2.coroutineName = "distort";
         Actions.Add(a2);
+
+        ActionClass a3 = new ActionClass();
+        a3.startTime = 20;
+        a3.coroutineName = "spawnYolo";
+        Actions.Add(a3);
     }
     IEnumerator spawnStar()
     {
         do
         {
-            yield return new WaitForSeconds(5);
+            yield return new WaitForSeconds(starSpawnTime);
             centerSpawner.SpawnButton(starObject,5);
-        } while (true);
+        } while (!player.isClear()&&!player.isDie());
+    }
+    IEnumerator spawnYolo()
+    {
+        GameObject g = centerSpawner.SpawnButton(YoloObject);
+        g.transform.Rotate(0, 0, 90);
+        yield return null;
     }
     LensDistortion lensDistortion;
     ChromaticAberration chromaticAberration;
@@ -105,7 +94,7 @@ public class SpaceMapManager : MapManager
             lensDistortion.intensity.value = v;
         }
         yield return null;
-
+        distorted = false;
     }
     IEnumerator colorDistort()
     {
@@ -123,8 +112,10 @@ public class SpaceMapManager : MapManager
             }
             yield return null;
         } while (startTime <= 0.5f);
-
-        yield return new WaitForSeconds(0.5f);
+        do
+        {
+            yield return null;
+        } while (!player.isFever());
 
         float tmp = n;
         startTime = 0;
@@ -142,15 +133,17 @@ public class SpaceMapManager : MapManager
         } while (startTime <= 0.5f);
 
         yield return null;
-
+        distorted = false;
     }
 
     public override void onDie()
     {
+        soundManager.StopMusic();
         StartCoroutine(clearDistort());
     }
     public override void OnGameClear()
     {
+        soundManager.StopMusic();
         StartCoroutine(clearDistort());
     }
     IEnumerator clearDistort()
