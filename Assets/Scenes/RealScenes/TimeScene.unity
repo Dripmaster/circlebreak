@@ -1027,7 +1027,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3985731617022263901, guid: 959eee265e677334c9c13343a3b65a04, type: 3}
       propertyPath: NormalWallScore
-      value: 1
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 3985731617022263901, guid: 959eee265e677334c9c13343a3b65a04, type: 3}
       propertyPath: targetScoreText
