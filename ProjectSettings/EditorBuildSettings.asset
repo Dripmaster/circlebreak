@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/RealScenes/TimeScene.unity
     guid: d728851948e8d494ab77339704a7c304
+  - enabled: 1
+    path: Assets/Scenes/RealScenes/YJScene.unity
+    guid: a025b1c22d118e943b690bc67d3fb053
   m_configObjects: {}

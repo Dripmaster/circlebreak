@@ -42,6 +42,7 @@ public class blockSpawner : MonoBehaviour
     public int WallSpawnCount = 5;
     public float spawnLageScale = 1.1f;
     public float spawnLageScaleDuration = 0.3f;
+    public bool passiveSpawn = true;
     [Header("GeneralValues")]
     public int RangeDivCount = 4;
     public float RangeOfLevel1 =2.5f;
@@ -86,7 +87,7 @@ public class blockSpawner : MonoBehaviour
                 eTime = 0;
                 newState = true;
                 yield return StartCoroutine(spawn_scale(spawnLageScaleDuration));
-                if(!boomStart)
+                if(!boomStart&& passiveSpawn)
                 SpawnBlock();
                 yield return StartCoroutine(spawn_scale(spawnLageScaleDuration,-1));
                 newState = false;
@@ -260,7 +261,7 @@ public class blockSpawner : MonoBehaviour
             g.GetComponent<blockBase>().setDest(theta,Range, TimeOfSpawn, p);
         }
     }
-    public void SpawnBlock()
+    public void SpawnBlock(bool isWall = false)
     {
         float RangeMin = p.rangeMin;
         float RangeMax = p.rangeMax;
@@ -271,7 +272,7 @@ public class blockSpawner : MonoBehaviour
         GameObject g;
 
         int RangeIdx =0;
-        if (wallspawnCounts >= WallSpawnCount)
+        if (isWall || (wallspawnCounts >= WallSpawnCount))
         {
             wallspawnCounts = 0;
             g = generateObject(blockType.wall);

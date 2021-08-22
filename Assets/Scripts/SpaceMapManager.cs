@@ -7,7 +7,6 @@ public class SpaceMapManager : MapManager
 {
     public GameObject YoloObject;
     public GameObject starObject;
-    SoundManager soundManager = SoundManager.Singleton;
     public AudioClip BGMclip;
     public PostProcessProfile post;
     public PostProcessVolume p;

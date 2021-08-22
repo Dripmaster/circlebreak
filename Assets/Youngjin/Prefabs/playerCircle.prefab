@@ -24398,12 +24398,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effector: {fileID: 6722249827950139408}
+  cap: {fileID: 0}
   rangeMax: 4.5
   rangeMin: 3
   turnSpeed: 1.4
   rangeSpeed: 3
-  dashCoolTime: 0.2
   invincibleTime: 0
+  moveSpeedReloadTime: 0.4
+  clearSpeedStopDuration: 3
+  dashCoolTime: 0.2
+  feverDuration: 5
+  feverSpeed: 5
   chargeDuration: 0.5
   chargeDistance: 0.6
   boomToCenterDuration: 0.1

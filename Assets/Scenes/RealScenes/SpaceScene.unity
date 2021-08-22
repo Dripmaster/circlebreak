@@ -751,6 +751,7 @@ MonoBehaviour:
   lazerLinePrefab: {fileID: 6878773261054555276, guid: 5d4367fa8664247c4b7f3b57bc16fef8, type: 3}
   _playerMove: {fileID: 303325857}
   spawnInterval: 10
+  LazorPassive: 1
 --- !u!4 &726701654
 Transform:
   m_ObjectHideFlags: 0
@@ -1368,6 +1369,10 @@ PrefabInstance:
       propertyPath: isGlobal
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 329229799173025812, guid: 8596e6feb7ab6d444bf55b4bdd11c9f3, type: 3}
+      propertyPath: sharedProfile
+      value: 
+      objectReference: {fileID: 11400000, guid: 49afc2cc17d26fe4daf8a1f84c403a8e, type: 2}
     - target: {fileID: 329229799173025813, guid: 8596e6feb7ab6d444bf55b4bdd11c9f3, type: 3}
       propertyPath: m_RootOrder
       value: 1

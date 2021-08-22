@@ -277,6 +277,7 @@ MonoBehaviour:
   lazerLinePrefab: {fileID: 6878773261054555276, guid: 5d4367fa8664247c4b7f3b57bc16fef8, type: 3}
   _playerMove: {fileID: 303325857}
   spawnInterval: 10
+  LazorPassive: 1
 --- !u!4 &726701654
 Transform:
   m_ObjectHideFlags: 0
@@ -574,7 +575,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6722249828909340030, guid: a2e8e2c225efbf747a85ac30f6633dc7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.38
+      value: 3.21
       objectReference: {fileID: 0}
     - target: {fileID: 6722249828909340031, guid: a2e8e2c225efbf747a85ac30f6633dc7, type: 3}
       propertyPath: feverDuration

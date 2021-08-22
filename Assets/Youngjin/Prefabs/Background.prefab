@@ -29280,7 +29280,6 @@ MonoBehaviour:
   smallCircle: {fileID: 5306423705269767823}
   p: {fileID: 6722249828909340031}
   fillSpeed: 0.1
-  wallColor: {r: 0.9380294, g: 0.3443396, b: 1, a: 1}
   TimeOfSpawn: 0.3
   ShrinkDuration: 0.15
   massiveSafetyZoneDegree: 90
@@ -29290,6 +29289,7 @@ MonoBehaviour:
   WallSpawnCount: 5
   spawnLageScale: 1.1
   spawnLageScaleDuration: 0.3
+  passiveSpawn: 1
   RangeDivCount: 4
   RangeOfLevel1: 2.5
   CountOfSpawnLevel1: 5
@@ -29886,10 +29886,6 @@ PrefabInstance:
     - target: {fileID: 6722249828709662663, guid: 7689dda58f27f3b4996ea27ac58c32db, type: 3}
       propertyPath: dashCoolTime
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6722249828709662663, guid: 7689dda58f27f3b4996ea27ac58c32db, type: 3}
-      propertyPath: feverDuration
-      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6722249828709662663, guid: 7689dda58f27f3b4996ea27ac58c32db, type: 3}
       propertyPath: chargeDuration

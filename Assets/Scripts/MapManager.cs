@@ -8,9 +8,11 @@ public class MapManager : MonoBehaviour
     [Header("References")]
     public playerMovwe player;
     public blockSpawner centerSpawner;
+    protected SoundManager soundManager;
     [SerializeField] protected List<ActionClass> Actions;
     void Awake()
     {
+        soundManager = SoundManager.Singleton;
     }
     protected void OnEnable()
     {
