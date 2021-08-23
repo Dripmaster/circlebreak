@@ -35,11 +35,11 @@ public class MapEffects : MonoBehaviour
         cameraEffector.Shake(0.2f, InitialZoomOutDuration * 0.7f);
         yield return StartCoroutine(cameraEffector.SetZoomCoroutine(0, InitialZoomOutDuration, TimeCurves.ExponentialPingPong));
         
-        canvas.renderMode = RenderMode.ScreenSpaceCamera;
         player.ReadyDone();
         blockSpawner.Activate();
         mapManager.OnReadyDone();
 
+        //canvas.renderMode = RenderMode.ScreenSpaceCamera;
     }
     public void OnGameClear()
     {

@@ -7,6 +7,7 @@ public class UturnButton : buttonBase
     [SerializeField] GameObject particle;
     public override void buttonAction()
     {
+        SoundManager.Singleton.PlaySound(SoundManager.Singleton.trapSound);
         _playerMove.StartCoroutine(Uturn());
         Camera.main.GetComponent<CameraEffector>().Shake(0.25f);
         particle.transform.parent = transform.parent;

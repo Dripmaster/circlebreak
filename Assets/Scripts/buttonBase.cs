@@ -13,7 +13,6 @@ public class buttonBase : wallBase
             if (!_playerMove.isFever() && !isBreak && !isSpawning)
             {
                 buttonAction();
-                SoundManager.Singleton.PlaySound(SoundManager.Singleton.trapSound);
                         //isBreak = true;
             }
             else

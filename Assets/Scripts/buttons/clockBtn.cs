@@ -38,6 +38,7 @@ public class clockBtn : buttonBase
         {
             if (!isBreak && !isSpawning)
             {
+                SoundManager.Singleton.PlaySound(SoundManager.Singleton.trapSound);
                 buttonAction();
                 gameObject.SetActive(false);
                 isBreak = true;
