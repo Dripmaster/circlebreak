@@ -26,6 +26,7 @@ public class EffectsManager : MonoBehaviour
 
     public ParticleSystem blockDestroyCircleParticle;
     public ParticleSystem blockDestroyParticle;
+    public ParticleSystem feverParticle;
 
     public void StartParticle(ParticleSystem particle)
     {
@@ -50,6 +51,7 @@ public class EffectsManager : MonoBehaviour
         SetColor(boomParticle4, mainColor);
         SetColor(blockDestroyCircleParticle, coreColor);
         SetColor(blockDestroyParticle, coreColor);
+        SetColor(feverParticle, mainColor);
     }
     void SetColor(ParticleSystem particle, Color color)
     {

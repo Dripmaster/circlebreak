@@ -55,7 +55,7 @@ public class SelectSceneManager : MonoBehaviour
         if(dir != 0)
             SoundManager.Singleton.PlaySound(SoundManager.Singleton.mapMoveSound);
         cameraEffector.SetFollow(mapPoints[currentPoint + dir].position);
-        StartCoroutine(ZoomCamera(moveZoom, 0.3f));
+        StartCoroutine(ZoomCamera(moveZoom, 0.15f));
         isMovable = false;
         float eTime = 0f;
         while(eTime < moveMapDuration)
@@ -69,7 +69,7 @@ public class SelectSceneManager : MonoBehaviour
         currentPoint += dir;
         playerTransform.transform.position = new Vector3(mapPoints[currentPoint].transform.position.x,0,0);
         isMovable = true;
-        StartCoroutine(ZoomCamera(0f, 0.3f));
+        StartCoroutine(ZoomCamera(0f, 0.15f));
     }
     public void Init()
     {
@@ -111,7 +111,7 @@ public class SelectSceneManager : MonoBehaviour
             {
                 cameraEffector.SetZoom(Mathf.Lerp(originalSize, zoomTarget, 1 - Mathf.Pow((x - 1), 2)));
             }
-            eTime += Time.unscaledDeltaTime;
+            eTime += Time.deltaTime;
         }
         cameraEffector.SetZoom(zoomTarget);
     }
@@ -140,12 +140,13 @@ public class SelectSceneManager : MonoBehaviour
         SpriteRenderer spriteRenderer = mapPoints[currentPoint].GetComponent<SpriteRenderer>();
         Color originalColor = spriteRenderer.color;
         spriteRenderer.sortingOrder = 100;
+        spriteRenderer.sortingLayerName = "UI";
         cameraEffector.Shake(0.4f, 0.35f);
         
         while(eTime < sceneChangeDuration)
         {
             yield return null;
-            eTime += Time.unscaledDeltaTime;
+            eTime += Time.deltaTime;
             float x = TimeCurves.ExponentialMirrored(eTime / sceneChangeDuration);
             mapPoints[currentPoint].localScale = originalScale + 
                 Mathf.Lerp(0,sceneChangeCircleScale-1,x)*new Vector3(1, 1, 0);
@@ -158,6 +159,7 @@ public class SelectSceneManager : MonoBehaviour
         if(sceneNames[currentPoint] != "")
         {
             SoundManager.Singleton.StopMusic();
+            yield return new WaitForSeconds(0.5f);
             SceneManager.LoadScene(sceneNames[currentPoint]);
         }
     }
@@ -183,5 +185,18 @@ public class SelectSceneManager : MonoBehaviour
         {
             PlayerPrefs.DeleteAll();
         }
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (!isPaused)
+            {
+                SceneManager.LoadScene("PauseScene", LoadSceneMode.Additive);
+                isPaused = true;
+            }
+            else
+            {
+                isPaused = false;
+            }
+        }
     }
+    bool isPaused = false;
 }

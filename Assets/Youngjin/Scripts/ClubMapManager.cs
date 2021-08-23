@@ -134,7 +134,7 @@ public class ClubMapManager : MapManager
         {
             whiteCover.color = new Color(1, 1, 1, Mathf.Lerp(1, 0, TimeCurves.ExponentialMirrored(eTime / 0.5f)));
             yield return null;
-            eTime += Time.unscaledDeltaTime;
+            eTime += Time.deltaTime;
         }
         whiteCover.color = new Color(1, 1, 1, 0);
     }
@@ -146,7 +146,7 @@ public class ClubMapManager : MapManager
         {
             whiteCover.color = new Color(0, 0, 0, Mathf.Lerp(1, 0, TimeCurves.ExponentialMirrored(eTime / 0.5f)));
             yield return null;
-            eTime += Time.unscaledDeltaTime;
+            eTime += Time.deltaTime;
         }
         whiteCover.color = new Color(0, 0, 0, 0);
     }
@@ -183,7 +183,7 @@ public class ClubMapManager : MapManager
         {
             background.localScale = Mathf.Lerp(1.1f, 1, eTime / 0.3f) * new Vector3(1,1,1);
             yield return null;
-            eTime += Time.unscaledDeltaTime;
+            eTime += Time.deltaTime;
         }
         background.localScale = new Vector3(1, 1, 1);
 
@@ -196,7 +196,7 @@ public class ClubMapManager : MapManager
             {
                 background.localScale = Mathf.Lerp(1.1f, 1, eTime / 0.3f) * new Vector3(1, 1, 1);
                 yield return null;
-                eTime += Time.unscaledDeltaTime;
+                eTime += Time.deltaTime;
             }
             background.localScale = new Vector3(1, 1, 1);
         }

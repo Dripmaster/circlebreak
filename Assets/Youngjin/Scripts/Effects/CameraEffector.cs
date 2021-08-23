@@ -37,7 +37,7 @@ public class CameraEffector : MonoBehaviour
             yield return null;
             float x = eTime / duration;
             SetZoom(Mathf.Lerp(originalSize, zoomTarget, curve(x)));
-            eTime += Time.unscaledDeltaTime;
+            eTime += Time.deltaTime;
         }
         SetZoom(zoomTarget);
     }
@@ -48,7 +48,7 @@ public class CameraEffector : MonoBehaviour
     private void Update()
     {
         {
-            transform.parent.position = Vector3.Lerp(transform.parent.position, targetPos, Time.unscaledDeltaTime * followSpeed);
+            transform.parent.position = Vector3.Lerp(transform.parent.position, targetPos, Time.deltaTime * followSpeed);
         }
     }
     public void Shake(float magnitude = 0.5f, float duration = 0.35f)

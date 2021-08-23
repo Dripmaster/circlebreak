@@ -54,7 +54,7 @@ public class MapEffects : MonoBehaviour
     IEnumerator GameClearCoroutine()
     {
         float eTime = 0f;
-            Time.timeScale = 1;
+            //Time.timeScale = 1;
         Vector3 bgInitialScale = background.localScale;
         float bgInitialRotation = background.rotation.eulerAngles.z;
         Vector3 bgInitialPosition = background.position;
@@ -64,7 +64,7 @@ public class MapEffects : MonoBehaviour
         while (eTime < gameClearDestroyDelay)
         {
             yield return null;
-            eTime += Time.unscaledDeltaTime;
+            eTime += Time.deltaTime;
             float x = TimeCurves.ExponentialMirrored(eTime / gameClearDestroyDelay);
             background.localScale = Vector3.Lerp(bgInitialScale, new Vector3(1, 1, 1), x);
             background.position = Vector3.Lerp(bgInitialPosition, new Vector3(0,0,0), x);
@@ -92,7 +92,7 @@ public class MapEffects : MonoBehaviour
         while (eTime < gameClearExplodeDuration)
         {
             yield return null;
-            eTime += Time.unscaledDeltaTime;
+            eTime += Time.deltaTime;
             if(eTime > shakeCount * shakeInterval)
             {
                 shakeCount++;
@@ -122,7 +122,7 @@ public class MapEffects : MonoBehaviour
         while (eTime < 1)
         {
             yield return null;
-            eTime += Time.unscaledDeltaTime;
+            eTime += Time.deltaTime;
             float x = eTime / 1;
             whiteCover.color = new Color(1, 1, 1, Mathf.Lerp(0, 1, x));
             whiteCover.transform.localScale = new Vector2(1, 1) * Mathf.Lerp(0, dieWhiteCoverScale, TimeCurves.ExponentialMirrored(x));
@@ -143,7 +143,7 @@ public class MapEffects : MonoBehaviour
         while(eTime < dieWhiteCoverDuration)
         {
             yield return null;
-            eTime += Time.unscaledDeltaTime;
+            eTime += Time.deltaTime;
             float x = eTime / dieWhiteCoverDuration;
             whiteCover.color = new Color(1, 1, 1, Mathf.Lerp(0, 1, x));
             whiteCover.transform.localScale = new Vector2(1, 1) * Mathf.Lerp(0, dieWhiteCoverScale, TimeCurves.ExponentialMirrored(x));

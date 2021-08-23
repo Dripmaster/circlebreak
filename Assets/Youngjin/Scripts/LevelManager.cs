@@ -54,7 +54,7 @@ public class LevelManager : MonoBehaviour
     private void Update()
     {
         if(countingTime)
-            playedTime += Time.unscaledDeltaTime;
+            playedTime += Time.deltaTime;
     }
     IEnumerator SetCurrentScore(int score)
     {
@@ -63,7 +63,7 @@ public class LevelManager : MonoBehaviour
         while (eTime < currentScoreEffectDuration)
         {
             yield return null;
-            eTime += Time.unscaledDeltaTime;
+            eTime += Time.deltaTime;
             float x = eTime / currentScoreEffectDuration;
             currentShownScore = (int)Mathf.Lerp(initialScore, score, x);
             scoreBar.value = currentShownScore;
@@ -93,7 +93,7 @@ public class LevelManager : MonoBehaviour
         while(eTime < targetScoreEffectDuration)
         {
             yield return null;
-            eTime += Time.unscaledDeltaTime;
+            eTime += Time.deltaTime;
             float x = eTime / targetScoreEffectDuration;
             currentValue = (int)Mathf.Lerp(0, targetScore, x);
             targetScoreText.transform.localScale

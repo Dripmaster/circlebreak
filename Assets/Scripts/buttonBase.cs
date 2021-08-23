@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class buttonBase : wallBase
 {
-    public virtual void buttonAction() { Debug.Log("버튼눌림:" + name); isBreak = true; }
+    public virtual void buttonAction() { Debug.Log("버튼눌림:" + name); //isBreak = true;
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Player")
@@ -13,7 +14,7 @@ public class buttonBase : wallBase
             {
                 buttonAction();
                 SoundManager.Singleton.PlaySound(SoundManager.Singleton.trapSound);
-                        isBreak = true;
+                        //isBreak = true;
             }
             else
             if (_playerMove.isFever())

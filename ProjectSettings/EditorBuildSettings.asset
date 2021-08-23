@@ -23,4 +23,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/RealScenes/YJScene.unity
     guid: a025b1c22d118e943b690bc67d3fb053
+  - enabled: 1
+    path: Assets/Scenes/RealScenes/CreditsScene.unity
+    guid: a7453330c1665fd4b94aca40508eadfc
+  - enabled: 1
+    path: Assets/Scenes/RealScenes/PauseScene.unity
+    guid: 4563ffa71d2ba7548b0156f4eb950a01
   m_configObjects: {}

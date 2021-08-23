@@ -81,7 +81,7 @@ public class blockSpawner : MonoBehaviour
         float eTime = 0;
         do
         {
-            eTime += Time.unscaledDeltaTime;
+            eTime += Time.deltaTime;
             if (eTime >= passiveSpawnTime)
             {
                 eTime = 0;
@@ -101,7 +101,7 @@ public class blockSpawner : MonoBehaviour
         float eTime = 0;
         do
         {
-            eTime += Time.unscaledDeltaTime;
+            eTime += Time.deltaTime;
             float x;
             
             if (dir == -1)

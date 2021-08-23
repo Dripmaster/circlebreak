@@ -42,12 +42,13 @@ public class SoundManager : MonoBehaviour
     }
     public void PlayMusic(AudioClip music)
     {
-        if (music != null)
-        {
-            musicSource.Stop();
-            musicSource.clip = music;
-            musicSource.Play();
-        }
+        if (music == null)
+            return;
+        if (musicSource.clip == music)
+            return;
+        musicSource.Stop();
+        musicSource.clip = music;
+        musicSource.Play();
     }
     public void StopMusic()
     {
@@ -63,5 +64,13 @@ public class SoundManager : MonoBehaviour
         {
             sfxSource.PlayOneShot(sound, volume);
         }
+    }
+    public void PauseMusic()
+    {
+        musicSource.Pause();
+    }
+    public void ResumeMusic()
+    {
+        musicSource.UnPause();
     }
 }

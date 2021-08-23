@@ -96,11 +96,11 @@ public class playerMovwe : MonoBehaviour
         {
             if (dashCoolTimeTimer >= 0)
             {
-                dashCoolTimeTimer -= Time.unscaledDeltaTime;
+                dashCoolTimeTimer -= Time.deltaTime;
             }
             if (isSmallPower)
             {
-                StartTime += Time.unscaledDeltaTime;
+                StartTime += Time.deltaTime;
                 if (StartTime>= invincibleTime)//�뽬��, ����� �� �� �ϰ� move ���� ��� �����ð�
                 {
                     isSmallPower = false;
@@ -110,7 +110,7 @@ public class playerMovwe : MonoBehaviour
             if (eTime <= moveSpeedReloadTime)
             {
                 speedScale = Mathf.Lerp(0, 1, eTime / moveSpeedReloadTime);
-                eTime += Time.unscaledDeltaTime;
+                eTime += Time.deltaTime;
                 if (eTime >= moveSpeedReloadTime)
                 {
                     speedScale = 1;
@@ -138,7 +138,7 @@ public class playerMovwe : MonoBehaviour
         do
         {
             dashSpeed = effector.GetDashSpeed();
-            startTime += Time.unscaledDeltaTime;
+            startTime += Time.deltaTime;
             rotationCircle(dashSpeed);
            
             if (startTime >= effector.FullDashDuration)
@@ -200,9 +200,10 @@ public class playerMovwe : MonoBehaviour
     IEnumerator fever()
     {
         float startTime = 0;
+        effector.StartFever();
         do
         {
-            startTime += Time.unscaledDeltaTime;
+            startTime += Time.deltaTime;
             if (startTime >= feverDuration)
             {
                 changeState = true;
@@ -214,6 +215,7 @@ public class playerMovwe : MonoBehaviour
             transform.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * GetCircleRotation());////////ȣ�� ��ġ ������ �ʿ��� �� ����
         } while (!changeState);
         isSmallPower = true;
+        effector.EndFever();
     }
     public bool isSpecial()
     {
@@ -261,7 +263,7 @@ public class playerMovwe : MonoBehaviour
             if (eTime <= clearSpeedStopDuration)
             {
                 speedScale = Mathf.Lerp(0, 1, eTime / clearSpeedStopDuration);
-                eTime += Time.unscaledDeltaTime;
+                eTime += Time.deltaTime;
                 if (eTime >= clearSpeedStopDuration)
                 {
                     speedScale = 1;
@@ -294,7 +296,7 @@ public class playerMovwe : MonoBehaviour
         {
             if (!isSpawned)
             {
-                eTime += Time.unscaledDeltaTime;
+                eTime += Time.deltaTime;
                 if (eTime <= chargeDuration)
                 {//���� ����
                     float x = eTime / chargeDuration;
@@ -326,7 +328,7 @@ public class playerMovwe : MonoBehaviour
             if (isSpawned)
             {
                 float rati = (eTime - chargeDuration) / (boomToCenterDuration);
-                eeTime += Time.unscaledDeltaTime;
+                eeTime += Time.deltaTime;
                 if (eeTime <= waitForSpawnDuration)
                 {//����� ���
 

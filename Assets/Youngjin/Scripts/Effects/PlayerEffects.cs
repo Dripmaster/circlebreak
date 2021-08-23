@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerEffects : MonoBehaviour
 {
@@ -50,7 +52,20 @@ public class PlayerEffects : MonoBehaviour
     private void Update()
     {
         coreColor = blockSpawner.MainColor;
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (!isPaused)
+            {
+                SceneManager.LoadScene("PauseScene", LoadSceneMode.Additive);
+                isPaused = true;
+            }
+            else
+            {
+                isPaused = false;
+            }
+        }
     }
+    bool isPaused = false;
     public void TurnWalkParticle(bool on)
     {
         if (on)
@@ -82,15 +97,15 @@ public class PlayerEffects : MonoBehaviour
         {
             yield return null;
             float x = eTime / preDashDuration;
-            Time.timeScale = Mathf.Lerp(1, 0.4f, 1 - Mathf.Pow((x - 1), 2));
-            eTime += Time.unscaledDeltaTime;
+            //Time.timeScale = Mathf.Lerp(1, 0.4f, 1 - Mathf.Pow((x - 1), 2));
+            eTime += Time.deltaTime;
         }
         playerScript.setDashCollider(true);
         effectsManager.StartParticle(effectsManager.dashParticle);
         effectsManager.StartParticle(effectsManager.dashBurstParticlePrimary);
 
         //dash + camera zoom out
-        Time.timeScale = 1f;
+        //Time.timeScale = 1f;
         currentDashSpeed = dashSpeed;
         StartCoroutine(ZoomCamera(0, 0.2f, CurveType.Linear));
         cameraEffector.SetFollow(new Vector3(0, 0, 0));
@@ -99,7 +114,7 @@ public class PlayerEffects : MonoBehaviour
         while (eTime < realDashDuration)
         {
             yield return null;
-            eTime += Time.unscaledDeltaTime;
+            eTime += Time.deltaTime;
         }
         //end
         currentDashSpeed = 1;
@@ -116,16 +131,16 @@ public class PlayerEffects : MonoBehaviour
         while (eTime < playerScript.chargeDuration - boomWaitInAirDuration)
         {
             yield return null;
-            eTime += Time.unscaledDeltaTime;
+            eTime += Time.deltaTime;
         }
         eTime = 0f;
-        Time.timeScale = 0.8f;
+        //Time.timeScale = 0.8f;
         while(eTime < boomWaitInAirDuration)
         {
             yield return null;
-            eTime += Time.unscaledDeltaTime;
+            eTime += Time.deltaTime;
         }
-        Time.timeScale = 1f;
+        //Time.timeScale = 1f;
         cameraEffector.SetFollow(new Vector3(0, 0, 0));
         StartCoroutine(ZoomCamera(0, 0.1f, CurveType.Linear));
     }
@@ -159,10 +174,20 @@ public class PlayerEffects : MonoBehaviour
                 cameraEffector.SetZoom(Mathf.Lerp(originalSize, zoomTarget, x));
 
             }
-            eTime += Time.unscaledDeltaTime;
+            eTime += Time.deltaTime;
         }
         cameraEffector.SetZoom(zoomTarget);
     }
+
+    internal void StartFever()
+    {
+        effectsManager.StartParticle(effectsManager.feverParticle);
+    }
+    internal void EndFever()
+    {
+        effectsManager.feverParticle.gameObject.SetActive(false);
+    }
+
     public void OnBlockBreak()
     {
 

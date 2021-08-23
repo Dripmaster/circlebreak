@@ -73,7 +73,7 @@ public class MapManager : MonoBehaviour
         {
             if (Actions.Count>0&&!player.isReady() && !player.isClear() && !player.isDie())
             {
-                startTime += Time.unscaledDeltaTime;
+                startTime += Time.deltaTime;
                 if (idx >= Actions.Count)
                 {
                     idx = 0;

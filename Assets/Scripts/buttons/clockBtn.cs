@@ -21,6 +21,7 @@ public class clockBtn : buttonBase
         _playerMove.StartCoroutine(Uturn(mgr));
         particle.transform.parent = transform.parent;
         particle.SetActive(true);
+        gameObject.SetActive(false);
         isBreak = true;
     }
     IEnumerator Uturn(TimeMapManager mgr)
@@ -38,6 +39,7 @@ public class clockBtn : buttonBase
             if (!isBreak && !isSpawning)
             {
                 buttonAction();
+                gameObject.SetActive(false);
                 isBreak = true;
             }
         }

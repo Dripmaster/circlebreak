@@ -35,9 +35,9 @@ public class yoloScript : buttonBase
                     particle.transform.parent = transform.parent;
                     particle.SetActive(true);
                     _playerMove.setFever();
+                    gameObject.SetActive(false);
                     isUsed = true;
                     isBreak = true;
-                    gameObject.SetActive(false);
                 }
             }
 

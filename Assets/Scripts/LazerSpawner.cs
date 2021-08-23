@@ -20,7 +20,7 @@ public class LazerSpawner : MonoBehaviour
     void Update()
     {
         
-        spawnTimer += Time.unscaledDeltaTime;
+        spawnTimer += Time.deltaTime;
 
         if(spawnTimer > spawnInterval) {
             spawnTimer = 0f;
