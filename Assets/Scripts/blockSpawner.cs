@@ -232,7 +232,19 @@ public class blockSpawner : MonoBehaviour
         int thetasNum = 0;
         for (int i = 0; i < count; i++)
         {
-            GameObject g = generateObject(blockType.block);
+
+            wallspawnCounts++;
+            GameObject g;
+            if ((wallspawnCounts >= WallSpawnCount))
+            {
+                wallspawnCounts = 0;
+                g = generateObject(blockType.wall);
+            }
+            else
+            {
+                g = generateObject(blockType.block);
+            }
+
 
             int thetaNum = UnityEngine.Random.Range(1, thetas.Length);
             float theta;

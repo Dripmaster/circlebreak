@@ -2,9 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
-using UnityEditorInternal;
 using UnityEngine;
-using UnityEngine.Android;
 
 public class playerMovwe : MonoBehaviour
 {
@@ -305,7 +303,7 @@ public class playerMovwe : MonoBehaviour
 
                     newMove = Quaternion.Euler(0, 0, transform.parent.rotation.eulerAngles.z) * newMove;
                     newMove += (Vector2)transform.parent.position;
-                    rigidbody.MovePosition(newMove);
+                    transform.position = newMove;
 
                 }
                 else if (eTime <= boomToCenterDuration + chargeDuration)
@@ -322,7 +320,7 @@ public class playerMovwe : MonoBehaviour
 
                     newMove = Quaternion.Euler(0, 0, transform.parent.rotation.eulerAngles.z) * newMove;
                     newMove += (Vector2)transform.parent.position;
-                    rigidbody.MovePosition(newMove);
+                    transform.position = newMove;
                 }
             }
             if (isSpawned)
@@ -346,7 +344,7 @@ public class playerMovwe : MonoBehaviour
 
                     newMove = Quaternion.Euler(0, 0, transform.parent.rotation.eulerAngles.z) * newMove;
                     newMove += (Vector2)transform.parent.position;
-                    rigidbody.MovePosition(newMove);
+                    transform.position = newMove;
                 }
                 else
                 {

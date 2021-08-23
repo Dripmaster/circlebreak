@@ -20,6 +20,8 @@ public class SoundManager : MonoBehaviour
 
     public AudioClip titleMusic;
 
+    public AudioClip duduMusic;
+
 
 
     [SerializeField] AudioSource sfxSource;

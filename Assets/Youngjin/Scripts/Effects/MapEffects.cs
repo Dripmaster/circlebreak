@@ -88,6 +88,7 @@ public class MapEffects : MonoBehaviour
         int shakeCount = 0;
         Vector3 originalPosition = player.transform.position;
         canvas.renderMode = RenderMode.WorldSpace;
+        bool isPlay = false;
         while (eTime < gameClearExplodeDuration)
         {
             yield return null;
@@ -104,6 +105,12 @@ public class MapEffects : MonoBehaviour
             }
             if (eTime > gameClearExplodeDuration/3)
             {
+                if(isPlay == false)
+                {
+                    SoundManager.Singleton.PlaySound(SoundManager.Singleton.duduMusic);
+                }
+                isPlay = true;
+                
                 float x = TimeCurves.Exponential((eTime-gameClearExplodeDuration/3) / (gameClearExplodeDuration*2/3));
                 player.transform.position = Vector3.Lerp(originalPosition, new Vector3(originalPosition.x,
                     6.5f, 0), x);

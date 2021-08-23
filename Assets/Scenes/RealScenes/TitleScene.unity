@@ -1148,6 +1148,7 @@ MonoBehaviour:
   mapSelectSound: {fileID: 8300000, guid: b49002a66e090469eaf946684e9ef9f0, type: 3}
   mapMoveSound: {fileID: 8300000, guid: 7c303f313c0c57e4fb8d005f0ae65ebc, type: 3}
   titleMusic: {fileID: 8300000, guid: 8d7e503884632c0469a0fba6c6bd6f3e, type: 3}
+  duduMusic: {fileID: 8300000, guid: 0d5e1b474fbc34b93a605fb0ae777c23, type: 3}
   sfxSource: {fileID: 1502886902}
   musicSource: {fileID: 1502886901}
 --- !u!4 &1502886904
