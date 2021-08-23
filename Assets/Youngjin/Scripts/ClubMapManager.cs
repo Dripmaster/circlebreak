@@ -55,7 +55,7 @@ public class ClubMapManager : MapManager
     {
         if(isRotating && !isGameOver && !player.isBoom())
         {
-            background.Rotate(new Vector3(0, 0, player.turnSpeed * Mathf.Rad2Deg) * Time.deltaTime);
+            background.Rotate(new Vector3(0, 0, player.turnSpeed * Mathf.Rad2Deg) * player.FowardDir * Time.deltaTime);
         }
     }
     private new void OnEnable()
