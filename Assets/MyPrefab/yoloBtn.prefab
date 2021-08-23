@@ -9804,7 +9804,7 @@ MonoBehaviour:
   effector: {fileID: 293849208179415866}
   spriteRenderer: {fileID: 508632750666139771}
   _playerMove: {fileID: 0}
-  countOfDestroy: 2
+  countOfDestroy: 3
   destroyDuration: 0.3
   particle: {fileID: 460151723842457810}
 --- !u!1 &1599677333174288461
